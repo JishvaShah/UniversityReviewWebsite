@@ -1,42 +1,42 @@
 CREATE SCHEMA `uni_review` DEFAULT CHARACTER SET utf8mb4;
 
-CREATE TABLE `uni_review`.`user`
+CREATE TABLE `admin`
 (
-    `id`       INT         NOT NULL,
-    `username` VARCHAR(45) CHARACTER SET 'utf8mb4' NOT NULL,
-    `email`    VARCHAR(45) NOT NULL,
-    `password` VARCHAR(45) NOT NULL,
-    `addr`     VARCHAR(256) NULL,
-    `tel`      VARCHAR(45) NULL,
+    `id`       bigint      NOT NULL,
+    `email`    varchar(45) NOT NULL,
+    `username` varchar(45) NOT NULL,
+    `password` varchar(45) NOT NULL,
     PRIMARY KEY (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 
-CREATE TABLE `uni_review`.`admin`
+CREATE TABLE `review`
 (
-    `id`       BIGINT(20) NOT NULL,
-    `email`    VARCHAR(45) NOT NULL,
-    `username` VARCHAR(45) NOT NULL,
-    `password` VARCHAR(45) NOT NULL,
+    `id`      bigint NOT NULL,
+    `user_id` bigint NOT NULL,
+    `uni_id`  bigint NOT NULL,
+    `content` blob   NOT NULL,
+    `rating`  int    NOT NULL,
     PRIMARY KEY (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 
-CREATE TABLE `uni_review`.`university`
+CREATE TABLE `university`
 (
-    `id`           BIGINT(20) NOT NULL,
-    `name`         VARCHAR(45) NOT NULL,
-    `ranking`      VARCHAR(45) NOT NULL,
-    `description`  BLOB        NOT NULL,
-    `student_size` INT         NOT NULL,
+    `id`           bigint      NOT NULL,
+    `name`         varchar(45) NOT NULL,
+    `ranking`      varchar(45) NOT NULL,
+    `description`  blob        NOT NULL,
+    `student_size` int         NOT NULL,
     PRIMARY KEY (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 
 
-CREATE TABLE `uni_review`.`review`
+CREATE TABLE `user`
 (
-    `id`      BIGINT(20) NOT NULL,
-    `user_id` BIGINT(20) NOT NULL,
-    `uni_id`  BIGINT(20) NOT NULL,
-    `content` BLOB NOT NULL,
-    `rating`  INT  NOT NULL,
+    `id`       int                                                          NOT NULL,
+    `username` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+    `email`    varchar(45)                                                  NOT NULL,
+    `password` varchar(45)                                                  NOT NULL,
+    `addr`     varchar(256) DEFAULT NULL,
+    `tel`      varchar(45)  DEFAULT NULL,
     PRIMARY KEY (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
