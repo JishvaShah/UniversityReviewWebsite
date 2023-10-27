@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {Link} from "react-router-dom";
 import {Helmet} from "react-helmet";
+import Header from "../../Header";
 
 const Register = () => {
     const [user, setUser] = useState({
@@ -29,16 +30,11 @@ const Register = () => {
             </Helmet>
 
             <div className="container mt-5">
-
+                <Header active="profile"/>
                 <div className="row align-items-center">
                     <div className="d-none d-md-block col-md-5">
-                        <img className="wd-login-bg"
+                        <img className="wd-login-bg mt-5"
                              src="/images/register.jpeg"
-                             alt=""/>
-                    </div>
-                    <div className="d-block d-md-none col-12 mb-3">
-                        <img className="wd-login-bg-small"
-                             src="/images/school.jpeg"
                              alt=""/>
                     </div>
                     <div className="col-12 col-md-7">
