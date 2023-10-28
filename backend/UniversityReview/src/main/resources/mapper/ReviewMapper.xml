@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.neu.review.mapper.ReviewMapper">
+    
+    <!-- SELECT by ID -->
+    <select id="getReviewById" resultType="Review">
+        SELECT * FROM review WHERE id = #{id}
+    </select>
+
+    <!-- SELECT by User ID -->
+    <select id="getReviewsByUserId" resultType="Review">
+        SELECT * FROM review WHERE user_id = #{userId}
+    </select>
+
+    <!-- INSERT a new Review -->
+    <insert id="insertReview" parameterType="Review">
+        INSERT INTO review (user_id, uni_id, content, rating)
+        VALUES (#{userId}, #{universityId}, #{content}, #{rating})
+    </insert>
+    
+    <!-- UPDATE a Review -->
+    <update id="updateReview" parameterType="Review">
+        UPDATE review
+        SET user_id = #{userId}, uni_id = #{universityId}, content = #{content}, rating = #{rating}
+        WHERE id = #{id}
+    </update>
+    
+    <!-- DELETE a Review by ID -->
+    <delete id="deleteReviewById" parameterType="long">
+        DELETE FROM review WHERE id = #{id}
+    </delete>
+</mapper>
