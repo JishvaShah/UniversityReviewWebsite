@@ -1,5 +1,6 @@
 package com.neu.review.controller;
 
+import com.neu.review.enums.ResponseCode;
 import com.neu.review.pojo.University;
 import com.neu.review.req.GetUniversityByIDReq;
 import com.neu.review.resp.GetUniversityByIDResp;
@@ -15,9 +16,15 @@ public class UniversityController {
 
     @PostMapping("/university/getByID")
     public GetUniversityByIDResp getByID(@RequestBody GetUniversityByIDReq req) {
-        University uni = universityService.getByID(req.getId());
-        GetUniversityByIDResp resp = new GetUniversityByIDResp();
-        resp.setData(uni);
-        return resp;
+        try {
+            University uni = universityService.getByID(req.getId());
+            GetUniversityByIDResp resp = new GetUniversityByIDResp();
+            resp.setData(uni);
+            resp.setResponseCode(ResponseCode.SUCCESS.getCode());
+            resp.setMessage(ResponseCode.SUCCESS.getDescription());
+            return resp;
+        } catch (Exception e) {
+            return new GetUniversityByIDResp(ResponseCode.INTERNAL_ERR.getCode(), ResponseCode.INTERNAL_ERR.getDescription());
+        }
     }
 }

@@ -4,7 +4,15 @@ import lombok.Data;
 
 @Data
 public class BaseResp<T> {
-    private String responseCode;
+    private Integer responseCode;
     private String message;
     private T data;
+
+    public BaseResp() {
+    }
+
+    public BaseResp(Integer responseCode, String message) {
+        this.responseCode = responseCode;
+        this.message = message;
+    }
 }
