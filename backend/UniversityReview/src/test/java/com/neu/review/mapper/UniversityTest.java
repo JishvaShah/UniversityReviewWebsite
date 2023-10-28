@@ -1,6 +1,8 @@
 package com.neu.review.mapper;
 
-import com.neu.review.pojo.University;
+import com.neu.review.controller.UniversityController;
+import com.neu.review.req.GetUniversityByIDReq;
+import com.neu.review.resp.GetUniversityByIDResp;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,6 +16,9 @@ public class UniversityTest {
     private UniversityMapper universityMapper;
 
     @Autowired
+    private UniversityController universityController;
+
+    @Autowired
     private DataSource dataSource;
 
 
@@ -24,7 +29,7 @@ public class UniversityTest {
 
     @Test
     void testGetUniversityByID() {
-        University university = universityMapper.getByID(1);
-        System.out.println(university);
+        GetUniversityByIDResp resp = universityController.getByID(new GetUniversityByIDReq(1));
+        System.out.println(resp.toString());
     }
 }
