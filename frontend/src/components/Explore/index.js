@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import Header from "../Header";
-import { Helmet } from 'react-helmet';
+import {Helmet} from 'react-helmet';
 import {useDispatch, useSelector} from "react-redux";
 import UniversityCard from "../University";
 
@@ -12,7 +12,6 @@ const Explore = () => {
     const menuIds = [1, 2, 3, 4, 5];
 
 
-
     let user = {
         username: "testing",
         id: 12
@@ -20,30 +19,27 @@ const Explore = () => {
 
     let university1 = {
         title: "Northeastern University1",
-        id:12345,
+        id: 12345,
         image: "./images/card2.jpeg",
-        description:"This is a place holder line of university description"
+        description: "This is a place holder line of university description"
     }
 
     let university2 = {
         title: "Northeastern University2",
-        id:12345,
+        id: 12345,
         image: "./images/card2.jpeg",
-        description:"This is a place holder line of university description"
+        description: "This is a place holder line of university description"
     }
 
     let university3 = {
         title: "Northeastern University3",
-        id:12345,
+        id: 12345,
         image: "./images/card2.jpeg",
-        description:"This is a place holder line of university description"
+        description: "This is a place holder line of university description"
     }
 
 
     let universities = [university1, university2, university3];
-
-
-
 
 
     return (
@@ -52,25 +48,33 @@ const Explore = () => {
                 <title>Explore | University Rater</title>
             </Helmet>
 
-            <div className="container mt-2">
+            <div className="container mt-2 mb-3">
                 <Header active="explore"/>
-
                 <div className="text-center my-4">
                     <h1 className="wd-menu-title">- &nbsp;Today's Highlight &nbsp; -</h1>
                     <h6 className="my-2 text-black">Recommendation For You!</h6>
                 </div>
-
                 <hr className="wd-color-coral"/>
                 <div className="row">
                     {
                         universities.map(singleSchool =>
-                            <UniversityCard university={singleSchool} />
+                            <UniversityCard university={singleSchool}/>
                         )
                     }
-
                 </div>
 
-
+                <div className="text-center my-4">
+                    <h1 className="wd-menu-title">- &nbsp;Your Favorite &nbsp; -</h1>
+                    <h6 className="my-2 text-black">In Your List!</h6>
+                </div>
+                <hr className="wd-color-coral"/>
+                <div className="row">
+                    {
+                        universities.map(singleSchool =>
+                            <UniversityCard university={singleSchool}/>
+                        )
+                    }
+                </div>
             </div>
         </>
 

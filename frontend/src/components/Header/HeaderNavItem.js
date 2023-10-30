@@ -19,7 +19,7 @@ const HeaderNavItem = (
     linkPathString = "/" + nav.navTitle;
 
     return (
-        <li className="nav-item">
+        <li className="nav-item ">
             <a className={classString} href={linkPathString}>{nav.navName}</a>
         </li>
     );

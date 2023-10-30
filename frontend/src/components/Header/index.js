@@ -4,7 +4,7 @@ import headerNavs from "./headerNavs.json";
 import "./header.css";
 
 
-const selectProfile = (profile) => profile;
+// const selectProfile = (profile) => profile;
 
 const Header = ({
                     active = "home"
@@ -45,11 +45,11 @@ const Header = ({
                                                nav={nav}
                                                isActive={nav.isActive}/>);
                         })}
-                        {
-                            <li className="nav-item">
-                                <a className='nav-link text-danger' href="/allUsers">User</a>
-                            </li>
-                        }
+                        {/*{*/}
+                        {/*    <li className="nav-item">*/}
+                        {/*        <a className='nav-link text-danger' href="/allUsers">User</a>*/}
+                        {/*    </li>*/}
+                        {/*}*/}
                     </ul>
                 </div>
                 <div className="d-none d-xl-block col-xl-3 align-self-center">

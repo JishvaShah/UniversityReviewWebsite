@@ -29,7 +29,7 @@ const Register = () => {
                 <title>Register | University Rater</title>
             </Helmet>
 
-            <div className="container mt-5">
+            <div className="container mt-2 mb-3">
                 <Header active="profile"/>
                 <div className="row align-items-center">
                     <div className="d-none d-md-block col-md-5">

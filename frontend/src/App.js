@@ -7,6 +7,7 @@ import './vendors/bootstrap/css/bootstrap.min.css';
 import './vendors/fontawesome/css/all.min.css';
 import Register from "./components/LoginAndRegister/Register";
 import Explore from "./components/Explore";
+import Profile from "./components/Profile";
 
 function App() {
   return (
@@ -25,6 +26,9 @@ function App() {
                   <Route path="/explore"
                          exact={true}
                          element={<Explore/>}/>
+                  <Route path="/profile"
+                         exact={true}
+                         element={<Profile/>}/>
               </Routes>
           </div>
       </BrowserRouter>
