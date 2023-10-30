@@ -1,6 +1,7 @@
 package com.neu.review.mapper;
 
-import com.example.model.Review;
+import com.neu.review.pojo.Review;
+import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
