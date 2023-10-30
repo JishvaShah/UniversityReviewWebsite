@@ -50,8 +50,13 @@ const UniversityCard = ({university}) => {
                     </div>
                 </Link>
                 <div className="d-grid gap-2 d-md-flex justify-content-center m-2">
-                    <button className="btn btn-outline-primary me-md-2" type="button">All reviews</button>
-                    <button className="btn btn-outline-primary" type="button">Write Review</button>
+                    <Link to={`/allReviews/${university.id}`}>
+                        <button className="btn btn-outline-primary me-md-2" type="button">All reviews</button>
+                    </Link>
+                    <Link to={`/addReviews/${university.id}`}>
+                        <button className="btn btn-outline-primary" type="button">Write Review</button>
+                    </Link>
+
                 </div>
             </div>
         </div>

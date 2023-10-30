@@ -19,21 +19,21 @@ const Explore = () => {
 
     let university1 = {
         title: "Northeastern University1",
-        id: 12345,
+        id: 1,
         image: "./images/card2.jpeg",
         description: "This is a place holder line of university description"
     }
 
     let university2 = {
         title: "Northeastern University2",
-        id: 12345,
+        id: 2,
         image: "./images/card2.jpeg",
         description: "This is a place holder line of university description"
     }
 
     let university3 = {
         title: "Northeastern University3",
-        id: 12345,
+        id: 3,
         image: "./images/card2.jpeg",
         description: "This is a place holder line of university description"
     }
@@ -70,8 +70,8 @@ const Explore = () => {
                 <hr className="wd-color-coral"/>
                 <div className="row">
                     {
-                        universities.map(singleSchool =>
-                            <UniversityCard university={singleSchool}/>
+                        universities.map(singleUniversity =>
+                            <UniversityCard university={singleUniversity}/>
                         )
                     }
                 </div>
