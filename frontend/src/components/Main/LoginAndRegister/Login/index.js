@@ -20,7 +20,7 @@ export default function Login() {
                 <title>Login | University Rater</title>
             </Helmet>
             <div className="container mt-2 mb-3">
-                <Header active="profile"/>
+                <Header active="home"/>
 
                 <div className="row align-items-center">
                     <div className="d-none d-md-block col-md-5">
