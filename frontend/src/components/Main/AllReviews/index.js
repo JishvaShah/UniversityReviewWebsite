@@ -18,12 +18,12 @@ const AllReviews = () => {
         reviews: [
             {
                 user: "test1",
-                rating: 4,
-                review: "This is a place holder"
+                rating: 2.5,
+                review: "This is a place holder This is a place holderThis is a place holderThis is a place holderThis is a place holderThis is a place holderThis is a place holderThis is a place holderThis is a place holder  "
             },
             {
-                user: "test2",
-                rating: 3,
+                user: "test2longlonglongname",
+                rating: 3.4,
                 review: "This is a place holder"
             },
             {
@@ -45,11 +45,11 @@ const AllReviews = () => {
 
             <div className="container mt-2 mb-3">
                 <Header active="review"/>
-                <h1 className="wd-block-title">{data.title}</h1>
+                <h1 className="wd-block-title ms-3">{data.title}</h1>
                 <div className="row">
                     {
                         data.reviews.map(singleReview =>
-                            <ReviewCard university={singleReview}/>
+                            <ReviewCard review={singleReview} key={singleReview.user}/>
                         )
                     }
                 </div>

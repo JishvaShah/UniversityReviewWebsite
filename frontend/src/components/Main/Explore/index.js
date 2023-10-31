@@ -71,7 +71,7 @@ const Explore = () => {
                 <div className="row">
                     {
                         universities.map(singleUniversity =>
-                            <UniversityCard university={singleUniversity}/>
+                            <UniversityCard university={singleUniversity} key={singleUniversity.id}/>
                         )
                     }
                 </div>
