@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.neu.review.mapper.UniversityMapper">
+<!--    <resultMap id="UniversityResultMap" type="com.neu.review.pojo.University">-->
+<!--        <result column="id" jdbcType="Integer" property="id"/>-->
+<!--        <result column="name" jdbcType="Varchar" property="name"/>-->
+<!--        <result column="description" jdbcType="Blob" property="description"/>-->
+<!--        <result column="ranking" jdbcType="Varchar" property="ranking"/>-->
+<!--        <result column="student_size" jdbcType="Integer" property="studentSize"/>-->
+<!--    </resultMap>-->
+
+    <select id="getByID" parameterType="int" resultType="University">
+        select id, name, ranking, description, student_size as studentSize from University where id = #{id}
+    </select>
+</mapper>

@@ -24,8 +24,10 @@ CREATE TABLE `university`
     `id`           bigint      NOT NULL,
     `name`         varchar(45) NOT NULL,
     `ranking`      varchar(45) NOT NULL,
-    `description`  blob        NOT NULL,
+    `description`  varchar(10000) DEFAULT NULL,
     `student_size` int         NOT NULL,
+    `photo`        blob,
+    `popularity`   int         NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 
@@ -38,5 +40,13 @@ CREATE TABLE `user`
     `password` varchar(45)                                                  NOT NULL,
     `addr`     varchar(256) DEFAULT NULL,
     `tel`      varchar(45)  DEFAULT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+CREATE TABLE `favourite`
+(
+    `id`            bigint NOT NULL,
+    `user_id`       bigint NOT NULL,
+    `university_id` bigint NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci

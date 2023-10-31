@@ -9,6 +9,7 @@ import Register from "./components/Main/LoginAndRegister/Register";
 import Explore from "./components/Main/Explore";
 import Profile from "./components/Main/Profile";
 import AllReviews from "./components/Main/AllReviews";
+import Home from "./components/pages/Home";
 
 
 function App() {
@@ -16,9 +17,12 @@ function App() {
         <BrowserRouter>
             <div className="container">
                 <Routes>
+                    <Route path="/home"
+                           exact={true}
+                           element={<Home/>}/>
                     <Route path="/"
                            exact={true}
-                           element={<HelloWorld/>}/>
+                           element={<Home/>}/>
                     <Route path="/login"
                            exact={true}
                            element={<Login/>}/>
@@ -38,6 +42,7 @@ function App() {
             </div>
         </BrowserRouter>
     );
+
 }
 
 export default App;
