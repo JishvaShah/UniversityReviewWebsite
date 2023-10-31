@@ -13,6 +13,6 @@
 <!--    </resultMap>-->
 
     <select id="getByID" parameterType="int" resultType="University">
-        select * from University where id = #{id}
+        select id, name, ranking, description, student_size as studentSize from University where id = #{id}
     </select>
 </mapper>
