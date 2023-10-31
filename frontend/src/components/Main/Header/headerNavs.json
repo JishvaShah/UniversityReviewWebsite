@@ -1,0 +1,27 @@
+[
+  {
+    "navName": "Home",
+    "navTitle": "",
+    "_id": 1
+  },
+  {
+    "navName": "Search",
+    "navTitle": "search",
+    "_id": 2
+  },
+  {
+    "navName": "Profile",
+    "navTitle": "profile",
+    "_id": 3
+  },
+  {
+    "navName": "Explore",
+    "navTitle": "explore",
+    "_id": 4
+  },
+  {
+    "navName": "Review",
+    "navTitle": "review",
+    "_id": 5
+  }
+]
