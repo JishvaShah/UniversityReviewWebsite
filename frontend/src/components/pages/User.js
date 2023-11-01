@@ -32,7 +32,7 @@ export default function User() {
       <div className="container mt-2 mb-3">
         <Header active="profile" />
         <div className="row">
-          <div className="col-md-6">
+          <div className="col-md-6 col-img">
             <img
               src={profileimg}
               alt="User Profile Image"
@@ -97,7 +97,7 @@ export default function User() {
                   onChange={handleChange}
                 />
               </div>
-              <button type="submit" className="btn">
+              <button type="submit" className="btn user">
                 Submit
               </button>
             </form>
