@@ -23,12 +23,12 @@ export default function Login() {
                 <Header active="profile"/>
 
                 <div className="row align-items-center">
-                    <div className="d-none d-md-block col-md-6">
+                    <div className="d-none d-md-block col-md-5">
                         <img className="wd-login-bg mt-5"
                              src="/images/school.jpeg"
                              alt=""/>
                     </div>
-                    <div className="col-12 col-md-6">
+                    <div className="col-12 col-md-7">
                         <div className="text-center mb-3">
                             <Link to="/login">
                                 <button className="btn btn-outline-primary wd-button wd-button-transparent">
