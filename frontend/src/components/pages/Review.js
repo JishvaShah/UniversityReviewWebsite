@@ -33,39 +33,42 @@ export default function Review() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const ratings = [
-      formData.facilitiesRating,
-      formData.locationRating,
-      formData.studentSupportRating,
-      formData.campusLookFeelRating,
-      formData.studentLifeRating,
-      formData.studentUnionRating,
-    ];
+        formData.facilitiesRating,
+        formData.locationRating,
+        formData.studentSupportRating,
+        formData.campusLookFeelRating,
+        formData.studentLifeRating,
+        formData.studentUnionRating,
+      ];
+  
+      // Calculate the average rating
+      const averageRating = calculateAverage(ratings);
+      console.log("Form Data:", formData);
+      console.log("Average Rating:", averageRating);
+    };
 
-    // Calculate the average rating
-    const averageRating = calculateAverage(ratings);
-    console.log("Form Data:", formData);
-    console.log("Average Rating:", averageRating);
-  };
+    const calculateAverage = (ratings) => {
+        if (ratings.length !== 6) {
+          console.error("Expected an array of six ratings.");
+          return 0;
+        }
+    
+        const sum = ratings.reduce((total, rating) => total + rating, 0);
+        const average = Math.floor(sum / 6);
+    
+        return average;
+      };
+    
 
-  const calculateAverage = (ratings) => {
-    if (ratings.length !== 6) {
-      console.error("Expected an array of six ratings.");
-      return 0;
-    }
-
-    const sum = ratings.reduce((total, rating) => total + rating, 0);
-    const average = Math.floor(sum / 6);
-
-    return average;
-  };
+  
 
   return (
     <>
       <Helmet>
         <title>Write a University Review</title>
       </Helmet>
-      <div className="container mt-2 mb-3">
-        <Header active="explore" />
+      <div className="review container mt-2 mb-3">
+        <Header active="review" />
         <div className="row">
           <div className="col-md-6 mx-auto">
             <h2>Review your University</h2>

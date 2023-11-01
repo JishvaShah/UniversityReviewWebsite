@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "../styles/User.css";
-import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import Header from "../Main/Header";
 import profileimg from "../images/profileimg.jpeg";
@@ -29,7 +28,7 @@ export default function User() {
       <Helmet>
         <title>User Profile</title>
       </Helmet>
-      <div className="container mt-2 mb-3">
+      <div className="user container mt-2 mb-3">
         <Header active="profile" />
         <div className="row">
           <div className="col-md-6 col-img">
@@ -97,7 +96,7 @@ export default function User() {
                   onChange={handleChange}
                 />
               </div>
-              <button type="submit" className="btn user">
+              <button type="submit" className="btn">
                 Submit
               </button>
             </form>
