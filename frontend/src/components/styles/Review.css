@@ -1,3 +1,6 @@
+.review.container {
+    text-align: center;
+  }
 .ratings-container {
   display: flex;
   flex-wrap: wrap;

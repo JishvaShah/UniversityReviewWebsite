@@ -25,7 +25,6 @@ function App() {
           <Route path="/explore" exact={true} element={<Explore />} />
           <Route path="/profile" exact={true} element={<User />} />
           <Route path="/allReviews/:id" exact={true} element={<AllReviews />} />
-          <Route path="/review" exact={true} element={<Review />} />
           <Route path="/addReviews/:id" exact={true} element={<Review />} />
         </Routes>
       </div>
