@@ -2,26 +2,13 @@
 /*create screen img*/
 
 .wd-login-bg {
-  width: 85%;
-  height: 520px;
-  border: 2px solid #ccc;
-  border-radius: 5px;
-  object-fit: cover;
-}
-
-.wd-login-bg-small,
-.wd-create-bg-small {
-  height: 150px;
-  width: 100%;
-  object-fit: cover;
-}
-
-.ms-3 label{
+    height: 700px;
     width: 100%;
-    text-align: left;
+    object-fit: cover;
 }
 
-.ms-3 input{
+.wd-login-bg-small, .wd-create-bg-small {
+    height: 150px;
     width: 100%;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    object-fit: cover;
 }

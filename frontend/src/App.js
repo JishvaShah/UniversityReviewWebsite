@@ -11,25 +11,53 @@ import Profile from "./components/Main/Profile";
 import AllReviews from "./components/Main/AllReviews";
 import Home from "./components/pages/Home";
 import User from "./components/pages/User";
+import {Provider} from "react-redux";
+import userReducer from "./components/reducers/userReducer";
+import { configureStore } from '@reduxjs/toolkit'
 import Review from "./components/pages/Review";
 
+const store = configureStore({ reducer: userReducer });
+
+
 function App() {
-  return (
-    <BrowserRouter>
-      <div className="container">
-        <Routes>
-          <Route path="/home" exact={true} element={<Home />} />
-          <Route path="/" exact={true} element={<Home />} />
-          <Route path="/login" exact={true} element={<Login />} />
-          <Route path="/register" exact={true} element={<Register />} />
-          <Route path="/explore" exact={true} element={<Explore />} />
-          <Route path="/profile" exact={true} element={<User />} />
-          <Route path="/allReviews/:id" exact={true} element={<AllReviews />} />
-          <Route path="/addReviews/:id" exact={true} element={<Review />} />
-        </Routes>
-      </div>
-    </BrowserRouter>
-  );
+    return (
+        <BrowserRouter>
+            <Provider store={store}>
+            <div className="container">
+                <Routes>
+                    <Route path="/home"
+                           exact={true}
+                           element={<Home/>}/>
+                    <Route path="/"
+                           exact={true}
+                           element={<Home/>}/>
+                    <Route path="/login"
+                           exact={true}
+                           element={<Login/>}/>
+                    <Route path="/register"
+                           exact={true}
+                           element={<User/>}/>
+                    <Route path="/explore"
+                           exact={true}
+                           element={<Explore/>}/>
+                    <Route path="/profile"
+                           exact={true}
+                           element={<User/>}/>
+                    <Route path="/allReviews/:id"
+                           exact={true}
+                           element={<AllReviews/>}/>
+                    <Route path="/addReviews/:id"
+                           exact={true}
+                           element={<Review/>}/>
+                    <Route path="/details/:id"
+                           exact={true}
+                           element={<AllReviews/>}/>
+                </Routes>
+            </div>
+            </Provider>
+        </BrowserRouter>
+    );
+
 }
 
 export default App;

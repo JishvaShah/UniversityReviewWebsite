@@ -1,14 +1,10 @@
 const initialUser = {
     username: "",
     email: "",
-    favRecipeList: [],
-    usersRecipe: [],
-    usersFollowers: [],
-    userAvatar: "/images/sample-user.jpeg",
-    location: "",
-    dateOfBirth: "",
-    bio: "",
-    role: "",
+    favUniversityList: [],
+    usersUniversity: [],
+    userReviews: [],
+
 }
 
 const userReducer = (state = initialUser, action) => {
@@ -31,14 +27,9 @@ const userReducer = (state = initialUser, action) => {
             state = {
                 username: "",
                 email: "",
-                favRecipeList: [],
-                usersRecipe: [],
-                usersFollowers: [],
-                userAvatar: "/images/sample-user.jpeg",
-                location: "",
-                dateOfBirth: "",
-                bio: "",
-                role: "normal"
+                favUniversityList: [],
+                usersUniversity: [],
+                userReviews: [],
             }
             return state;
 
@@ -49,21 +40,21 @@ const userReducer = (state = initialUser, action) => {
             // console.log(state);
             return state;
 
-        case "like-recipe":
+        case "like-university":
             state = {
                 ...state,
-                favRecipeList: [
-                    action.recipeId,
-                    ...state.favRecipeList
+                favUniversityList: [
+                    action.universityId,
+                    ...state.favUniversityList
                 ]
             };
             return state;
 
-        case "unlike-recipe":
+        case "unlike-university":
             state = {
                 ...state,
-                favRecipeList: state.favRecipeList.filter(
-                    recipeID => recipeID !== action.recipeId
+                favUniversityList: state.favUniversityList.filter(
+                    universityID => universityID !== action.universityId
                 )
             }
             return state;
@@ -71,9 +62,9 @@ const userReducer = (state = initialUser, action) => {
         case "get-user-fav":
             state = {
                 ...state,
-                favRecipeList: action.list
+                favUniversityList: action.list
             };
-            // console.log("state: ", state.favRecipeList);
+            // console.log("state: ", state.favUniversityList);
             return state;
 
 
