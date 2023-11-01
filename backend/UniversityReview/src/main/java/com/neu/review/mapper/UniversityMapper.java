@@ -10,4 +10,10 @@ public interface UniversityMapper {
      * @return
      */
     University getByID(Integer id);
+
+    /**
+     * @param university
+     * @return
+     */
+    University create(University university);
 }

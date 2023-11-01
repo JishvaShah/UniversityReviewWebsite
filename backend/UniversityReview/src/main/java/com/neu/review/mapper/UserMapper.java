@@ -6,11 +6,38 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface UserMapper {
 
-    User getUserById(int id);
+    /**
+     * @param id
+     * @return
+     */
+    User getById(int id);
 
-    void insertUser(User user);
+    /**
+     * @param user
+     * @return
+     */
+    User insert(User user);
 
-    void updateUser(User user);
+    /**
+     * @param user
+     * @return
+     */
+    User update(User user);
 
-    void deleteUserById(int id);
+    /**
+     * @param id
+     */
+    void deleteById(int id);
+
+    /**
+     * @param email
+     * @return
+     */
+    User getByEmail(String email);
+
+    /**
+     * @param userName
+     * @return
+     */
+    User getByUserName(String userName);
 }

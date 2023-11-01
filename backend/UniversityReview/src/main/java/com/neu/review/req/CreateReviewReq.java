@@ -1,16 +1,13 @@
-package com.neu.review.pojo;
+package com.neu.review.req;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
-@ToString
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-public class Review {
-    private Integer id;
+public class CreateReviewReq extends BaseReq {
     private Integer userID;
     private Integer uniID;
     private String content;

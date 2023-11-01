@@ -2,7 +2,7 @@ CREATE SCHEMA `uni_review` DEFAULT CHARACTER SET utf8mb4;
 
 CREATE TABLE `admin`
 (
-    `id`       bigint      NOT NULL,
+    `id`       int         NOT NULL,
     `email`    varchar(45) NOT NULL,
     `username` varchar(45) NOT NULL,
     `password` varchar(45) NOT NULL,
@@ -11,17 +11,17 @@ CREATE TABLE `admin`
 
 CREATE TABLE `review`
 (
-    `id`      bigint NOT NULL,
-    `user_id` bigint NOT NULL,
-    `uni_id`  bigint NOT NULL,
-    `content` blob   NOT NULL,
-    `rating`  int    NOT NULL,
+    `id`      int  NOT NULL,
+    `user_id` int  NOT NULL,
+    `uni_id`  int  NOT NULL,
+    `content` blob NOT NULL,
+    `rating`  int  NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 
 CREATE TABLE `university`
 (
-    `id`           bigint      NOT NULL,
+    `id`           int         NOT NULL,
     `name`         varchar(45) NOT NULL,
     `ranking`      varchar(45) NOT NULL,
     `description`  varchar(10000) DEFAULT NULL,
@@ -45,8 +45,8 @@ CREATE TABLE `user`
 
 CREATE TABLE `favourite`
 (
-    `id`            bigint NOT NULL,
-    `user_id`       bigint NOT NULL,
-    `university_id` bigint NOT NULL,
+    `id`            int NOT NULL,
+    `user_id`       int NOT NULL,
+    `university_id` int NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci

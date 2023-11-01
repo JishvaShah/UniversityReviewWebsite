@@ -17,4 +17,11 @@ public class UniversityService {
         }
         return universityMapper.getByID(id);
     }
+
+    public University create(University uni) {
+        if (uni == null) {
+            return null;
+        }
+        return universityMapper.create(uni);
+    }
 }

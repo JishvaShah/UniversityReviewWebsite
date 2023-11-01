@@ -1,19 +1,21 @@
 package com.neu.review.mapper;
 
 import com.neu.review.pojo.Review;
+
 import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface ReviewMapper {
 
-    Review getReviewById(long id);
+    Review getByID(long id);
 
-    List<Review> getReviewsByUserId(long userId);
+    List<Review> getByUserId(int userId);
 
-    void insertReview(Review review);
+    Review insert(Review review);
 
-    void updateReview(Review review);
+    void update(Review review);
 
-    void deleteReviewById(long id);
+    void deleteByID(long id);
 }

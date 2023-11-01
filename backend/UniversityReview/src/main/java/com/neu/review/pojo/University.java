@@ -15,4 +15,15 @@ public class University {
     private String ranking;
     private Integer studentSize;
     private String description;
+    private byte[] photo;
+    private Integer popularity;
+
+    public University(String name, String ranking, Integer studentSize, String description, byte[] photo) {
+        this.name = name;
+        this.ranking = ranking;
+        this.studentSize = studentSize;
+        this.description = description;
+        this.photo = photo;
+    }
 }
+
