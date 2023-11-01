@@ -11,11 +11,18 @@ import Profile from "./components/Main/Profile";
 import AllReviews from "./components/Main/AllReviews";
 import Home from "./components/pages/Home";
 import User from "./components/pages/User";
+import {Provider} from "react-redux";
+import userReducer from "./components/reducers/userReducer";
+import { configureStore } from '@reduxjs/toolkit'
+import Review from "./components/pages/Review";
+
+const store = configureStore({ reducer: userReducer });
 
 
 function App() {
     return (
         <BrowserRouter>
+            <Provider store={store}>
             <div className="container">
                 <Routes>
                     <Route path="/home"
@@ -29,7 +36,7 @@ function App() {
                            element={<Login/>}/>
                     <Route path="/register"
                            exact={true}
-                           element={<Register/>}/>
+                           element={<User/>}/>
                     <Route path="/explore"
                            exact={true}
                            element={<Explore/>}/>
@@ -39,8 +46,15 @@ function App() {
                     <Route path="/allReviews/:id"
                            exact={true}
                            element={<AllReviews/>}/>
+                    <Route path="/addReviews/:id"
+                           exact={true}
+                           element={<Review/>}/>
+                    <Route path="/details/:id"
+                           exact={true}
+                           element={<AllReviews/>}/>
                 </Routes>
             </div>
+            </Provider>
         </BrowserRouter>
     );
 

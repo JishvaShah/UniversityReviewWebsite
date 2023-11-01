@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../loginAndRegister.css";
 import {Helmet} from "react-helmet";
 import Header from "../../Header";
+import userService from "../../../service/userService";
+import {useDispatch} from "react-redux";
 
 export default function Login() {
     const [user, setUser] = useState({
@@ -10,8 +12,27 @@ export default function Login() {
         password: "",
     });
 
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    // const login = () => {
+    //     userService.login(user)
+    //         .then(newUser => {
+    //                 dispatch({
+    //                     type: "set-user",
+    //                     newUser
+    //                 })
+    //             navigate.push('/explore');
+    //             })
+    //         .catch(e => alert("User does not exist or wrong password."))
+    // };
+
     const login = () => {
-        console.log("Successfully Login!");
+        dispatch({
+            type: "set-user",
+            user
+        });
+        navigate("/explore");
     };
 
     return (
@@ -36,7 +57,7 @@ export default function Login() {
                                 </button>
                             </Link>
                             <span className="wd-color-coral"> | </span>
-                            <Link to="/register">
+                            <Link to="/profile">
                                 <button className="btn btn-outline-primary wd-button wd-button-transparent">
                                     Register
                                 </button>
