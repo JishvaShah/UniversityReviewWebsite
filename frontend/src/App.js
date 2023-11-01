@@ -10,6 +10,7 @@ import Explore from "./components/Main/Explore";
 import Profile from "./components/Main/Profile";
 import AllReviews from "./components/Main/AllReviews";
 import Home from "./components/pages/Home";
+import User from "./components/pages/User";
 
 
 function App() {
@@ -34,7 +35,7 @@ function App() {
                            element={<Explore/>}/>
                     <Route path="/profile"
                            exact={true}
-                           element={<Profile/>}/>
+                           element={<User/>}/>
                     <Route path="/allReviews/:id"
                            exact={true}
                            element={<AllReviews/>}/>
