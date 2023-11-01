@@ -35,12 +35,12 @@ export default function User() {
                         <img
                             src={profileimg}
                             alt="User Profile Image"
-                            className="img-fluid"
+                            className="img-fluid user"
                         />
                     </div>
                     <div className="col-md-6 col-user">
                         <h2>Create Your Profile</h2>
-                        <form onSubmit={handleSubmit}>
+                        <form onSubmit={handleSubmit} className="user-form">
                             <div className="form-group">
                                 <label htmlFor="username">Username</label>
                                 <input
@@ -96,7 +96,7 @@ export default function User() {
                                     onChange={handleChange}
                                 />
                             </div>
-                            <button type="submit" className="btn">
+                            <button type="submit" className="btn user">
                                 Submit
                             </button>
                         </form>

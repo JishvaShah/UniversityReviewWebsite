@@ -72,7 +72,7 @@ export default function Review() {
         <div className="row">
           <div className="col-md-6 mx-auto">
             <h2>Review your University</h2>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="review-form">
               <div className="form-group">
                 <label htmlFor="email">Email</label>
                 <input
