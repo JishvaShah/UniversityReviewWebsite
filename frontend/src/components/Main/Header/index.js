@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import HeaderNavItem from "./HeaderNavItem";
 import headerNavs from "./headerNavs.json";
 import "./header.css";
+import {useSelector} from "react-redux";
 
 
 // const selectProfile = (profile) => profile;
@@ -25,10 +26,12 @@ const Header = ({
         console.log("auto complete result ->", event.target.value);
     };
 
-    let user = {
-        username: "testing",
-        id: 12
-    }
+    // let user = {
+    //     username: "testing",
+    //     id: 12
+    // }
+
+    let user = useSelector(state => state.userReducer);
 
 
     return (
