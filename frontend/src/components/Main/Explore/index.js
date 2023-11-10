@@ -20,8 +20,10 @@ const Explore = () => {
     let university1 = {
         title: "Northeastern University1",
         id: 1,
-        popular: 100,
-        image: "./images/card1.jpeg",
+        ranking: 1,
+        studentSize:100,
+        popularity: 100,
+        photo: "./images/card1.jpeg",
         description: "This is a place holder line of university description, " +
             "This is a place holder line of university description, " +
             "This is a place holder line of university description"
@@ -30,16 +32,20 @@ const Explore = () => {
     let university2 = {
         title: "Northeastern University2",
         id: 2,
-        popular: 200,
-        image: "./images/register.jpeg",
+        popularity: 200,
+        ranking: 2,
+        studentSize:200,
+        photo: "./images/register.jpeg",
         description: "This is a place holder line of university description"
     }
 
     let university3 = {
         title: "Northeastern University3",
         id: 3,
-        popular: 300,
-        image: "./images/card2.jpeg",
+        popularity: 300,
+        ranking: 3,
+        studentSize:300,
+        photo: "./images/card2.jpeg",
         description: "This is a place holder line of university description"
     }
 

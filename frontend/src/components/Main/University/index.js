@@ -32,17 +32,15 @@ const UniversityCard = ({university}) => {
         <div className="col">
             <div className="card mx-2" >
                 <div className="card-body" data-bs-toggle="modal" data-bs-target={`#modal-${university.id}`}>
-                <img src={university.image} className="card-img-top wd-card-img" alt="sample"/>
+                <img src={university.photo} className="card-img-top wd-card-img" alt="sample"/>
                 <button className="btn btn-outline-primary wd-button wd-button-on-img"
                         onClick={() => likeUniversityHandler(university.id, dispatch)}>
                     <i className={`fas fa-heart ${inList(university) ? "wd-color-red" : ""}`}/>
                 </button>
-
-
                         <h5 className="wd-block-title">{university.title}</h5>
                         <p className="card-text">{university.description.substring(0, 50) + " ..."}</p>
                         <p className="card-text">Popularity: &nbsp;
-                            <i className="fas fa-heart red-color"/> {university.popular}</p>
+                            <i className="fas fa-heart red-color"/> {university.popularity}</p>
                     </div>
 
                 <div className="modal fade" id={`modal-${university.id}`} data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true"  >
@@ -52,10 +50,15 @@ const UniversityCard = ({university}) => {
                                 <h1 className="modal-title fs-5" id="exampleModalLabel">{university.title}</h1>
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <img src={university.image} className="card-img-top wd-card-img p-2" alt="sample"/>
+                            <img src={university.photo} className="card-img-top wd-card-img p-2" alt="sample"/>
                             <div className="modal-body">
-                                {university.description}
+                                <p className="fw-bold">Introduction</p>
+                               <p>{university.description}</p>
+                                <p><span className="fw-bold">Ranking: </span>{university.ranking}</p>
+                                <p><span className="fw-bold">StudentSize: </span>{university.studentSize}</p>
+
                             </div>
+
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 {/*<button type="button" className="btn btn-primary">Save changes</button>*/}
