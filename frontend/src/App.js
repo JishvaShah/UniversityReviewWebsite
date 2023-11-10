@@ -13,6 +13,7 @@ import {Provider} from "react-redux";
 import userReducer from "./components/reducers/userReducer";
 import { configureStore } from '@reduxjs/toolkit'
 import Review from "./components/pages/Review";
+import Search from "./components/Main/Search";
 
 const store = configureStore({ reducer: {userReducer} });
 
@@ -50,6 +51,9 @@ function App() {
                     <Route path="/details/:id"
                            exact={true}
                            element={<AllReviews/>}/>
+                    <Route path="/search"
+                           exact={true}
+                           element={<Search/>}/>
                 </Routes>
             </div>
             </Provider>

@@ -8,7 +8,8 @@ import {useSelector} from "react-redux";
 // const selectProfile = (profile) => profile;
 
 const Header = ({
-                    active = "home"
+                    active = 'home',
+
                 }) => {
 
 
@@ -63,18 +64,18 @@ const Header = ({
                         {/*    </label>*/}
                         {/*</div>*/}
                         <div>
-                            <input id="SearchInput"
-                                   className="form-control wd-search-bar-input"
-                                   list="datalistOptions"
-                                   placeholder="Search University"
-                                   onChange={e => searchRecipe(e)}
-                                  />
+                            {/*<input id="SearchInput"*/}
+                            {/*       className="form-control wd-search-bar-input"*/}
+                            {/*       list="datalistOptions"*/}
+                            {/*       placeholder="Search University"*/}
+                            {/*       onChange={e => searchRecipe(e)}*/}
+                            {/*      />*/}
 
-                            <datalist id="datalistOptions">
-                                {searchResult.map(item => (
-                                    <option value={item.title} />
-                                ))}
-                            </datalist>
+                            {/*<datalist id="datalistOptions">*/}
+                            {/*    {searchResult.map(item => (*/}
+                            {/*        <option value={item.title} />*/}
+                            {/*    ))}*/}
+                            {/*</datalist>*/}
                         </div>
                     </div>
                 </div>
