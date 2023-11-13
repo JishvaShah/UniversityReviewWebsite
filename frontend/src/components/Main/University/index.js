@@ -31,9 +31,9 @@ const UniversityCard = ({university}) => {
         // }
     };
 
-    // if (!university.image) {
-    //     university.image = "/images/wholeSchool.jpeg";
-    // }
+    if (!university.image) {
+        university.image = "/images/wholeSchool.jpeg";
+    }
 
 
     return (

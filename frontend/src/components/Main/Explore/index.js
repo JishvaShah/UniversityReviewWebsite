@@ -3,6 +3,7 @@ import Header from "../Header";
 import {Helmet} from 'react-helmet';
 import {useDispatch, useSelector} from "react-redux";
 import UniversityCard from "../University";
+import {getRandomUni} from "../../service/universityService";
 
 
 const selectProfile = (profile) => profile;
@@ -51,6 +52,19 @@ const Explore = () => {
 
 
     let universities = [university1, university2, university3];
+
+    useEffect(() => updateUniList);
+
+    const updateUniList = () => {
+        getRandomUni()
+            .then(singleUni => {
+                if (singleUni.title) {
+                    universities.push(singleUni);
+                }
+            })
+            .catch(e => console.log(e));
+    }
+
 
 
     return (
