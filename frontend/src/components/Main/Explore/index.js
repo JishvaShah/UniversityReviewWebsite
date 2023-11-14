@@ -56,7 +56,7 @@ const Explore = () => {
     useEffect(() => updateUniList);
 
     const updateUniList = () => {
-        getRandomUni()
+        getRandomUni({"id": 1})
             .then(singleUni => {
                 if (singleUni.title) {
                     universities.push(singleUni);
