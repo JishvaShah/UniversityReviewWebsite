@@ -4,16 +4,18 @@ import com.neu.review.enums.ResponseCode;
 import com.neu.review.pojo.University;
 import com.neu.review.req.CreateUniversityReq;
 import com.neu.review.req.GetUniversityByIDReq;
+import com.neu.review.req.RecommendReq;
 import com.neu.review.resp.CreateUniversityResp;
 import com.neu.review.resp.GetUniversityByIDResp;
+import com.neu.review.resp.RecommendResp;
 import com.neu.review.service.UniversityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
+import java.util.*;
 
 @RestController
-@CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST}, allowedHeaders = "*", allowCredentials = "true")
+@CrossOrigin(originPatterns = "*", methods = {RequestMethod.GET, RequestMethod.POST}, allowedHeaders = "*", allowCredentials = "true")
 public class UniversityController {
 
     @Autowired
@@ -21,15 +23,16 @@ public class UniversityController {
 
     @PostMapping("/university/getByID")
     public GetUniversityByIDResp getByID(@RequestBody GetUniversityByIDReq req) {
+        GetUniversityByIDResp resp = new GetUniversityByIDResp();
+
         if (req.getId() == null) {
-            GetUniversityByIDResp resp = new GetUniversityByIDResp();
-            resp.setResponseCode(ResponseCode.SUCCESS.getCode());
-            resp.setMessage(ResponseCode.SUCCESS.getDescription());
+            resp.setResponseCode(ResponseCode.ILLEGAL_REQ.getCode());
+            resp.setMessage(ResponseCode.ILLEGAL_REQ.getDescription());
             return resp;
         }
         try {
             University uni = universityService.getByID(req.getId());
-            GetUniversityByIDResp resp = new GetUniversityByIDResp();
+
             resp.setData(uni);
             resp.setResponseCode(ResponseCode.SUCCESS.getCode());
             resp.setMessage(ResponseCode.SUCCESS.getDescription());
@@ -41,17 +44,18 @@ public class UniversityController {
 
     @PostMapping("/university/create")
     public CreateUniversityResp create(@RequestBody CreateUniversityReq req) {
+        CreateUniversityResp resp = new CreateUniversityResp();
+
         if (req.getName() == null || req.getDescription() == null
                 || req.getPhoto() == null || req.getRanking() == null || req.getStudentSize() == null) {
-            CreateUniversityResp resp = new CreateUniversityResp();
-            resp.setResponseCode(ResponseCode.SUCCESS.getCode());
-            resp.setMessage(ResponseCode.SUCCESS.getDescription());
+            resp.setResponseCode(ResponseCode.ILLEGAL_REQ.getCode());
+            resp.setMessage(ResponseCode.ILLEGAL_REQ.getDescription());
             return resp;
         }
         try {
             University uni = new University(req.getName(), req.getRanking(), req.getStudentSize(), req.getDescription(), req.getPhoto());
             uni = universityService.create(uni);
-            CreateUniversityResp resp = new CreateUniversityResp();
+
             resp.setData(uni);
             resp.setResponseCode(ResponseCode.SUCCESS.getCode());
             resp.setMessage(ResponseCode.SUCCESS.getDescription());
@@ -59,5 +63,45 @@ public class UniversityController {
         } catch (Exception e) {
             return new CreateUniversityResp(ResponseCode.INTERNAL_ERR.getCode(), ResponseCode.INTERNAL_ERR.getDescription());
         }
+    }
+
+    @PostMapping("/university/recommend")
+    public RecommendResp recommend(@RequestBody RecommendReq req) {
+        RecommendResp resp = new RecommendResp();
+        try {
+            List<University> recommendations = new ArrayList<>();
+            List<University> universities = universityService.get(new UniversityService.Condition(100));
+            Map<Integer, Boolean> used = new HashMap<>();
+            while (recommendations.size() != (req.getNum() == null ? 3 : req.getNum())) {
+                int idx = getRandomInt(0, universities.size() - 1);
+                if (used.containsKey(idx)) {
+                    continue;
+                }
+                used.put(idx, true);
+                recommendations.add(universities.get(idx));
+            }
+
+            resp.setData(recommendations);
+            resp.setResponseCode(ResponseCode.SUCCESS.getCode());
+            resp.setMessage(ResponseCode.SUCCESS.getDescription());
+            return resp;
+        } catch (Exception e) {
+            return new RecommendResp(ResponseCode.INTERNAL_ERR.getCode(), ResponseCode.INTERNAL_ERR.getDescription());
+        }
+    }
+
+    public static int getRandomInt(int lowerBound, int upperBound) {
+        // Validate the bounds
+        if (lowerBound > upperBound) {
+            throw new IllegalArgumentException("Lower bound must be less than or equal to upper bound");
+        }
+
+        Random random = new Random();
+        // Calculate the range, add 1 to include the upper bound
+        int range = upperBound - lowerBound + 1;
+        // Generate a random integer within the specified range
+        int randomInt = random.nextInt(range) + lowerBound;
+
+        return randomInt;
     }
 }

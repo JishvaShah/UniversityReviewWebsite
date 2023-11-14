@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST}, allowedHeaders = "*", allowCredentials = "true")
+@CrossOrigin(originPatterns = "*", methods = {RequestMethod.GET, RequestMethod.POST}, allowedHeaders = "*", allowCredentials = "true")
 public class ReviewController {
 
     @Autowired
@@ -32,15 +32,15 @@ public class ReviewController {
 
     @PostMapping("/review/getByID")
     public GetReviewByIDResp getByID(@RequestBody GetReviewByIDReq req) {
+        GetReviewByIDResp resp = new GetReviewByIDResp();
+
         if (req.getId() == null) {
-            GetReviewByIDResp resp = new GetReviewByIDResp();
-            resp.setResponseCode(ResponseCode.SUCCESS.getCode());
-            resp.setMessage(ResponseCode.SUCCESS.getDescription());
+            resp.setResponseCode(ResponseCode.ILLEGAL_REQ.getCode());
+            resp.setMessage(ResponseCode.ILLEGAL_REQ.getDescription());
             return resp;
         }
         try {
             Review review = reviewService.getByID(req.getId());
-            GetReviewByIDResp resp = new GetReviewByIDResp();
             resp.setData(review);
             resp.setResponseCode(ResponseCode.SUCCESS.getCode());
             resp.setMessage(ResponseCode.SUCCESS.getDescription());
@@ -52,10 +52,11 @@ public class ReviewController {
 
     @PostMapping("/review/create")
     public CreateReviewResp create(@RequestBody CreateReviewReq req) {
+        CreateReviewResp resp = new CreateReviewResp();
+
         if (req.getContent() == null || req.getRating() == null || req.getUniID() == null || req.getUserID() == null) {
-            CreateReviewResp resp = new CreateReviewResp();
-            resp.setResponseCode(ResponseCode.SUCCESS.getCode());
-            resp.setMessage(ResponseCode.SUCCESS.getDescription());
+            resp.setResponseCode(ResponseCode.ILLEGAL_REQ.getCode());
+            resp.setMessage(ResponseCode.ILLEGAL_REQ.getDescription());
             return resp;
         }
         try {
@@ -67,7 +68,7 @@ public class ReviewController {
             review.setUniID(req.getUniID());
             review.setUserID(req.getUserID());
             review = reviewService.create(review);
-            CreateReviewResp resp = new CreateReviewResp();
+
             resp.setData(review);
             resp.setResponseCode(ResponseCode.SUCCESS.getCode());
             resp.setMessage(ResponseCode.SUCCESS.getDescription());
