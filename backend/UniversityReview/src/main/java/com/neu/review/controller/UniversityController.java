@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST}, allowedHeaders = "*", allowCredentials = "true")
+@CrossOrigin(originPatterns = "*", methods = {RequestMethod.GET, RequestMethod.POST}, allowedHeaders = "*", allowCredentials = "true")
 public class UniversityController {
 
     @Autowired
@@ -21,15 +21,16 @@ public class UniversityController {
 
     @PostMapping("/university/getByID")
     public GetUniversityByIDResp getByID(@RequestBody GetUniversityByIDReq req) {
+        GetUniversityByIDResp resp = new GetUniversityByIDResp();
+
         if (req.getId() == null) {
-            GetUniversityByIDResp resp = new GetUniversityByIDResp();
-            resp.setResponseCode(ResponseCode.SUCCESS.getCode());
-            resp.setMessage(ResponseCode.SUCCESS.getDescription());
+            resp.setResponseCode(ResponseCode.ILLEGAL_REQ.getCode());
+            resp.setMessage(ResponseCode.ILLEGAL_REQ.getDescription());
             return resp;
         }
         try {
             University uni = universityService.getByID(req.getId());
-            GetUniversityByIDResp resp = new GetUniversityByIDResp();
+
             resp.setData(uni);
             resp.setResponseCode(ResponseCode.SUCCESS.getCode());
             resp.setMessage(ResponseCode.SUCCESS.getDescription());
@@ -41,17 +42,18 @@ public class UniversityController {
 
     @PostMapping("/university/create")
     public CreateUniversityResp create(@RequestBody CreateUniversityReq req) {
+        CreateUniversityResp resp = new CreateUniversityResp();
+
         if (req.getName() == null || req.getDescription() == null
                 || req.getPhoto() == null || req.getRanking() == null || req.getStudentSize() == null) {
-            CreateUniversityResp resp = new CreateUniversityResp();
-            resp.setResponseCode(ResponseCode.SUCCESS.getCode());
-            resp.setMessage(ResponseCode.SUCCESS.getDescription());
+            resp.setResponseCode(ResponseCode.ILLEGAL_REQ.getCode());
+            resp.setMessage(ResponseCode.ILLEGAL_REQ.getDescription());
             return resp;
         }
         try {
             University uni = new University(req.getName(), req.getRanking(), req.getStudentSize(), req.getDescription(), req.getPhoto());
             uni = universityService.create(uni);
-            CreateUniversityResp resp = new CreateUniversityResp();
+
             resp.setData(uni);
             resp.setResponseCode(ResponseCode.SUCCESS.getCode());
             resp.setMessage(ResponseCode.SUCCESS.getDescription());

@@ -1,6 +1,7 @@
 package com.neu.review.controller;
 
 import com.neu.review.enums.ResponseCode;
+import com.neu.review.pojo.Admin;
 import com.neu.review.pojo.University;
 import com.neu.review.pojo.User;
 import com.neu.review.req.*;
@@ -11,23 +12,69 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST}, allowedHeaders = "*", allowCredentials = "true")
+@CrossOrigin(originPatterns = "*", methods = {RequestMethod.GET, RequestMethod.POST}, allowedHeaders = "*", allowCredentials = "true")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
+    @PostMapping("/user/login")
+    public UserLoginResp login(@RequestBody UserLoginReq req) {
+        UserLoginResp resp = new UserLoginResp();
+
+        if (req.getEmail() == null || req.getPassword() == null) {
+            resp.setResponseCode(ResponseCode.ILLEGAL_REQ.getCode());
+            resp.setMessage(ResponseCode.ILLEGAL_REQ.getDescription());
+            return resp;
+        }
+
+        try {
+            User user = userService.getByEmail(req.getEmail());
+            if (!user.getPassword().equals(req.getPassword())) {
+                resp.setResponseCode(ResponseCode.BUSINESS_ERR.getCode());
+                resp.setMessage(ResponseCode.BUSINESS_ERR.getDescription());
+            } else {
+                // TODO: put login in session
+                resp.setData(user);
+                resp.setResponseCode(ResponseCode.SUCCESS.getCode());
+                resp.setMessage(ResponseCode.SUCCESS.getDescription());
+            }
+            return resp;
+        } catch (Exception e) {
+            return new UserLoginResp(ResponseCode.INTERNAL_ERR.getCode(), ResponseCode.INTERNAL_ERR.getDescription());
+        }
+    }
+
+    @PostMapping("/user/logout")
+    public UserLogoutResp logout(@RequestBody UserLogoutReq req) {
+        UserLogoutResp resp = new UserLogoutResp();
+
+        if (req.getEmail() == null) {
+            resp.setResponseCode(ResponseCode.ILLEGAL_REQ.getCode());
+            resp.setMessage(ResponseCode.ILLEGAL_REQ.getDescription());
+            return resp;
+        }
+
+        try {
+            // TODO: logout
+            return resp;
+        } catch (Exception e) {
+            return new UserLogoutResp(ResponseCode.INTERNAL_ERR.getCode(), ResponseCode.INTERNAL_ERR.getDescription());
+        }
+    }
+
     @PostMapping("/user/getByID")
     public GetUserByIDResp getByID(@RequestBody GetUserByIDReq req) {
+        GetUserByIDResp resp = new GetUserByIDResp();
+
         if (req.getId() == null) {
-            GetUserByIDResp resp = new GetUserByIDResp();
-            resp.setResponseCode(ResponseCode.SUCCESS.getCode());
-            resp.setMessage(ResponseCode.SUCCESS.getDescription());
+            resp.setResponseCode(ResponseCode.ILLEGAL_REQ.getCode());
+            resp.setMessage(ResponseCode.ILLEGAL_REQ.getDescription());
             return resp;
         }
         try {
             User user = userService.getByID(req.getId());
-            GetUserByIDResp resp = new GetUserByIDResp();
+
             resp.setData(user);
             resp.setResponseCode(ResponseCode.SUCCESS.getCode());
             resp.setMessage(ResponseCode.SUCCESS.getDescription());
@@ -39,11 +86,12 @@ public class UserController {
 
     @PostMapping("/user/create")
     public CreateUserResp create(@RequestBody CreateUserReq req) {
+        CreateUserResp resp = new CreateUserResp();
+
         if (req.getUserName() == null || req.getEmail() == null
                 || req.getAddr() == null || req.getTel() == null || req.getPassword() == null) {
-            CreateUserResp resp = new CreateUserResp();
-            resp.setResponseCode(ResponseCode.SUCCESS.getCode());
-            resp.setMessage(ResponseCode.SUCCESS.getDescription());
+            resp.setResponseCode(ResponseCode.ILLEGAL_REQ.getCode());
+            resp.setMessage(ResponseCode.ILLEGAL_REQ.getDescription());
             return resp;
         }
         try {
@@ -55,7 +103,7 @@ public class UserController {
             }
             User user = new User(req.getEmail(), req.getUserName(), req.getPassword(), req.getAddr(), req.getTel());
             user = userService.create(user);
-            CreateUserResp resp = new CreateUserResp();
+
             resp.setData(user);
             resp.setResponseCode(ResponseCode.SUCCESS.getCode());
             resp.setMessage(ResponseCode.SUCCESS.getDescription());
@@ -67,10 +115,11 @@ public class UserController {
 
     @PostMapping("/user/update")
     public UpdateUserResp create(@RequestBody UpdateUserReq req) {
+        UpdateUserResp resp = new UpdateUserResp();
+
         if (req.getId() == null) {
-            UpdateUserResp resp = new UpdateUserResp();
-            resp.setResponseCode(ResponseCode.SUCCESS.getCode());
-            resp.setMessage(ResponseCode.SUCCESS.getDescription());
+            resp.setResponseCode(ResponseCode.ILLEGAL_REQ.getCode());
+            resp.setMessage(ResponseCode.ILLEGAL_REQ.getDescription());
             return resp;
         }
         try {
@@ -88,7 +137,7 @@ public class UserController {
                 user.setPassword(req.getPassword());
             }
             user = userService.update(user);
-            UpdateUserResp resp = new UpdateUserResp();
+
             resp.setData(user);
             resp.setResponseCode(ResponseCode.SUCCESS.getCode());
             resp.setMessage(ResponseCode.SUCCESS.getDescription());

@@ -5,6 +5,7 @@ public enum ResponseCode {
     INTERNAL_ERR(200, "Internal error"),
     DB_ERR(300, "DB error"),
     BUSINESS_ERR(400, "Business error"),
+    ILLEGAL_REQ(500, "Illegal Request"),
     UNKNOWN_ERR(1000, "Unknown error");
 
     private final int code;
