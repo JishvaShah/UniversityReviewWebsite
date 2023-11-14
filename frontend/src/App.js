@@ -5,9 +5,7 @@ import HelloWorld from "./components/hello-world";
 import Login from "./components/Main/LoginAndRegister/Login";
 import "./vendors/bootstrap/css/bootstrap.min.css";
 import "./vendors/fontawesome/css/all.min.css";
-import Register from "./components/Main/LoginAndRegister/Register";
 import Explore from "./components/Main/Explore";
-import Profile from "./components/Main/Profile";
 import AllReviews from "./components/Main/AllReviews";
 import Home from "./components/pages/Home";
 import User from "./components/pages/User";
@@ -16,7 +14,7 @@ import userReducer from "./components/reducers/userReducer";
 import { configureStore } from '@reduxjs/toolkit'
 import Review from "./components/pages/Review";
 
-const store = configureStore({ reducer: userReducer });
+const store = configureStore({ reducer: {userReducer} });
 
 
 function App() {

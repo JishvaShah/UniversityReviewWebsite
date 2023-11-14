@@ -30,7 +30,7 @@ export default function Login() {
     const login = () => {
         dispatch({
             type: "set-user",
-            user
+            newUser: user
         });
         navigate("/explore");
     };
