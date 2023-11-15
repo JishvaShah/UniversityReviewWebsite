@@ -21,15 +21,16 @@ CREATE TABLE `review`
 
 CREATE TABLE `university`
 (
-    `id`           int         NOT NULL,
+    `id`           int         NOT NULL AUTO_INCREMENT,
     `name`         varchar(45) NOT NULL,
     `ranking`      varchar(45) NOT NULL,
-    `description`  varchar(10000) DEFAULT NULL,
+    `description`  varchar(10000)       DEFAULT NULL,
     `student_size` int         NOT NULL,
     `photo`        blob,
-    `popularity`   int         NOT NULL,
-    PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+    `popularity`   int         NOT NULL DEFAULT '0',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uniq` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 
 
 CREATE TABLE `user`

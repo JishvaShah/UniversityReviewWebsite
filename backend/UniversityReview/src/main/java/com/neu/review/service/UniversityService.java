@@ -32,8 +32,10 @@ public class UniversityService {
     }
 
     public List<University> get(Condition condition) {
-        // TODO
-        return null;
+        if (condition == null) {
+            return null;
+        }
+        return universityMapper.get(condition);
     }
 
     public University update(University university) {
