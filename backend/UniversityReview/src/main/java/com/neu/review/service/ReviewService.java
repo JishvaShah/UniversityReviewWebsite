@@ -26,13 +26,21 @@ public class ReviewService {
         if (review == null) {
             return null;
         }
-        return reviewMapper.insert(review);
+        reviewMapper.insert(review);
+        return review;
     }
 
     public List<Review> getByUserID(Integer id) {
         if (id == null) {
             return null;
         }
-        return reviewMapper.getByUserId(id);
+        return reviewMapper.getByUserID(id);
+    }
+
+    public List<Review> getByUniversityID(Integer universityID) {
+        if (universityID == null) {
+            return null;
+        }
+        return reviewMapper.getByUniversityID(universityID);
     }
 }

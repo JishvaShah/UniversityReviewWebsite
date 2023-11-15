@@ -91,8 +91,8 @@ public class UserController {
         }
     }
 
-    @PostMapping("/user/create")
-    public CreateUserResp create(@RequestBody CreateUserReq req) {
+    @PostMapping("/user/register")
+    public CreateUserResp register(@RequestBody CreateUserReq req) {
         CreateUserResp resp = new CreateUserResp();
 
         if (req.getUserName() == null || req.getEmail() == null
@@ -121,7 +121,7 @@ public class UserController {
     }
 
     @PostMapping("/user/update")
-    public UpdateUserResp create(@RequestBody UpdateUserReq req) {
+    public UpdateUserResp update(@RequestBody UpdateUserReq req) {
         UpdateUserResp resp = new UpdateUserResp();
 
         if (req.getId() == null) {

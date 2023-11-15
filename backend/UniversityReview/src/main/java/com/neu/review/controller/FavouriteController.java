@@ -35,8 +35,8 @@ public class FavouriteController {
     @Autowired
     private UniversityService universityService;
 
-    @PostMapping("/favourite/create")
-    public CreateFavouriteResp create(@RequestBody CreateFavouriteReq req) {
+    @PostMapping("/favourite/like")
+    public CreateFavouriteResp like(@RequestBody CreateFavouriteReq req) {
         CreateFavouriteResp resp = new CreateFavouriteResp();
 
         if (req.getUserID() == null || req.getUniID() == null) {
@@ -72,8 +72,9 @@ public class FavouriteController {
         }
     }
 
-    @PostMapping("/favourite/remove")
-    public RemoveFavouriteResp logout(@RequestBody RemoveFavouriteReq req) {
+    // TODO use userID and Uniid
+    @PostMapping("/favourite/unlike")
+    public RemoveFavouriteResp unlike(@RequestBody RemoveFavouriteReq req) {
         RemoveFavouriteResp resp = new RemoveFavouriteResp();
 
         if (req.getId() == null) {
@@ -97,4 +98,6 @@ public class FavouriteController {
             return new RemoveFavouriteResp(ResponseCode.INTERNAL_ERR.getCode(), ResponseCode.INTERNAL_ERR.getDescription());
         }
     }
+
+    // TODO: new API to get all the likes of a user
 }

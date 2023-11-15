@@ -4,27 +4,59 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.neu.review.mapper.UserMapper">
-    
+
+    <resultMap id="UserResultMap" type="com.neu.review.pojo.User">
+        <id property="id" column="id"/>
+        <result property="email" column="email"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="address" column="addr"/>
+        <result property="tel" column="tel"/>
+    </resultMap>
+
     <!-- SELECT by ID -->
-    <select id="getUserById" resultType="User">
-        SELECT * FROM user WHERE id = #{id}
+    <select id="getById" resultType="User">
+        SELECT *
+        FROM user
+        WHERE id = #{id}
     </select>
 
     <!-- INSERT a new User -->
-    <insert id="insertUser" parameterType="User">
+    <insert id="insert" parameterType="User">
         INSERT INTO user (username, email, password, addr, tel)
         VALUES (#{username}, #{email}, #{password}, #{address}, #{telephone})
     </insert>
-    
+
     <!-- UPDATE a User -->
-    <update id="updateUser" parameterType="User">
+    <update id="update" parameterType="User">
         UPDATE user
-        SET username = #{username}, email = #{email}, password = #{password}, addr = #{address}, tel = #{telephone}
+        SET username = #{username},
+            email    = #{email},
+            password = #{password},
+            addr     = #{address},
+            tel      = #{telephone}
         WHERE id = #{id}
     </update>
-    
+
     <!-- DELETE a User by ID -->
-    <delete id="deleteUserById" parameterType="int">
-        DELETE FROM user WHERE id = #{id}
+    <delete id="deleteById" parameterType="int">
+        DELETE
+        FROM user
+        WHERE id = #{id}
     </delete>
+
+
+    <select id="getByUserName" resultType="User">
+        SELECT *
+        FROM user
+        WHERE username = #{userName}
+    </select>
+
+    <select id="getByIDs" parameterType="java.util.List" resultMap="UserResultMap">
+        SELECT * FROM user
+        WHERE id IN
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
 </mapper>

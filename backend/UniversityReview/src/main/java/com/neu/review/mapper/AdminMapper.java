@@ -5,6 +5,7 @@ import com.neu.review.pojo.User;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
+@Deprecated
 public interface AdminMapper {
 
     /**

@@ -7,9 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateReviewReq extends BaseReq {
-    private String userName;
-    private Integer uniID;
-    private String content;
-    private Integer rating;
+public class GetReviewsByUniversityIDReq extends BaseReq {
+    private Integer universityID;
 }

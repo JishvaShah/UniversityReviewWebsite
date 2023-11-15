@@ -4,32 +4,55 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.neu.review.mapper.ReviewMapper">
-    
+
+    <resultMap id="ReviewResultMap" type="com.neu.review.pojo.Review">
+        <id property="id" column="id"/>
+        <result property="userID" column="user_id"/>
+        <result property="uniID" column="uni_id"/>
+        <result property="content" column="content"/>
+        <result property="rating" column="rating"/>
+    </resultMap>
+
     <!-- SELECT by ID -->
-    <select id="getReviewById" resultType="Review">
-        SELECT * FROM review WHERE id = #{id}
+    <select id="getById" resultType="Review">
+        SELECT *
+        FROM review
+        WHERE id = #{id}
     </select>
 
     <!-- SELECT by User ID -->
-    <select id="getReviewsByUserId" resultType="Review">
-        SELECT * FROM review WHERE user_id = #{userId}
+    <select id="getByUserID" resultType="Review">
+        SELECT *
+        FROM review
+        WHERE user_id = #{userID}
+    </select>
+
+    <select id="getByUniversityID" resultType="Review" parameterType="java.util.List" resultMap="ReviewResultMap">
+        SELECT *
+        FROM review
+        WHERE uni_id = #{universityID}
     </select>
 
     <!-- INSERT a new Review -->
-    <insert id="insertReview" parameterType="Review">
+    <insert id="insert" parameterType="Review" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO review (user_id, uni_id, content, rating)
-        VALUES (#{userId}, #{universityId}, #{content}, #{rating})
+        VALUES (#{userID}, #{uniID}, #{content}, #{rating})
     </insert>
-    
+
     <!-- UPDATE a Review -->
-    <update id="updateReview" parameterType="Review">
+    <update id="update" parameterType="Review">
         UPDATE review
-        SET user_id = #{userId}, uni_id = #{universityId}, content = #{content}, rating = #{rating}
+        SET user_id = #{userID},
+            uni_id  = #{universityID},
+            content = #{content},
+            rating  = #{rating}
         WHERE id = #{id}
     </update>
-    
+
     <!-- DELETE a Review by ID -->
-    <delete id="deleteReviewById" parameterType="long">
-        DELETE FROM review WHERE id = #{id}
+    <delete id="deleteById" parameterType="long">
+        DELETE
+        FROM review
+        WHERE id = #{id}
     </delete>
 </mapper>

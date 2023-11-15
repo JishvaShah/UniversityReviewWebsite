@@ -3,6 +3,8 @@ package com.neu.review.mapper;
 import com.neu.review.pojo.User;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface UserMapper {
 
@@ -40,4 +42,10 @@ public interface UserMapper {
      * @return
      */
     User getByUserName(String userName);
+
+    /**
+     * @param ids
+     * @return
+     */
+    List<User> getByIDs(List<Integer> ids);
 }
