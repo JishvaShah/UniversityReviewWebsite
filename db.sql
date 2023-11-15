@@ -31,7 +31,7 @@ CREATE TABLE `university`
     PRIMARY KEY (`id`),
     UNIQUE KEY `uniq` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
-
+INSERT INTO `university` VALUES (1,'Northeastern University','10000','This is a university.',2323,NULL,0),(2,'Boston University','QS100','this is bU',500,_binary '‰PNG\r\n\Z\n\0\0\0\rIHDR\0\0\0\0\0\0\0\0\0µú7\ê\0\0\0[IDATx\Úcüÿÿ\0R>V¹rð\0\0\0”T\äJ\ä&',0);
 
 CREATE TABLE `user`
 (
