@@ -53,4 +53,13 @@ public class ReviewTest {
         GetReviewsByUniversityIDResp resp = reviewController.getReviewsByUniversityID(req);
         System.out.println(resp);
     }
+
+    @Test
+    void testGetByID() {
+        GetReviewByIDReq req = new GetReviewByIDReq();
+        req.setId(1);
+
+        GetReviewByIDResp resp = reviewController.getByID(req);
+        System.out.println(resp);
+    }
 }

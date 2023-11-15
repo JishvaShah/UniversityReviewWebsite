@@ -14,7 +14,7 @@
     </resultMap>
 
     <!-- SELECT by ID -->
-    <select id="getById" resultType="Review">
+    <select id="getByID" resultType="Review" resultMap="ReviewResultMap">
         SELECT *
         FROM review
         WHERE id = #{id}
