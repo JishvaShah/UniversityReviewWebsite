@@ -1,13 +1,5 @@
-const API_USER = 'http://localhost:3036/db/user';
+const API_USER = 'http://localhost:8080/user';
 
-const initialUser = {
-    username: "winter",
-    email: "1234",
-    favUniversityList: [],
-    usersUniversity: [],
-    userReviews: [],
-
-}
 
 export const login = (user) =>
     fetch(`${API_USER}/login`, {
@@ -18,7 +10,7 @@ export const login = (user) =>
             'content-type': 'application/json'
         }
     }).then(res => {
-
+        console.log("get res: " + res.json());
         if (res.ok)
             return res.json();
         else throw res;

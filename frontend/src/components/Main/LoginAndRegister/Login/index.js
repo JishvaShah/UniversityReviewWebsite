@@ -8,32 +8,32 @@ import {useDispatch} from "react-redux";
 
 export default function Login() {
     const [user, setUser] = useState({
-        username: "",
+        email: "",
         password: "",
     });
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    // const login = () => {
-    //     userService.login(user)
-    //         .then(newUser => {
-    //                 dispatch({
-    //                     type: "set-user",
-    //                     newUser
-    //                 })
-    //             navigate.push('/explore');
-    //             })
-    //         .catch(e => alert("User does not exist or wrong password."))
-    // };
-
     const login = () => {
-        dispatch({
-            type: "set-user",
-            newUser: user
-        });
-        navigate("/explore");
+        userService.login(user)
+            .then(newUser => {
+                    dispatch({
+                        type: "set-user",
+                        newUser: user
+                    })
+                navigate.push('/explore');
+                })
+            .catch(e => alert("User does not exist or wrong password."))
     };
+
+    // const login = () => {
+    //     dispatch({
+    //         type: "set-user",
+    //         newUser: user
+    //     });
+    //     navigate("/explore");
+    // };
 
     return (
         <>
@@ -70,9 +70,9 @@ export default function Login() {
                             </label>
                             <input className="form-control" id="usernameInput"
                                    placeholder="your username" autoComplete="username"
-                                   value={user.username}
+                                   value={user.email}
                                    onChange={(e) =>
-                                       setUser({...user, username: e.target.value})}/>
+                                       setUser({...user, email: e.target.value})}/>
                         </div>
                         <div className="ms-3 mb-3">
                             <label htmlFor="passwordInput" className="form-label">
