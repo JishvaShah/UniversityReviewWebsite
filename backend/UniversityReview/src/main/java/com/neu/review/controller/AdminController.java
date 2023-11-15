@@ -9,6 +9,7 @@ import com.neu.review.service.AdminService;
 import com.neu.review.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import javax.servlet.http.HttpSession;
 
 @RestController
 @CrossOrigin(originPatterns = "*", methods = {RequestMethod.GET, RequestMethod.POST}, allowedHeaders = "*", allowCredentials = "true")
@@ -16,6 +17,9 @@ public class AdminController {
 
     @Autowired
     private AdminService adminService;
+
+    @Autowired
+    private HttpSession httpSession;
 
     @PostMapping("/admin/login")
     public AdminLoginResp login(@RequestBody AdminLoginReq req) {
@@ -33,7 +37,8 @@ public class AdminController {
                 resp.setResponseCode(ResponseCode.BUSINESS_ERR.getCode());
                 resp.setMessage(ResponseCode.BUSINESS_ERR.getDescription());
             } else {
-                // TODO: put login in session
+                // put login in session
+                httpSession.setAttribute("loggedInAdmin", admin);
                 resp.setData(admin);
                 resp.setResponseCode(ResponseCode.SUCCESS.getCode());
                 resp.setMessage(ResponseCode.SUCCESS.getDescription());
@@ -55,7 +60,9 @@ public class AdminController {
         }
 
         try {
-            // TODO: logout
+            // logout
+            httpSession.removeAttribute("loggedInAdmin");
+            httpSession.invalidate();
             return resp;
         } catch (Exception e) {
             return new AdminLogoutResp(ResponseCode.INTERNAL_ERR.getCode(), ResponseCode.INTERNAL_ERR.getDescription());
