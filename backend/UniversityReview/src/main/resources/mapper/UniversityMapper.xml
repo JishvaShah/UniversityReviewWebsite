@@ -4,15 +4,39 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.neu.review.mapper.UniversityMapper">
-<!--    <resultMap id="UniversityResultMap" type="com.neu.review.pojo.University">-->
-<!--        <result column="id" jdbcType="Integer" property="id"/>-->
-<!--        <result column="name" jdbcType="Varchar" property="name"/>-->
-<!--        <result column="description" jdbcType="Blob" property="description"/>-->
-<!--        <result column="ranking" jdbcType="Varchar" property="ranking"/>-->
-<!--        <result column="student_size" jdbcType="Integer" property="studentSize"/>-->
-<!--    </resultMap>-->
 
-    <select id="getByID" parameterType="int" resultType="University">
-        select id, name, ranking, description, student_size as studentSize, photo, popularity from University where id = #{id}
+    <resultMap id="UniversityResultMap" type="com.neu.review.pojo.University">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="ranking" column="ranking"/>
+        <result property="studentSize" column="student_size"/>
+        <result property="description" column="description"/>
+        <result property="photo" column="photo"/>
+        <result property="popularity" column="popularity"/>
+    </resultMap>
+
+    <select id="getByID" resultMap="UniversityResultMap">
+        SELECT id, name, ranking, student_size, description, photo, popularity
+        FROM university
+        WHERE id = #{id}
     </select>
+
+    <insert id="create" parameterType="com.neu.review.pojo.University">
+        INSERT INTO university (name, ranking, student_size, description, photo)
+        VALUES (#{name}, #{ranking}, #{studentSize}, #{description}, #{photo})
+    </insert>
+
+    <select id="get" resultMap="UniversityResultMap">
+        SELECT * FROM university
+        <where>
+            <!-- Condition: Only include if 'name' parameter is provided -->
+            <if test="name != null and name != ''">
+                AND name LIKE CONCAT('%', #{name}, '%')
+            </if>
+        </where>
+        <if test="cnt &gt; 0">
+            LIMIT #{cnt}
+        </if>
+    </select>
+
 </mapper>
