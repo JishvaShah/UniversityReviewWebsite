@@ -16,4 +16,10 @@ public interface UniversityMapper {
      * @return
      */
     University create(University university);
+
+    /**
+     * @param university
+     * @return
+     */
+    University update(University university);
 }

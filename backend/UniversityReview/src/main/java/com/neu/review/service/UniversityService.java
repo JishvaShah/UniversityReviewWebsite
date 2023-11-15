@@ -36,6 +36,13 @@ public class UniversityService {
         return null;
     }
 
+    public University update(University university) {
+        if (university == null || university.getId() == null) {
+            return null;
+        }
+        return universityMapper.update(university);
+    }
+
     @ToString
     @AllArgsConstructor
     @NoArgsConstructor
