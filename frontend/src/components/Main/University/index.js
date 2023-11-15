@@ -46,7 +46,7 @@ const UniversityCard = ({university}) => {
                     <i className={`fas fa-heart ${like ? "wd-color-red" : ""}`}/>
                 </button>
                 <div className="card-body" data-bs-toggle="modal" data-bs-target={`#modal-${university.id}`}>
-                        <h5 className="wd-block-title">{university.title}</h5>
+                        <h5 className="wd-block-title">{university.name}</h5>
                         <p className="card-text">{university.description.substring(0, 50) + " ..."}</p>
                         <p className="card-text">Popularity: &nbsp;
                             <i className="fas fa-heart red-color"/> {popularity}</p>
@@ -56,7 +56,7 @@ const UniversityCard = ({university}) => {
                     <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                         <div className="modal-content">
                             <div className="modal-header">
-                                <h1 className="modal-title fs-5" id="exampleModalLabel">{university.title}</h1>
+                                <h1 className="modal-title fs-5" id="exampleModalLabel">{university.name}</h1>
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <img src={university.photo} className="card-img-top wd-card-img p-2" alt="sample"/>
