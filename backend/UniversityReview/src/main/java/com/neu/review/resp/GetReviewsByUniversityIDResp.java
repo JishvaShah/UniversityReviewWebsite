@@ -3,6 +3,7 @@ package com.neu.review.resp;
 import com.neu.review.pojo.Review;
 import com.neu.review.pojo.University;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
@@ -17,6 +18,7 @@ public class GetReviewsByUniversityIDResp extends BaseResp<List<GetReviewsByUniv
     }
 
     @Setter
+    @Getter
     public static class ReviewWrapper extends Review {
         private String userName;
     }
