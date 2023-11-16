@@ -24,7 +24,7 @@ public interface UniversityMapper {
      * @param university
      * @return
      */
-    University update(University university);
+    void update(University university);
 
     /**
      * @param condition

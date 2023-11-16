@@ -13,5 +13,5 @@ import lombok.ToString;
 public class Favourite {
     private Integer id;
     private Integer userID;
-    private Integer universityID;
+    private Integer uniID;
 }

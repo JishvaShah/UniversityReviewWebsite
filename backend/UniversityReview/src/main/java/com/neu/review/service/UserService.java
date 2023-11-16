@@ -52,6 +52,7 @@ public class UserService {
         if (user == null) {
             return null;
         }
-        return userMapper.update(user);
+        userMapper.update(user);
+        return user;
     }
 }

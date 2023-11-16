@@ -1,26 +1,22 @@
 package com.neu.review.controller;
 
 import com.neu.review.enums.ResponseCode;
-import com.neu.review.pojo.Admin;
 import com.neu.review.pojo.Favourite;
 import com.neu.review.pojo.University;
 import com.neu.review.pojo.User;
-import com.neu.review.req.AdminLoginReq;
-import com.neu.review.req.AdminLogoutReq;
 import com.neu.review.req.CreateFavouriteReq;
+import com.neu.review.req.GetLikeByUserIDReq;
 import com.neu.review.req.RemoveFavouriteReq;
-import com.neu.review.resp.AdminLoginResp;
-import com.neu.review.resp.AdminLogoutResp;
 import com.neu.review.resp.CreateFavouriteResp;
+import com.neu.review.resp.GetLikeByUserIDResp;
 import com.neu.review.resp.RemoveFavouriteResp;
-import com.neu.review.service.AdminService;
 import com.neu.review.service.FavouriteService;
 import com.neu.review.service.UniversityService;
 import com.neu.review.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @RestController
 @CrossOrigin(originPatterns = "*", methods = {RequestMethod.GET, RequestMethod.POST}, allowedHeaders = "*", allowCredentials = "true")
@@ -57,7 +53,7 @@ public class FavouriteController {
             // TODO: put in a transaction
             Favourite favourite = new Favourite();
             favourite.setUserID(req.getUserID());
-            favourite.setUniversityID(req.getUniID());
+            favourite.setUniID(req.getUniID());
             favourite = favouriteService.create(favourite);
 
             university.setPopularity(university.getPopularity() + 1);
@@ -72,12 +68,11 @@ public class FavouriteController {
         }
     }
 
-    // TODO use userID and Uniid
     @PostMapping("/favourite/unlike")
     public RemoveFavouriteResp unlike(@RequestBody RemoveFavouriteReq req) {
         RemoveFavouriteResp resp = new RemoveFavouriteResp();
 
-        if (req.getId() == null) {
+        if (req.getUserID() == null || req.getUniID() == null) {
             resp.setResponseCode(ResponseCode.ILLEGAL_REQ.getCode());
             resp.setMessage(ResponseCode.ILLEGAL_REQ.getDescription());
             return resp;
@@ -85,12 +80,12 @@ public class FavouriteController {
 
         try {
             // TODO: transaction
-            Favourite favourite = favouriteService.getByID(req.getId());
-            University university = universityService.getByID(favourite.getUniversityID());
+            Favourite favourite = favouriteService.getByUserIDUniID(req.getUserID(), req.getUniID());
+            University university = universityService.getByID(favourite.getUniID());
             university.setPopularity(university.getPopularity() - 1);
             universityService.update(university);
 
-            favouriteService.deleteByID(req.getId());
+            favouriteService.delete(favourite.getId());
             resp.setResponseCode(ResponseCode.SUCCESS.getCode());
             resp.setMessage(ResponseCode.SUCCESS.getDescription());
             return resp;
@@ -99,5 +94,25 @@ public class FavouriteController {
         }
     }
 
-    // TODO: new API to get all the likes of a user
+    @PostMapping("/favourite/get_by_user_id")
+    public GetLikeByUserIDResp getByUserID(@RequestBody GetLikeByUserIDReq req) {
+        GetLikeByUserIDResp resp = new GetLikeByUserIDResp();
+
+        if (req.getUserID() == null) {
+            resp.setResponseCode(ResponseCode.ILLEGAL_REQ.getCode());
+            resp.setMessage(ResponseCode.ILLEGAL_REQ.getDescription());
+            return resp;
+        }
+
+        try {
+            List<Favourite> favourites = favouriteService.getByUserID(req.getUserID());
+
+            resp.setData(favourites);
+            resp.setResponseCode(ResponseCode.SUCCESS.getCode());
+            resp.setMessage(ResponseCode.SUCCESS.getDescription());
+            return resp;
+        } catch (Exception e) {
+            return new GetLikeByUserIDResp(ResponseCode.INTERNAL_ERR.getCode(), ResponseCode.INTERNAL_ERR.getDescription());
+        }
+    }
 }

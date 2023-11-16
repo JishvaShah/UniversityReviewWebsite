@@ -42,7 +42,8 @@ public class UniversityService {
         if (university == null || university.getId() == null) {
             return null;
         }
-        return universityMapper.update(university);
+        universityMapper.update(university);
+        return university;
     }
 
     @ToString

@@ -24,7 +24,7 @@ public interface UserMapper {
      * @param user
      * @return
      */
-    User update(User user);
+    void update(User user);
 
     /**
      * @param id

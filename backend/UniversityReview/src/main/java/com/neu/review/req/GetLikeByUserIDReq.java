@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RemoveFavouriteReq extends BaseReq {
+public class GetLikeByUserIDReq extends BaseReq {
     private Integer userID;
-    private Integer uniID;
 }

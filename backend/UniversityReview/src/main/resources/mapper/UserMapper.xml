@@ -30,11 +30,11 @@
     <!-- UPDATE a User -->
     <update id="update" parameterType="User">
         UPDATE user
-        SET username = #{username},
-            email    = #{email},
-            password = #{password},
-            addr     = #{address},
-            tel      = #{telephone}
+        <set>
+            <if test="password != null">password = #{password},</if>
+            <if test="address != null">addr = #{address},</if>
+            <if test="tel != null">tel = #{tel},</if>
+        </set>
         WHERE id = #{id}
     </update>
 

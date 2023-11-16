@@ -39,4 +39,12 @@
         </if>
     </select>
 
+    <update id="update" parameterType="University">
+        UPDATE university
+        <set>
+            <if test="popularity != null">popularity = #{popularity},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
 </mapper>

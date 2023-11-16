@@ -13,22 +13,22 @@ public interface FavouriteMapper {
      * @param id
      * @return
      */
-    Favourite getByID(int id);
+    Favourite getByUserIDUniID(int userID, int uniID);
 
     /**
      * @param id
      * @return
      */
-    List<Favourite> getByUserID(int id);
+    List<Favourite> getByUserID(int userID);
 
     /**
      * @param favourite
      * @return
      */
-    Favourite insert(Favourite favourite);
+    void insert(Favourite favourite);
 
     /**
      * @param id
      */
-    void deleteById(int id);
+    void delete(int id);
 }

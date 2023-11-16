@@ -1,15 +1,13 @@
 package com.neu.review.controller;
 
 import com.neu.review.enums.ResponseCode;
-import com.neu.review.pojo.Admin;
-import com.neu.review.pojo.University;
 import com.neu.review.pojo.User;
 import com.neu.review.req.*;
 import com.neu.review.resp.*;
-import com.neu.review.service.UniversityService;
 import com.neu.review.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpSession;
 
 @RestController
@@ -140,8 +138,13 @@ public class UserController {
             if (req.getTel() != null) {
                 user.setTel(req.getTel());
             }
-            if (req.getPassword() != null) {
-                user.setPassword(req.getPassword());
+            if (req.getNewPassword() != null) {
+                if (!req.getOriginalPassword().equals(user.getPassword())) {
+                    resp.setResponseCode(ResponseCode.ILLEGAL_REQ.getCode());
+                    resp.setMessage(ResponseCode.ILLEGAL_REQ.getDescription());
+                    return resp;
+                }
+                user.setPassword(req.getNewPassword());
             }
             user = userService.update(user);
 
