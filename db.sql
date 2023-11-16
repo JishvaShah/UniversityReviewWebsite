@@ -28,7 +28,7 @@ CREATE TABLE `university`
     `ranking`      varchar(45) NOT NULL,
     `description`  varchar(10000)       DEFAULT NULL,
     `student_size` int         NOT NULL,
-    `photo`        blob,
+    `photo`        varchar(10000),
     `popularity`   int         NOT NULL DEFAULT '0',
     PRIMARY KEY (`id`),
     UNIQUE KEY `uniq` (`name`)
@@ -54,5 +54,6 @@ CREATE TABLE `favourite`
     `id`            int NOT NULL AUTO_INCREMENT,
     `user_id`       int NOT NULL,
     `university_id` int NOT NULL,
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uniq` (`user_id`, `university_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
