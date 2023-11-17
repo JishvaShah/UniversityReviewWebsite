@@ -109,7 +109,7 @@ public class ReviewController {
                 wrapper.setUniID(v.getUniID());
                 wrapper.setContent(v.getContent());
                 wrapper.setRating(v.getRating());
-                wrapper.setUserName(userMap.get(v.getUserID()).getUsername());
+                wrapper.setUsername(userMap.get(v.getUserID()).getUsername());
                 reviewWrappers.add(wrapper);
             }
 

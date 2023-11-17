@@ -20,6 +20,6 @@ public class GetReviewsByUniversityIDResp extends BaseResp<List<GetReviewsByUniv
     @Setter
     @Getter
     public static class ReviewWrapper extends Review {
-        private String userName;
+        private String username;
     }
 }
