@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserLogoutReq extends BaseReq {
-    private String email;
+    private String username;
 }

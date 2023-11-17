@@ -15,16 +15,16 @@
     </resultMap>
 
     <!-- SELECT by ID -->
-    <select id="getById" resultType="User">
+    <select id="getById" resultMap="UserResultMap">
         SELECT *
         FROM user
         WHERE id = #{id}
     </select>
 
     <!-- INSERT a new User -->
-    <insert id="insert" parameterType="User">
+    <insert id="insert" parameterType="User" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO user (username, email, password, addr, tel)
-        VALUES (#{username}, #{email}, #{password}, #{address}, #{telephone})
+        VALUES (#{username}, #{email}, #{password}, #{address}, #{tel})
     </insert>
 
     <!-- UPDATE a User -->
@@ -46,10 +46,10 @@
     </delete>
 
 
-    <select id="getByUserName" resultType="User">
+    <select id="getByUserName" resultMap="UserResultMap">
         SELECT *
         FROM user
-        WHERE username = #{userName}
+        WHERE username = #{username}
     </select>
 
     <select id="getByIDs" parameterType="java.util.List" resultMap="UserResultMap">

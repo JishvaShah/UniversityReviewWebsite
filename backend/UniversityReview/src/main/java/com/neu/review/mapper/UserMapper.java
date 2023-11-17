@@ -18,7 +18,7 @@ public interface UserMapper {
      * @param user
      * @return
      */
-    User insert(User user);
+    void insert(User user);
 
     /**
      * @param user

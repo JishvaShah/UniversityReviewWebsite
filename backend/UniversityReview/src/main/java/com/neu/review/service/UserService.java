@@ -17,7 +17,8 @@ public class UserService {
         if (user == null) {
             return null;
         }
-        return userMapper.insert(user);
+        userMapper.insert(user);
+        return user;
     }
 
     public User getByID(Integer id) {

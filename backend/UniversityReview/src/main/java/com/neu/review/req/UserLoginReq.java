@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserLoginReq extends BaseReq {
-    private String email;
+    private String username;
     private String password;
 }
