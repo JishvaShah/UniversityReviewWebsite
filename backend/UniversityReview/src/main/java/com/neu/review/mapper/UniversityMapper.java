@@ -18,7 +18,7 @@ public interface UniversityMapper {
      * @param university
      * @return
      */
-    University create(University university);
+    void create(University university);
 
     /**
      * @param university

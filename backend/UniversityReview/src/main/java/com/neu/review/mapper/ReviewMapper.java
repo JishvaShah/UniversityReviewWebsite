@@ -19,6 +19,6 @@ public interface ReviewMapper {
 
     void update(Review review);
 
-    void deleteByID(long id);
+    void deleteById(long id);
 
 }

@@ -9,14 +9,10 @@ import java.util.List;
 @Mapper
 public interface FavouriteMapper {
 
-    /**
-     * @param id
-     * @return
-     */
     Favourite getByUserIDUniID(int userID, int uniID);
 
     /**
-     * @param id
+     * @param userID
      * @return
      */
     List<Favourite> getByUserID(int userID);

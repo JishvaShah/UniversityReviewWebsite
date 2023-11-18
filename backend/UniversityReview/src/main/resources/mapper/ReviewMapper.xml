@@ -43,7 +43,7 @@
     <update id="update" parameterType="Review">
         UPDATE review
         SET user_id = #{userID},
-            uni_id  = #{universityID},
+            uni_id  = #{uniID},
             content = #{content},
             rating  = #{rating}
         WHERE id = #{id}

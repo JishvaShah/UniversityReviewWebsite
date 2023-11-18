@@ -16,12 +16,12 @@
     </resultMap>
 
     <select id="getByID" resultMap="UniversityResultMap">
-        SELECT id, name, ranking, student_size, description, photo, popularity
+        SELECT *
         FROM university
         WHERE id = #{id}
     </select>
 
-    <insert id="create" parameterType="com.neu.review.pojo.University">
+    <insert id="create" parameterType="com.neu.review.pojo.University" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO university (name, ranking, student_size, description, photo)
         VALUES (#{name}, #{ranking}, #{studentSize}, #{description}, #{photo})
     </insert>
