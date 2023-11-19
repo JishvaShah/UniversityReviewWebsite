@@ -52,6 +52,12 @@
         WHERE username = #{username}
     </select>
 
+    <select id="getByEmail" resultMap="UserResultMap">
+        SELECT *
+        FROM user
+        WHERE email = #{email}
+    </select>
+
     <select id="getByIDs" parameterType="java.util.List" resultMap="UserResultMap">
         SELECT * FROM user
         WHERE id IN
