@@ -13,6 +13,8 @@ import {Provider} from "react-redux";
 import userReducer from "./components/reducers/userReducer";
 import { configureStore } from '@reduxjs/toolkit'
 import Review from "./components/pages/Review";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 const store = configureStore({ reducer: {userReducer} });
 
@@ -22,6 +24,7 @@ function App() {
         <BrowserRouter>
             <Provider store={store}>
             <div className="container">
+            <ToastContainer />
                 <Routes>
                     <Route path="/home"
                            exact={true}
