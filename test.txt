@@ -5,21 +5,23 @@
 2. postman
     2.1. register with new username
     2.2. register with used username
-    2.3. login with correct username & password
-    2.4. login with username that doesn't exist
-    2.5. login with correct username & wrong password
-    2.6. logout with username that is not logged in
-    2.7. logout with correct username
-    2.8. update user profile
-    2.8. update user password
-    2.9. create review
-    2.10. create review with username that doesn't exist
-    2.11. create review with uniID that doesn't exist
-    2.12. recommend requested amount of universities
-    2.13. recommend universities without amount
-    2.14. favourite a university
-    2.15. favourite a university(duplicate) - only one record in DB, uniq index set
-    2.16. unfavourite a university
+    2.3. register with all fields filled (no empty fields)
+    2.4. login with correct username & password
+    2.5. login with username that doesn't exist
+    2.6. login with correct username & wrong password
+    2.7. logout with username that is not logged in
+    2.8. logout with correct username
+    2.9. update user profile
+    2.10. update user password
+    2.11. create review
+    2.12. create review with username that doesn't exist
+    2.13. create review with uniID that doesn't exist
+    2.14. create review with empty fields
+    2.15. recommend requested amount of universities
+    2.16. recommend universities without amount
+    2.17. favourite a university
+    2.18. favourite a university(duplicate) - only one record in DB, uniq index set
+    2.19. unfavourite a university
 3. integration tests (should cover all the cases in postman section)
     3.1 University module
     3.2 User module
