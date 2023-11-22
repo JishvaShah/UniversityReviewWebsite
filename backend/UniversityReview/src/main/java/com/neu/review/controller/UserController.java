@@ -32,7 +32,7 @@ public class UserController {
 
         try {
             User user = userService.getByUserName(req.getUsername());
-            if (!user.getPassword().equals(req.getPassword())) {
+            if (user == null || !user.getPassword().equals(req.getPassword())) {
                 resp.setResponseCode(ResponseCode.BUSINESS_ERR.getCode());
                 resp.setMessage(ResponseCode.BUSINESS_ERR.getDescription());
             } else {
