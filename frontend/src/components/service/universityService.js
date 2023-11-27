@@ -4,6 +4,7 @@ const API_UNI = 'http://localhost:8080/university';
 export const getRecommendUni = () =>
     fetch(`${API_UNI}/recommend`, {
         method: 'POST',
+        body: JSON.stringify({"num": 2}),
         credentials: 'include',
         headers: {
             'content-type': 'application/json'
