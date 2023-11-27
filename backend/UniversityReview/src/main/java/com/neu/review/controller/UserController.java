@@ -1,15 +1,13 @@
 package com.neu.review.controller;
 
 import com.neu.review.enums.ResponseCode;
-import com.neu.review.pojo.Admin;
-import com.neu.review.pojo.University;
 import com.neu.review.pojo.User;
 import com.neu.review.req.*;
 import com.neu.review.resp.*;
-import com.neu.review.service.UniversityService;
 import com.neu.review.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpSession;
 
 @RestController
@@ -26,20 +24,21 @@ public class UserController {
     public UserLoginResp login(@RequestBody UserLoginReq req) {
         UserLoginResp resp = new UserLoginResp();
 
-        if (req.getEmail() == null || req.getPassword() == null) {
+        if (req.getUsername() == null || req.getPassword() == null) {
             resp.setResponseCode(ResponseCode.ILLEGAL_REQ.getCode());
             resp.setMessage(ResponseCode.ILLEGAL_REQ.getDescription());
             return resp;
         }
 
         try {
-            User user = userService.getByEmail(req.getEmail());
-            if (!user.getPassword().equals(req.getPassword())) {
+            User user = userService.getByUserName(req.getUsername());
+            if (user == null || !user.getPassword().equals(req.getPassword())) {
                 resp.setResponseCode(ResponseCode.BUSINESS_ERR.getCode());
                 resp.setMessage(ResponseCode.BUSINESS_ERR.getDescription());
             } else {
-                // put login in session
-                httpSession.setAttribute("loggedInUser", user);
+                httpSession.setAttribute(user.getUsername(), user);
+                user.setPassword(null);
+
                 resp.setData(user);
                 resp.setResponseCode(ResponseCode.SUCCESS.getCode());
                 resp.setMessage(ResponseCode.SUCCESS.getDescription());
@@ -54,16 +53,19 @@ public class UserController {
     public UserLogoutResp logout(@RequestBody UserLogoutReq req) {
         UserLogoutResp resp = new UserLogoutResp();
 
-        if (req.getEmail() == null) {
+        if (req.getUsername() == null) {
             resp.setResponseCode(ResponseCode.ILLEGAL_REQ.getCode());
             resp.setMessage(ResponseCode.ILLEGAL_REQ.getDescription());
             return resp;
         }
 
         try {
-            // logout
-            httpSession.removeAttribute("loggedInUser");
-            httpSession.invalidate();
+            if (httpSession.getAttribute(req.getUsername()) == null) {
+                return new UserLogoutResp(ResponseCode.INTERNAL_ERR.getCode(), ResponseCode.INTERNAL_ERR.getDescription());
+            }
+            httpSession.removeAttribute(req.getUsername());
+            resp.setResponseCode(ResponseCode.SUCCESS.getCode());
+            resp.setMessage(ResponseCode.SUCCESS.getDescription());
             return resp;
         } catch (Exception e) {
             return new UserLogoutResp(ResponseCode.INTERNAL_ERR.getCode(), ResponseCode.INTERNAL_ERR.getDescription());
@@ -91,26 +93,25 @@ public class UserController {
         }
     }
 
-    @PostMapping("/user/create")
-    public CreateUserResp create(@RequestBody CreateUserReq req) {
+    @PostMapping("/user/register")
+    public CreateUserResp register(@RequestBody CreateUserReq req) {
         CreateUserResp resp = new CreateUserResp();
 
-        if (req.getUserName() == null || req.getEmail() == null
+        if (req.getUsername() == null || req.getEmail() == null
                 || req.getAddr() == null || req.getTel() == null || req.getPassword() == null) {
             resp.setResponseCode(ResponseCode.ILLEGAL_REQ.getCode());
             resp.setMessage(ResponseCode.ILLEGAL_REQ.getDescription());
             return resp;
         }
         try {
-            if (userService.getByEmail(req.getEmail()) != null) {
+            if (userService.getByUserName(req.getUsername()) != null) {
                 return new CreateUserResp(ResponseCode.BUSINESS_ERR.getCode(), ResponseCode.BUSINESS_ERR.getDescription());
             }
-            if (userService.getByUserName(req.getUserName()) != null) {
-                return new CreateUserResp(ResponseCode.BUSINESS_ERR.getCode(), ResponseCode.BUSINESS_ERR.getDescription());
-            }
-            User user = new User(req.getEmail(), req.getUserName(), req.getPassword(), req.getAddr(), req.getTel());
+            User user = new User(req.getEmail(), req.getUsername(), req.getPassword(), req.getAddr(), req.getTel());
             user = userService.create(user);
+            httpSession.setAttribute(user.getUsername(), user);
 
+            user.setPassword(null);
             resp.setData(user);
             resp.setResponseCode(ResponseCode.SUCCESS.getCode());
             resp.setMessage(ResponseCode.SUCCESS.getDescription());
@@ -121,7 +122,7 @@ public class UserController {
     }
 
     @PostMapping("/user/update")
-    public UpdateUserResp create(@RequestBody UpdateUserReq req) {
+    public UpdateUserResp update(@RequestBody UpdateUserReq req) {
         UpdateUserResp resp = new UpdateUserResp();
 
         if (req.getId() == null) {
@@ -140,8 +141,13 @@ public class UserController {
             if (req.getTel() != null) {
                 user.setTel(req.getTel());
             }
-            if (req.getPassword() != null) {
-                user.setPassword(req.getPassword());
+            if (req.getNewPassword() != null) {
+                if (!req.getOriginalPassword().equals(user.getPassword())) {
+                    resp.setResponseCode(ResponseCode.ILLEGAL_REQ.getCode());
+                    resp.setMessage(ResponseCode.ILLEGAL_REQ.getDescription());
+                    return resp;
+                }
+                user.setPassword(req.getNewPassword());
             }
             user = userService.update(user);
 

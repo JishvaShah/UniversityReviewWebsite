@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UpdateUserReq extends BaseReq {
     private Integer id;
-    private String password;
+    private String originalPassword;
+    private String newPassword;
     private String addr;
     private String tel;
 }

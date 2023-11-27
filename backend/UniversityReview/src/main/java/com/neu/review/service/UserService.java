@@ -5,6 +5,8 @@ import com.neu.review.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
 
@@ -15,7 +17,8 @@ public class UserService {
         if (user == null) {
             return null;
         }
-        return userMapper.insert(user);
+        userMapper.insert(user);
+        return user;
     }
 
     public User getByID(Integer id) {
@@ -39,10 +42,18 @@ public class UserService {
         return userMapper.getByUserName(userName);
     }
 
+    public List<User> getByIDs(List<Integer> ids) {
+        if (ids == null || ids.size() == 0) {
+            return null;
+        }
+        return userMapper.getByIDs(ids);
+    }
+
     public User update(User user) {
         if (user == null) {
             return null;
         }
-        return userMapper.update(user);
+        userMapper.update(user);
+        return user;
     }
 }

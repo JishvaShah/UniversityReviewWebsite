@@ -11,11 +11,14 @@ public interface ReviewMapper {
 
     Review getByID(long id);
 
-    List<Review> getByUserId(int userId);
+    List<Review> getByUserID(int userId);
 
-    Review insert(Review review);
+    List<Review> getByUniversityID(int universityId);
+
+    void insert(Review review);
 
     void update(Review review);
 
-    void deleteByID(long id);
+    void deleteById(long id);
+
 }

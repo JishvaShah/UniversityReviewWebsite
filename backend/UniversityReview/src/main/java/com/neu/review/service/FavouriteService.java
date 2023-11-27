@@ -15,19 +15,20 @@ public class FavouriteService {
     @Autowired
     private FavouriteMapper mapper;
 
-    public Favourite getByID(Integer id) {
-        if (id == null) {
+    public Favourite getByUserIDUniID(Integer userID, Integer uniID) {
+        if (userID == null || uniID == null) {
             return null;
         }
 
-        return mapper.getByID(id);
+        return mapper.getByUserIDUniID(userID, uniID);
     }
 
     public Favourite create(Favourite favourite) {
         if (favourite == null) {
             return null;
         }
-        return mapper.insert(favourite);
+        mapper.insert(favourite);
+        return favourite;
     }
 
     public List<Favourite> getByUserID(Integer userID) {
@@ -37,10 +38,10 @@ public class FavouriteService {
         return mapper.getByUserID(userID);
     }
 
-    public void deleteByID(Integer id) {
+    public void delete(Integer id) {
         if (id == null) {
             return;
         }
-        mapper.deleteById(id);
+        mapper.delete(id);
     }
 }

@@ -28,7 +28,8 @@ public class UniversityService {
         if (uni == null) {
             return null;
         }
-        return universityMapper.create(uni);
+        universityMapper.create(uni);
+        return uni;
     }
 
     public List<University> get(Condition condition) {
@@ -42,7 +43,8 @@ public class UniversityService {
         if (university == null || university.getId() == null) {
             return null;
         }
-        return universityMapper.update(university);
+        universityMapper.update(university);
+        return university;
     }
 
     @ToString

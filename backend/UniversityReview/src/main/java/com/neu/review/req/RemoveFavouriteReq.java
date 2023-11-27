@@ -8,5 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RemoveFavouriteReq extends BaseReq {
-    private Integer id;
+    private Integer userID;
+    private Integer uniID;
 }
