@@ -3,12 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import "../loginAndRegister.css";
 import {Helmet} from "react-helmet";
 import Header from "../../Header";
-import userService from "../../../service/userService";
+import userService from "../../../service/allServices";
 import {useDispatch} from "react-redux";
 
 export default function Login() {
     const [user, setUser] = useState({
-        email: "",
+        username: "",
         password: "",
     });
 
@@ -17,23 +17,15 @@ export default function Login() {
 
     const login = () => {
         userService.login(user)
-            .then(newUser => {
-                    dispatch({
-                        type: "set-user",
-                        newUser: user
-                    })
-                navigate.push('/explore');
+            .then(response => {
+                dispatch({
+                    type: "set-user",
+                    newUser: response.data
+                })
+                navigate('/explore');
                 })
             .catch(e => alert("User does not exist or wrong password."))
     };
-
-    // const login = () => {
-    //     dispatch({
-    //         type: "set-user",
-    //         newUser: user
-    //     });
-    //     navigate("/explore");
-    // };
 
     return (
         <>
@@ -70,9 +62,9 @@ export default function Login() {
                             </label>
                             <input className="form-control" id="usernameInput"
                                    placeholder="your username" autoComplete="username"
-                                   value={user.email}
+                                   value={user.username}
                                    onChange={(e) =>
-                                       setUser({...user, email: e.target.value})}/>
+                                       setUser({...user, username: e.target.value})}/>
                         </div>
                         <div className="ms-3 mb-3">
                             <label htmlFor="passwordInput" className="form-label">

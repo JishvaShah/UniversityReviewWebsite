@@ -2,45 +2,57 @@ import React, {useEffect, useState} from 'react';
 import Header from "../Header";
 import {Helmet} from 'react-helmet';
 import UniversityCard from "../University";
-import {getUniByID, getRecommendUni} from "../../service/universityService";
+import {getFavByUserId, getRecommendUni} from "../../service/allServices";
 import uniPlaceHolder from "../../Data/univeristy.json";
+import {useSelector} from "react-redux";
+import FavCard from "../University/favCard";
+
+const selectProfile = (profile) => profile;
 
 const Explore = () => {
     // get shown menu lists information
     const menuIds = [1, 2, 3, 4, 5];
 
-
-    let user = {
-        username: "testing",
-        id: 12
-    }
-
+    let user = useSelector(selectProfile)['userReducer'];
 
     const [universities, setUniversities] = useState([uniPlaceHolder]);
+    const [favList, setFavList] = useState([]);
+    const [login, setLogin] = useState(false);
 
-    console.log("Component rendered");
     useEffect(() => {
-        console.log("useEffect is running");
-        // getUniByID()
-        //     .then(res => {
-        //         console.log(res.data);
-        //         if (res.data) {
-        //             setUniversities(universities => [...universities, res.data]);
-        //             console.log(universities.length);
-        //         }
-        //     })
-        //     .catch(e => console.log(e));
-        // return () => console.log("useEffect cleanup");
-        getRecommendUni()
-            .then(res => {
-                console.log(res.data);
-                if (res.data) {
-                    setUniversities(universities => res.data);
-                    console.log(universities.length);
-                }
-            })
-            .catch(e => console.log(e));
-        return () => console.log("useEffect cleanup");
+        if (user.id === null || user.id === undefined) {
+            setLogin(false);
+        } else {
+            setLogin( true);
+            getRecommendUni()
+                .then(res => {
+                    if (res.data) {
+                        // console.log("Random uni: " + res.data);
+                        setUniversities(universities => res.data);
+                    }
+                })
+                .catch(e => console.log(e));
+
+            console.log("record, userid: " + user.id);
+
+            getFavByUserId({userID: user.id})
+                .then(res => {
+                    if (res.data) {
+                        // console.log("Fav uni: "+ JSON.stringify(res.data));
+                        setFavList(favList => {
+                            res.data.forEach((item) => {
+                                console.log("For loop: " + item.uniID)
+                                favList.push(item.uniID);
+
+                            });
+                            return favList;
+                        });
+                        // console.log(favList.length);
+                    }
+                })
+                .catch(e => console.log(e));
+        }
+
     }, []);
 
 
@@ -61,7 +73,7 @@ const Explore = () => {
                 <div className="row">
                     {
                         universities.map(singleSchool =>
-                            <UniversityCard university={singleSchool} key={singleSchool.id}/>
+                            <UniversityCard university={singleSchool} key={singleSchool.id} userId={user.id}/>
                         )
                     }
                 </div>
@@ -73,10 +85,19 @@ const Explore = () => {
                 <hr className="wd-color-coral"/>
                 <div className="row">
                     {
-                        universities.map(singleUniversity =>
-                            <UniversityCard university={singleUniversity} key={singleUniversity.id}/>
+                        favList.map(uniID =>
+                            <FavCard uniID={uniID} key={uniID} userId={user.id}/>
                         )
                     }
+                    {login && favList.length === 0 && <p className="align-items-center">
+                          OOPS, you haven't saved any universities yet.</p>
+
+                    }
+                    {!login && <p className="align-items-center">
+                        Please login to see your saved list</p>
+
+                    }
+
                 </div>
             </div>
         </>
