@@ -1,39 +1,32 @@
 import {Helmet} from "react-helmet";
 import Header from "../Header";
-import React from "react";
-import { useParams } from 'react-router-dom';
-import ReviewCard from "../University/ReviewCard";
+import React, {useEffect, useState} from "react";
+import {Link, useParams} from 'react-router-dom';
+import ReviewCard from "./ReviewCard";
+import {getReviewsByUniId, getUniByID} from "../../service/allServices";
 
 
 const AllReviews = () => {
     const params = useParams();
     const universityID = parseInt(params.id);
 
-    //TODO: should get all reviews data from database
-    let data = {
-        title: "Northeastern University1",
-        id: 12345,
-        image: "./images/card2.jpeg",
-        description: "This is a place holder line of university description",
-        reviews: [
-            {
-                user: "test1",
-                rating: 2.5,
-                review: "This is a place holder This is a place holderThis is a place holderThis is a place holderThis is a place holderThis is a place holderThis is a place holderThis is a place holderThis is a place holder  "
-            },
-            {
-                user: "test2longlonglongname",
-                rating: 3.4,
-                review: "This is a place holder"
-            },
-            {
-                user: "test3",
-                rating: 5,
-                review: "This is a place holder"
-            }
-        ]
-    }
+    const [uniName, setUniName] = useState("");
+    const [reviews, setReviews] = useState([]);
+    useEffect(()=> {
+        getReviewsByUniId(universityID)
+            .then(res=> {
+                if (res.data)
+                    setReviews(reviews => res.data);
+            })
+            .catch(e => console.log(e));
 
+        getUniByID({id: universityID})
+            .then(res => {
+                if (res.data)
+                    setUniName(uniName => res.data.name);
+            })
+            .catch( e => console.log(e));
+    },[]);
 
 
     return (
@@ -45,12 +38,19 @@ const AllReviews = () => {
 
             <div className="container mt-2 mb-3">
                 <Header active="review"/>
-                <h1 className="wd-block-title ms-3">{data.title}</h1>
+                <h1 className="wd-block-title ms-3">{uniName}</h1>
                 <div className="row">
                     {
-                        data.reviews.map(singleReview =>
-                            <ReviewCard review={singleReview} key={singleReview.user}/>
+                        reviews.length > 0 && reviews.map((singleReview, idx) =>
+                            <ReviewCard review={singleReview} key={idx}/>
                         )
+                    }
+                    {
+                        reviews.length === 0 && <p className="ps-4">No reviews found for this university.&nbsp;
+                        <Link to={`/addReviews/${universityID}`}>
+                            Add your first review.
+                        </Link>
+                        </p>
                     }
                 </div>
             </div>

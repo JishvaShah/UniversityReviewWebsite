@@ -1,6 +1,7 @@
 const API_USER = 'http://localhost:8080/user';
 const API_FAV = 'http://localhost:8080/favourite';
 const API_UNI = 'http://localhost:8080/university';
+const API_REVIEWS = 'http://localhost:8080/review';
 
 
 export const login = (user) =>
@@ -84,9 +85,9 @@ export const updateProfile = (dispatch, newProfile) =>
 
 
 export const getUserById = (userId) =>
-    fetch(`${API_USER}/findUser`, {
+    fetch(`${API_USER}/getByID`, {
         method: "POST",
-        body: JSON.stringify({userId: userId}),
+        body: JSON.stringify({id: userId}),
         credentials: 'include',
         headers: {
             'content-type': 'application/json'
@@ -181,6 +182,24 @@ export const unlikeUni = ({userID, uniID}) =>
     fetch(`${API_FAV}/unlike`, {
         method: 'POST',
         body: JSON.stringify({userID, uniID}),
+        credentials: 'include',
+        headers: {
+            'content-type': 'application/json'
+        }
+    }).then(res => {
+        if (res.ok) {
+            return res.json();
+        }
+
+        else throw res;
+
+    });
+
+// all reviews related functions
+export const getReviewsByUniId = (universityID) =>
+    fetch(`${API_REVIEWS}/get_reviews_by_university_id`, {
+        method: 'POST',
+        body: JSON.stringify(universityID),
         credentials: 'include',
         headers: {
             'content-type': 'application/json'
