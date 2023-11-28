@@ -50,7 +50,7 @@ const UniversityCard = ({university, userId, setFavList}) => {
     return (
         <div className="col">
             <div className="card mx-2" >
-                <img src={cardImage} className="card-img-top wd-card-img" alt="sample"/>
+                <img src={atob(university.photo)} className="card-img-top wd-card-img" alt="sample"/>
                 <button className="btn btn-outline-primary wd-button wd-button-on-img"
                         onClick={() => likeUniversityHandler(university.id)}>
                     <i className={`fas fa-heart ${like ? "wd-color-red" : ""}`}/>
@@ -69,7 +69,7 @@ const UniversityCard = ({university, userId, setFavList}) => {
                                 <h1 className="modal-title fs-5" id="exampleModalLabel">{university.name}</h1>
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <img src={university.photo} className="card-img-top wd-card-img p-2" alt="sample"/>
+                            <img src={atob(university.photo)} className="card-img-top wd-card-img p-2" alt="sample"/>
                             <div className="modal-body">
                                 <p className="fw-bold">Introduction</p>
                                <p>{university.description}</p>

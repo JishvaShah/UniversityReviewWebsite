@@ -15,7 +15,7 @@ const Explore = () => {
 
     let user = useSelector(selectProfile)['userReducer'];
 
-    const [universities, setUniversities] = useState([uniPlaceHolder]);
+    const [universities, setUniversities] = useState([]);
     const [favList, setFavList] = useState([]);
     const [login, setLogin] = useState(false);
 

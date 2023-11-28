@@ -9,7 +9,7 @@ import cardImage from "../../images/card1.jpeg";
 
 
 const FavCard = ({uniID, userId, setFavList}) => {
-    const [university, setUniversity] = useState( {placeHolderUni});
+    const [university, setUniversity] = useState( placeHolderUni);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -52,7 +52,7 @@ const FavCard = ({uniID, userId, setFavList}) => {
 
                 <div className="col">
                     <div className="card mx-2" >
-                        <img src={cardImage} className="card-img-top wd-card-img" alt="sample"/>
+                        <img src={atob(university.photo) || image} className="card-img-top wd-card-img" alt="sample"/>
                         <button className="btn btn-outline-primary wd-button wd-button-on-img"
                                 onClick={() => removeLike(university.id)}>
                             <i className="fas fa-heart wd-color-red"/>
