@@ -20,7 +20,7 @@ public class UniversityServiceTest {
 
     @Test
     void testCreateAndGetByID() {
-        University newUniversity = new University("Create University", "Top 100", 10000, "Test Description", new byte[0]);
+        University newUniversity = new University("Create University", "Top 100", 10000, "Test Description", null);
         universityService.create(newUniversity);
         System.out.println("Created University: " + newUniversity);
 
@@ -30,7 +30,7 @@ public class UniversityServiceTest {
 
     @Test
     void testGet() {
-        University newUniversity = new University("Get University", "Top 50", 5000, "GetTest Description", new byte[0]);
+        University newUniversity = new University("Get University", "Top 50", 5000, "GetTest Description", null);
         universityService.create(newUniversity);
 
         UniversityService.Condition condition = new UniversityService.Condition("Get", 1);
@@ -40,7 +40,7 @@ public class UniversityServiceTest {
 
     @Test
     void testUpdate() {
-        University university = new University("Update University", "Top 150", 15000, "UpdateTest Description", new byte[0]);
+        University university = new University("Update University", "Top 150", 15000, "UpdateTest Description", null);
         universityService.create(university);
 
         university.setPopularity(100);
