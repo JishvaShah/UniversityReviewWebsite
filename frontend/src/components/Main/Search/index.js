@@ -42,7 +42,7 @@ const Search = () => {
                 <Header active="search"/>
 
                 <img className="wd-search-bg"
-                     src="/images/autumn.jpeg"
+                     src="/frontend/src/components/images/autumn.jpeg"
                      alt=""/>
 
                 <div className="wd-search-container">

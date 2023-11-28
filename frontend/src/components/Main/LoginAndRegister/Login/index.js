@@ -5,6 +5,7 @@ import {Helmet} from "react-helmet";
 import Header from "../../Header";
 import userService from "../../../service/allServices";
 import {useDispatch} from "react-redux";
+import loginBg from "../../../images/school.jpeg";
 
 export default function Login() {
     const [user, setUser] = useState({
@@ -38,7 +39,7 @@ export default function Login() {
                 <div className="row align-items-center">
                     <div className="d-none d-md-block col-md-5">
                         <img className="wd-login-bg mt-5"
-                             src="/images/school.jpeg"
+                             src={loginBg}
                              alt=""/>
                     </div>
                     <div className="col-12 col-md-7">

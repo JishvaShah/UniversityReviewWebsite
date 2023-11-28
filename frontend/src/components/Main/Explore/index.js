@@ -41,8 +41,10 @@ const Explore = () => {
                         // console.log("Fav uni: "+ JSON.stringify(res.data));
                         setFavList(favList => {
                             res.data.forEach((item) => {
-                                console.log("For loop: " + item.uniID)
-                                favList.push(item.uniID);
+                                console.log("For loop: " + item.uniID);
+                                // if the item is not in the fav list, add it into favList
+                                if (favList.indexOf(item.uniID) === -1)
+                                    favList.push(item.uniID);
 
                             });
                             return favList;
@@ -52,7 +54,6 @@ const Explore = () => {
                 })
                 .catch(e => console.log(e));
         }
-
     }, []);
 
 
@@ -73,7 +74,7 @@ const Explore = () => {
                 <div className="row">
                     {
                         universities.map(singleSchool =>
-                            <UniversityCard university={singleSchool} key={singleSchool.id} userId={user.id}/>
+                            <UniversityCard university={singleSchool} key={singleSchool.id} userId={user.id}  setFavList={setFavList} />
                         )
                     }
                 </div>
@@ -83,12 +84,15 @@ const Explore = () => {
                     <h6 className="my-2 text-black">In Your List!</h6>
                 </div>
                 <hr className="wd-color-coral"/>
-                <div className="row">
+
+                <div>
+                    <ul className="list-group list-group-horizontal">
                     {
                         favList.map(uniID =>
-                            <FavCard uniID={uniID} key={uniID} userId={user.id}/>
+                            <FavCard uniID={uniID} key={uniID} userId={user.id}  setFavList={setFavList}/>
                         )
                     }
+                    </ul>
                     {login && favList.length === 0 && <p className="align-items-center">
                           OOPS, you haven't saved any universities yet.</p>
 

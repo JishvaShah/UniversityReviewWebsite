@@ -34,7 +34,7 @@ const Register = () => {
                 <div className="row align-items-center">
                     <div className="d-none d-md-block col-md-5">
                         <img className="wd-login-bg mt-5"
-                             src="/images/register.jpeg"
+                             src="/frontend/src/components/images/register.jpeg"
                              alt=""/>
                     </div>
                     <div className="col-12 col-md-7">
