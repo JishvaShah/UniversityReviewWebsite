@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.sql.DataSource;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.Base64;
 
@@ -41,15 +43,28 @@ public class UniversityTest {
 
     @Test
     void testCreateUniversity() {
-        String base64String = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAAW0lEQVR42mP8/wf/DpAAAlKAPla5cvAAAAAElFTkSuQmCC";
-        byte[] decodedBytes = Base64.getDecoder().decode(base64String);
+        String photoPath = "/Users/joshua/Downloads/neu.jpeg";
+
+        String encodedPhoto = "";
+        try {
+            // Read the photo file
+            byte[] photoData = Files.readAllBytes(Paths.get(photoPath));
+
+            // Encode the photo data to base64
+            encodedPhoto = Base64.getEncoder().encodeToString(photoData);
+
+            // Print or use the base64-encoded photo data as needed
+            System.out.println(encodedPhoto);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         CreateUniversityReq req = new CreateUniversityReq();
-        req.setName("Boston University");
+        req.setName("Northeastern University");
         req.setRanking("QS100");
         req.setDescription("this is bU");
         req.setStudentSize(500);
-        req.setPhoto(decodedBytes);
+        req.setPhoto(encodedPhoto);
         CreateUniversityResp resp = universityController.create(req);
         System.out.println(resp);
     }

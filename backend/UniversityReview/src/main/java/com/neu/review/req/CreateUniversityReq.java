@@ -12,5 +12,5 @@ public class CreateUniversityReq extends BaseReq {
     private String ranking;
     private Integer studentSize;
     private String description;
-    private byte[] photo;
+    private String photo;
 }

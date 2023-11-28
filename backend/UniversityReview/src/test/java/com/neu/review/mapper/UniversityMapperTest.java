@@ -16,7 +16,7 @@ public class UniversityMapperTest {
 
     @Test
     void testCreate() {
-        University university = new University("Create University", "Top 100", 10000, "Test Description", new byte[0]);
+        University university = new University("Create University", "Top 100", 10000, "Test Description", null);
         universityMapper.create(university);
 
         System.out.println("Created University: " + universityMapper.getByID(university.getId()));
@@ -24,7 +24,7 @@ public class UniversityMapperTest {
 
     @Test
     void testGetByID() {
-        University university = new University("GetById University", "Top 100", 10000, "Test Description", new byte[0]);
+        University university = new University("GetById University", "Top 100", 10000, "Test Description", null);
         universityMapper.create(university);
 
         University fetchedUniversity = universityMapper.getByID(university.getId());
@@ -33,7 +33,7 @@ public class UniversityMapperTest {
 
     @Test
     void testGet() {
-        University university = new University("Get University", "Top 100", 10000, "Test Description", new byte[0]);
+        University university = new University("Get University", "Top 100", 10000, "Test Description", null);
         universityMapper.create(university);
 
         UniversityService.Condition condition = new UniversityService.Condition();
@@ -44,7 +44,7 @@ public class UniversityMapperTest {
 
     @Test
     void testUpdate() {
-        University university = new University("Update University", "Top 100", 10000, "Test Description", new byte[0]);
+        University university = new University("Update University", "Top 100", 10000, "Test Description", null);
         universityMapper.create(university);
 
         university.setPopularity(100);
