@@ -1,64 +1,85 @@
 import React, {useState} from "react";
 import {Link} from "react-router-dom";
 import "./universityCard.css";
+import {likeUni, unlikeUni} from "../../service/allServices";
+import cardImage from '../../images/card1.jpeg';
 
-const UniversityCard = ({university}) => {
+const UniversityCard = ({university, userId, setFavList}) => {
+    const [popularity, setPopularity] = useState(university.popularity);
+    const [like, setLike] = useState(false);
+    
+    const likeUniversityHandler = (universityId, dispatch) => {
+        // make sure user is logged in, so he can like and unlike
+        if (userId === null || userId === undefined) {
+            alert("Please Login to like a university.")
+            return;
+        }
+
+        // need to remove the like from the list
+        if (like) {
+            unlikeUni({uerID: userId, uniID: university.id})
+                .then(r => {
+                    setPopularity(popularity -1);
+                    setLike(!like);
+                    setFavList(favList => favList.filter(item=> item !== university.id));
+                    console.log("Remove a like");
+                }).catch(e => console.log(e))
 
 
-    const inList = (university) => {
-        // return user.favUniversityList.includes(university.id);
-    }
 
+        } else {   // need to add the like to the list
 
-    const likeUniversityHandler = (university, dispatch) => {
-        // if (!user.username || user.username === "") {
-        //     alert("Please Login to like a university.")
-        //     return;
-        // }
-        //
-        // if (inList(university)) {
-        //    console.log("Need to unlike the university")
-        // } else {
-        //    console.log("Need to add university to users fav list")
-        // }
+            likeUni({userId: userId, uniId: university.id})
+                .then(r => {
+                        setPopularity(popularity + 1);
+                        setLike(!like);
+                        setFavList(favList => [...favList, university.id]);
+                        console.log("Add a like");
+                }).catch(e => console.log(e))
+
+        }
+
     };
 
-    // if (!university.image) {
-    //     university.image = "/images/wholeSchool.jpeg";
+    //
+    // if (!university.photo) {
+    //     university.photo = 'data:image/jpeg;base64,'+ placeholoder;
     // }
 
 
     return (
         <div className="col">
             <div className="card mx-2" >
-                <div className="card-body" data-bs-toggle="modal" data-bs-target={`#modal-${university.id}`}>
-                <img src={university.image} className="card-img-top wd-card-img" alt="sample"/>
+                <img src={cardImage} className="card-img-top wd-card-img" alt="sample"/>
                 <button className="btn btn-outline-primary wd-button wd-button-on-img"
-                        onClick={() => likeUniversityHandler(university.id, dispatch)}>
-                    <i className={`fas fa-heart ${inList(university) ? "wd-color-red" : ""}`}/>
+                        onClick={() => likeUniversityHandler(university.id)}>
+                    <i className={`fas fa-heart ${like ? "wd-color-red" : ""}`}/>
                 </button>
-
-
-                        <h5 className="wd-block-title">{university.title}</h5>
+                <div className="card-body" data-bs-toggle="modal" data-bs-target={`#modal-${university.id}`}>
+                        <h5 className="wd-block-title">{university.name}</h5>
                         <p className="card-text">{university.description.substring(0, 50) + " ..."}</p>
                         <p className="card-text">Popularity: &nbsp;
-                            <i className="fas fa-heart red-color"/> {university.popular}</p>
+                            <i className="fas fa-heart red-color"/> {popularity}</p>
                     </div>
 
                 <div className="modal fade" id={`modal-${university.id}`} data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true"  >
                     <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                         <div className="modal-content">
                             <div className="modal-header">
-                                <h1 className="modal-title fs-5" id="exampleModalLabel">{university.title}</h1>
+                                <h1 className="modal-title fs-5" id="exampleModalLabel">{university.name}</h1>
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <img src={university.image} className="card-img-top wd-card-img p-2" alt="sample"/>
+                            <img src={university.photo} className="card-img-top wd-card-img p-2" alt="sample"/>
                             <div className="modal-body">
-                                {university.description}
+                                <p className="fw-bold">Introduction</p>
+                               <p>{university.description}</p>
+                                <p><span className="fw-bold">Ranking: </span>{university.ranking}</p>
+                                <p><span className="fw-bold">StudentSize: </span>{university.studentSize}</p>
+
                             </div>
+
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                {/*<button type="button" className="btn btn-primary">Save changes</button>*/}
                             </div>
                         </div>
                     </div>

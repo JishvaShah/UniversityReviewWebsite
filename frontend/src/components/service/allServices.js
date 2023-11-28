@@ -1,13 +1,7 @@
-const API_USER = 'http://localhost:3036/db/user';
+const API_USER = 'http://localhost:8080/user';
+const API_FAV = 'http://localhost:8080/favourite';
+const API_UNI = 'http://localhost:8080/university';
 
-const initialUser = {
-    username: "winter",
-    email: "1234",
-    favUniversityList: [],
-    usersUniversity: [],
-    userReviews: [],
-
-}
 
 export const login = (user) =>
     fetch(`${API_USER}/login`, {
@@ -18,7 +12,6 @@ export const login = (user) =>
             'content-type': 'application/json'
         }
     }).then(res => {
-
         if (res.ok)
             return res.json();
         else throw res;
@@ -112,6 +105,95 @@ export const getAllUsers = () =>
 
 
 
+// university related services
+export const getRecommendUni = () =>
+    fetch(`${API_UNI}/recommend`, {
+        method: 'POST',
+        body: JSON.stringify({"num": 3}),
+        credentials: 'include',
+        headers: {
+            'content-type': 'application/json'
+        }
+    }).then(res => {
+        if (res.ok) {
+            return res.json();
+        }
+
+        else throw res;
+
+    });
+
+export const getUniByID = (id) =>
+    fetch(`${API_UNI}/getByID`, {
+        method: 'POST',
+        body: JSON.stringify(id),
+        credentials: 'include',
+        headers: {
+            'content-type': 'application/json'
+        }
+    }).then(res => {
+        if (res.ok) {
+            return res.json();
+        }
+
+        else throw res;
+
+    });
+
+
+
+// User favorite related services
+export const getFavByUserId = (userID) =>
+    fetch(`${API_FAV}/get_by_user_id`, {
+        method: 'POST',
+        body: JSON.stringify(userID),
+        credentials: 'include',
+        headers: {
+            'content-type': 'application/json'
+        }
+    }).then(res => {
+        if (res.ok) {
+            return res.json();
+        }
+
+        else throw res;
+
+    });
+
+export const likeUni = ({userID, uniID}) =>
+    fetch(`${API_FAV}/like`, {
+        method: 'POST',
+        body: JSON.stringify({userID, uniID}),
+        credentials: 'include',
+        headers: {
+            'content-type': 'application/json'
+        }
+    }).then(res => {
+        if (res.ok) {
+            return res.json();
+        }
+
+        else throw res;
+
+    });
+
+export const unlikeUni = ({userID, uniID}) =>
+    fetch(`${API_FAV}/unlike`, {
+        method: 'POST',
+        body: JSON.stringify({userID, uniID}),
+        credentials: 'include',
+        headers: {
+            'content-type': 'application/json'
+        }
+    }).then(res => {
+        if (res.ok) {
+            return res.json();
+        }
+
+        else throw res;
+
+    });
+
 
 
 
@@ -122,5 +204,8 @@ export default {
     getProfile,
     logout,
     getAllUsers,
-    updateProfile
+    updateProfile,
+    getUserFav: getFavByUserId,
+    getRecommendUni
+
 };

@@ -3,8 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import "../loginAndRegister.css";
 import {Helmet} from "react-helmet";
 import Header from "../../Header";
-import userService from "../../../service/userService";
+import userService from "../../../service/allServices";
 import {useDispatch} from "react-redux";
+import loginBg from "../../../images/school.jpeg";
 
 export default function Login() {
     const [user, setUser] = useState({
@@ -15,24 +16,16 @@ export default function Login() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    // const login = () => {
-    //     userService.login(user)
-    //         .then(newUser => {
-    //                 dispatch({
-    //                     type: "set-user",
-    //                     newUser
-    //                 })
-    //             navigate.push('/explore');
-    //             })
-    //         .catch(e => alert("User does not exist or wrong password."))
-    // };
-
     const login = () => {
-        dispatch({
-            type: "set-user",
-            newUser: user
-        });
-        navigate("/explore");
+        userService.login(user)
+            .then(response => {
+                dispatch({
+                    type: "set-user",
+                    newUser: response.data
+                })
+                navigate('/explore');
+                })
+            .catch(e => alert("User does not exist or wrong password."))
     };
 
     return (
@@ -46,7 +39,7 @@ export default function Login() {
                 <div className="row align-items-center">
                     <div className="d-none d-md-block col-md-5">
                         <img className="wd-login-bg mt-5"
-                             src="/images/school.jpeg"
+                             src={loginBg}
                              alt=""/>
                     </div>
                     <div className="col-12 col-md-7">

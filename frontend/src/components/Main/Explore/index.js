@@ -1,9 +1,11 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import Header from "../Header";
 import {Helmet} from 'react-helmet';
-import {useDispatch, useSelector} from "react-redux";
 import UniversityCard from "../University";
-
+import {getFavByUserId, getRecommendUni} from "../../service/allServices";
+import uniPlaceHolder from "../../Data/univeristy.json";
+import {useSelector} from "react-redux";
+import FavCard from "../University/favCard";
 
 const selectProfile = (profile) => profile;
 
@@ -11,40 +13,49 @@ const Explore = () => {
     // get shown menu lists information
     const menuIds = [1, 2, 3, 4, 5];
 
+    let user = useSelector(selectProfile)['userReducer'];
 
-    let user = {
-        username: "testing",
-        id: 12
-    }
+    const [universities, setUniversities] = useState([uniPlaceHolder]);
+    const [favList, setFavList] = useState([]);
+    const [login, setLogin] = useState(false);
 
-    let university1 = {
-        title: "Northeastern University1",
-        id: 1,
-        popular: 100,
-        image: "./images/card1.jpeg",
-        description: "This is a place holder line of university description, " +
-            "This is a place holder line of university description, " +
-            "This is a place holder line of university description"
-    }
+    useEffect(() => {
+        if (user.id === null || user.id === undefined) {
+            setLogin(false);
+        } else {
+            setLogin( true);
+            getRecommendUni()
+                .then(res => {
+                    if (res.data) {
+                        // console.log("Random uni: " + res.data);
+                        setUniversities(universities => res.data);
+                    }
+                })
+                .catch(e => console.log(e));
 
-    let university2 = {
-        title: "Northeastern University2",
-        id: 2,
-        popular: 200,
-        image: "./images/register.jpeg",
-        description: "This is a place holder line of university description"
-    }
+            console.log("record, userid: " + user.id);
 
-    let university3 = {
-        title: "Northeastern University3",
-        id: 3,
-        popular: 300,
-        image: "./images/card2.jpeg",
-        description: "This is a place holder line of university description"
-    }
+            getFavByUserId({userID: user.id})
+                .then(res => {
+                    if (res.data) {
+                        // console.log("Fav uni: "+ JSON.stringify(res.data));
+                        setFavList(favList => {
+                            res.data.forEach((item) => {
+                                console.log("For loop: " + item.uniID);
+                                // if the item is not in the fav list, add it into favList
+                                if (favList.indexOf(item.uniID) === -1)
+                                    favList.push(item.uniID);
 
+                            });
+                            return favList;
+                        });
+                        // console.log(favList.length);
+                    }
+                })
+                .catch(e => console.log(e));
+        }
+    }, []);
 
-    let universities = [university1, university2, university3];
 
 
     return (
@@ -63,7 +74,7 @@ const Explore = () => {
                 <div className="row">
                     {
                         universities.map(singleSchool =>
-                            <UniversityCard university={singleSchool}/>
+                            <UniversityCard university={singleSchool} key={singleSchool.id} userId={user.id}  setFavList={setFavList} />
                         )
                     }
                 </div>
@@ -73,12 +84,24 @@ const Explore = () => {
                     <h6 className="my-2 text-black">In Your List!</h6>
                 </div>
                 <hr className="wd-color-coral"/>
-                <div className="row">
+
+                <div>
+                    <ul className="list-group list-group-horizontal">
                     {
-                        universities.map(singleUniversity =>
-                            <UniversityCard university={singleUniversity} key={singleUniversity.id}/>
+                        favList.map(uniID =>
+                            <FavCard uniID={uniID} key={uniID} userId={user.id}  setFavList={setFavList}/>
                         )
                     }
+                    </ul>
+                    {login && favList.length === 0 && <p className="align-items-center">
+                          OOPS, you haven't saved any universities yet.</p>
+
+                    }
+                    {!login && <p className="align-items-center">
+                        Please login to see your saved list</p>
+
+                    }
+
                 </div>
             </div>
         </>
