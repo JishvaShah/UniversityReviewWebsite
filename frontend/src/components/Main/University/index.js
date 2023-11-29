@@ -4,6 +4,7 @@ import "./universityCard.css";
 import {likeUni, unlikeUni} from "../../service/allServices";
 import cardImage from '../../images/card1.jpeg';
 
+
 const UniversityCard = ({university, userId, setFavList, favList}) => {
     const [popularity, setPopularity] = useState(university.popularity);
     const [like, setLike] = useState(favList.indexOf(university.id) !== -1);
@@ -15,6 +16,7 @@ const UniversityCard = ({university, userId, setFavList, favList}) => {
             alert("Please Login to like a university.")
             return;
         }
+      
 
         // need to remove the like from the list
         if (like) {
