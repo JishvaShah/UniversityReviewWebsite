@@ -15,6 +15,12 @@ public interface UniversityMapper {
     University getByID(Integer id);
 
     /**
+     * @param name
+     * @return
+     */
+    List<University> getByNameFuzzy(String name);
+
+    /**
      * @param university
      * @return
      */

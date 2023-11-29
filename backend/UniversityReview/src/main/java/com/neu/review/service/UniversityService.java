@@ -9,6 +9,7 @@ import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -22,6 +23,13 @@ public class UniversityService {
             return null;
         }
         return universityMapper.getByID(id);
+    }
+
+    public List<University> getByNameFuzzy(String name) {
+        if (name == null) {
+            return Collections.emptyList();
+        }
+        return universityMapper.getByNameFuzzy(name);
     }
 
     public University create(University uni) {

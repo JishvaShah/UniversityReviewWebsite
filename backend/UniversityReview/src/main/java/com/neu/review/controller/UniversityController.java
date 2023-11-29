@@ -4,9 +4,11 @@ import com.neu.review.enums.ResponseCode;
 import com.neu.review.pojo.University;
 import com.neu.review.req.CreateUniversityReq;
 import com.neu.review.req.GetUniversityByIDReq;
+import com.neu.review.req.GetUniversityByNameFuzzyReq;
 import com.neu.review.req.RecommendReq;
 import com.neu.review.resp.CreateUniversityResp;
 import com.neu.review.resp.GetUniversityByIDResp;
+import com.neu.review.resp.GetUniversityByNameFuzzyResp;
 import com.neu.review.resp.RecommendResp;
 import com.neu.review.service.UniversityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +43,27 @@ public class UniversityController {
             return resp;
         } catch (Exception e) {
             return new GetUniversityByIDResp(ResponseCode.INTERNAL_ERR.getCode(), ResponseCode.INTERNAL_ERR.getDescription());
+        }
+    }
+
+    @PostMapping("/university/getByNameFuzzy")
+    public GetUniversityByNameFuzzyResp getByNameFuzzy(@RequestBody GetUniversityByNameFuzzyReq req) {
+        GetUniversityByNameFuzzyResp resp = new GetUniversityByNameFuzzyResp();
+
+        if (req.getName() == null || req.getName().trim().equals("")) {
+            resp.setResponseCode(ResponseCode.ILLEGAL_REQ.getCode());
+            resp.setMessage(ResponseCode.ILLEGAL_REQ.getDescription());
+            return resp;
+        }
+        try {
+            List<University> universities = universityService.getByNameFuzzy(req.getName().trim());
+
+            resp.setData(universities);
+            resp.setResponseCode(ResponseCode.SUCCESS.getCode());
+            resp.setMessage(ResponseCode.SUCCESS.getDescription());
+            return resp;
+        } catch (Exception e) {
+            return new GetUniversityByNameFuzzyResp(ResponseCode.INTERNAL_ERR.getCode(), ResponseCode.INTERNAL_ERR.getDescription());
         }
     }
 
