@@ -5,11 +5,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.io.Serializable;
+
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class University {
+public class University implements Serializable {
     private Integer id;
     private String name;
     private String ranking;
