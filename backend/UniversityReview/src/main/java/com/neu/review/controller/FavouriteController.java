@@ -64,6 +64,7 @@ public class FavouriteController {
             resp.setData(favourite);
             return resp;
         } catch (Exception e) {
+
             return new CreateFavouriteResp(ResponseCode.INTERNAL_ERR.getCode(), ResponseCode.INTERNAL_ERR.getDescription());
         }
     }
