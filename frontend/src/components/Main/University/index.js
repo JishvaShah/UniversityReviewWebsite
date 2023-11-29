@@ -20,6 +20,7 @@ const UniversityCard = ({university, userId, setFavList, favList}) => {
         if (like) {
             unlikeUni({uerID: userId, uniID: university.id})
                 .then(r => {
+                    console.log("UNLIKE"+ JSON.stringify(r.data));
                     setPopularity(popularity -1);
                     setLike(!like);
                     setFavList(favList => favList.filter(item=> item !== university.id));
@@ -30,8 +31,9 @@ const UniversityCard = ({university, userId, setFavList, favList}) => {
 
         } else {   // need to add the like to the list
 
-            likeUni({userId: userId, uniId: university.id})
+            likeUni({userID: userId, uniID: university.id})
                 .then(r => {
+                        console.log("LIKE"+JSON.stringify(r.data));
                         setPopularity(popularity + 1);
                         setLike(!like);
                         setFavList(favList => [...favList, university.id]);

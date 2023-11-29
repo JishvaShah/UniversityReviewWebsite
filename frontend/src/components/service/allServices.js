@@ -141,6 +141,23 @@ export const getUniByID = (id) =>
 
     });
 
+export const getUniByName = (name) =>
+    fetch(`${API_UNI}/getByNameFuzzy`, {
+        method: 'POST',
+        body: JSON.stringify(name),
+        credentials: 'include',
+        headers: {
+            'content-type': 'application/json'
+        }
+    }).then(res => {
+        if (res.ok) {
+            return res.json();
+        }
+
+        else throw res;
+
+    });
+
 
 
 // User favorite related services
@@ -225,6 +242,7 @@ export default {
     getAllUsers,
     updateProfile,
     getUserFav: getFavByUserId,
-    getRecommendUni
+    getRecommendUni,
+    getUniByName
 
 };

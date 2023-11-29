@@ -21,17 +21,18 @@ const Explore = () => {
     const [login, setLogin] = useState(false);
 
     useEffect(() => {
-        if (user.id === null || user.id === undefined || user.id === 0) {
+        getRecommendUni()
+            .then(res => {
+                console.log("uni: "+ JSON.stringify(res.data));
+                if (res.data) {
+                    setUniversities(universities => res.data);
+                }
+            })
+            .catch(e => console.log(e));
+
+        if (user.id === 0) {
             setLogin(false);
         } else {
-            setLogin( true);
-            getRecommendUni()
-                .then(res => {
-                    if (res.data) {
-                        setUniversities(universities => res.data);
-                    }
-                })
-                .catch(e => console.log(e));
 
             console.log("record, userid: " + JSON.stringify(user));
 
@@ -52,6 +53,7 @@ const Explore = () => {
                     }
                 })
                 .catch(e => console.log(e));
+            setLogin( true);
         }
     }, []);
 
