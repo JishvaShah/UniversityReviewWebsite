@@ -2,9 +2,10 @@ const initialUser = {
     username: "",
     email: "",
     address:"",
-    id:"",
+    id: 0,
     tel:"",
     password:""
+
 }
 
 const userReducer = (state = initialUser, action) => {

@@ -6,6 +6,7 @@ import {getFavByUserId, getRecommendUni} from "../../service/allServices";
 import uniPlaceHolder from "../../Data/univeristy.json";
 import {useSelector} from "react-redux";
 import FavCard from "../University/favCard";
+import {Link} from "react-router-dom";
 
 const selectProfile = (profile) => profile;
 
@@ -20,20 +21,19 @@ const Explore = () => {
     const [login, setLogin] = useState(false);
 
     useEffect(() => {
-        if (user.id === null || user.id === undefined) {
+        if (user.id === null || user.id === undefined || user.id === 0) {
             setLogin(false);
         } else {
             setLogin( true);
             getRecommendUni()
                 .then(res => {
                     if (res.data) {
-                        // console.log("Random uni: " + res.data);
                         setUniversities(universities => res.data);
                     }
                 })
                 .catch(e => console.log(e));
 
-            console.log("record, userid: " + user.id);
+            console.log("record, userid: " + JSON.stringify(user));
 
             getFavByUserId({userID: user.id})
                 .then(res => {
@@ -41,7 +41,6 @@ const Explore = () => {
                         // console.log("Fav uni: "+ JSON.stringify(res.data));
                         setFavList(favList => {
                             res.data.forEach((item) => {
-                                console.log("For loop: " + item.uniID);
                                 // if the item is not in the fav list, add it into favList
                                 if (favList.indexOf(item.uniID) === -1)
                                     favList.push(item.uniID);
@@ -49,7 +48,7 @@ const Explore = () => {
                             });
                             return favList;
                         });
-                        // console.log(favList.length);
+
                     }
                 })
                 .catch(e => console.log(e));
@@ -74,7 +73,7 @@ const Explore = () => {
                 <div className="row">
                     {
                         universities.map(singleSchool =>
-                            <UniversityCard university={singleSchool} key={singleSchool.id} userId={user.id}  setFavList={setFavList} />
+                            <UniversityCard university={singleSchool} key={singleSchool.id} userId={user.id}  setFavList={setFavList} favList={favList} />
                         )
                     }
                 </div>
@@ -93,14 +92,19 @@ const Explore = () => {
                         )
                     }
                     </ul>
+                    {!login && <p className="align-items-center">
+                        Please &nbsp;
+                        <Link to="/login">
+                            login to see your saved list
+                        </Link>
+                    </p>
+
+                    }
                     {login && favList.length === 0 && <p className="align-items-center">
                           OOPS, you haven't saved any universities yet.</p>
 
                     }
-                    {!login && <p className="align-items-center">
-                        Please login to see your saved list</p>
 
-                    }
 
                 </div>
             </div>

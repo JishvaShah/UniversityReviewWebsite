@@ -4,9 +4,10 @@ import "./universityCard.css";
 import {likeUni, unlikeUni} from "../../service/allServices";
 import cardImage from '../../images/card1.jpeg';
 
-const UniversityCard = ({university, userId, setFavList}) => {
+const UniversityCard = ({university, userId, setFavList, favList}) => {
     const [popularity, setPopularity] = useState(university.popularity);
-    const [like, setLike] = useState(false);
+    const [like, setLike] = useState(favList.indexOf(university.id) !== -1);
+    // const [inFavList, setInFavList] = useState();
     
     const likeUniversityHandler = (universityId, dispatch) => {
         // make sure user is logged in, so he can like and unlike
@@ -41,10 +42,6 @@ const UniversityCard = ({university, userId, setFavList}) => {
 
     };
 
-    //
-    // if (!university.photo) {
-    //     university.photo = 'data:image/jpeg;base64,'+ placeholoder;
-    // }
 
 
     return (

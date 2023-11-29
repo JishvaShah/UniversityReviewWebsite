@@ -16,10 +16,9 @@ const FavCard = ({uniID, userId, setFavList}) => {
         setLoading(true);
         getUniByID({id: uniID})
             .then(res => {
-                console.log("single uni:" + JSON.stringify(res.data));
+                // console.log("single uni:" + JSON.stringify(res.data));
                 if (res.data) {
                     setUniversity(university => res.data);
-                    // university.photo = "../../../../public/images/school.jpeg";
                     setLoading(false);
                 }
             })
@@ -41,15 +40,6 @@ const FavCard = ({uniID, userId, setFavList}) => {
 
             {
                 !loading &&
-                // <Link to={`/profile/${university.id}`}>
-                //     <li className="list-group-item">
-                //         <img className="wd-card-img" alt="sample" src={image}/>
-                //         <p className="nav-link btn btn-outline-primary px-0 align-self-center wd-button-transparent">
-                //             {university.name}
-                //         </p>
-                //     </li>
-                // </Link>
-
                 <div className="col">
                     <div className="card mx-2" >
                         <img src={atob(university.photo) || image} className="card-img-top wd-card-img" alt="sample"/>
