@@ -13,10 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.sql.DataSource;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.Base64;
+import java.util.Random;
 
 @SpringBootTest
 public class UniversityTest {
@@ -75,5 +79,39 @@ public class UniversityTest {
         req.setNum(2);
         RecommendResp resp = universityController.recommend(req);
         System.out.println(resp);
+    }
+
+    @Test
+    void insertUni() {
+        String filePath = "/Users/joshua/Downloads/uni.txt";
+
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+
+            int rank = 1;
+            while ((line = br.readLine()) != null) {
+                line = line.trim();
+                String name = line.substring(0, line.length() - 5);
+                String[] words = name.split("_");
+                name = String.join(" ", words);
+
+                int min = 5000;
+                int max = 20000;
+                Random random = new Random();
+                int size = random.nextInt(max - min + 1) + min;
+
+                CreateUniversityReq req = new CreateUniversityReq();
+                req.setName(name);
+                req.setRanking("US-" + rank);
+                req.setDescription("this is " + name + ", this is a great university");
+                req.setStudentSize(size);
+                req.setPhoto("/images/" + line);
+                CreateUniversityResp resp = universityController.create(req);
+
+                rank++;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
