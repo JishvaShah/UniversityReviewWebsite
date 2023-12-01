@@ -4,10 +4,11 @@ import './search.css';
 import Header from "../Header";
 import { Helmet } from 'react-helmet';
 import university from "../University";
-import {getRecommendUni} from "../../service/allServices";
+import {getRecommendUni, getUniByName} from "../../service/allServices";
 import Footer from "../Footer";
 import UniversityCard from "../University";
 import {useSelector} from "react-redux";
+import uniPlaceholder from "../../Data/univeristy.json"
 
 const selectProfile = (profile) => profile;
 
@@ -16,20 +17,20 @@ const Search = () => {
     const params = useParams();
     const [searchTerm, setSearchTerm] = useState("");
     const [searchResult, setSearchResult] = useState([]);
-    const [uniList, setUniList] = useState([]);
+    const [uniList, setUniList] = useState([uniPlaceholder]);
     const navigate = useNavigate();
 
     let user = useSelector(selectProfile)['userReducer'];
 
     const searchUniversity = (event) => {
         setSearchTerm(searchTerm => event.target.value);
-        // getUniByName({name: searchTerm})
-        //     .then(res => {
-        //         console.log("search result"+ res);
-        //         if (res.data)
-        //             setSearchResult(uniList => res.data)
-        //     })
-        //     .catch(e => console.log(e))
+        getUniByName({name: searchTerm})
+            .then(res => {
+                console.log("search result"+ JSON.stringify(res.data));
+                if (res.data)
+                    setSearchResult(uniList => res.data)
+            })
+            .catch(e => console.log(e))
 
 
     };
@@ -47,15 +48,15 @@ const Search = () => {
 
 
     const clickSearch = () => {
-        // getUniByName(searchTerm)
-        //     .then(res => {
-        //             console.log("db data length ==>", res.data.length );
-        //             if (res.data.length !== 0) {
-        //                 uniList = res.data;
-        //
-        //             }
-        //         }
-        //     )
+        getUniByName(searchTerm)
+            .then(res => {
+                    console.log("db data length ==>", res.data );
+                    if (res.data ) {
+                        setUniList(uniList => res.data)
+
+                    }
+                }
+            )
         alert(searchTerm);
     }
 

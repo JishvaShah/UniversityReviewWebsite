@@ -1,7 +1,7 @@
 {
-  "name": "Northeastern University1",
+  "name": "Northeastern University",
   "id": 10,
-  "ranking": 1,
+  "ranking": "QS-45",
   "studentSize":100,
   "popularity": 100,
   "photo": "../../images/card1.jpeg",
