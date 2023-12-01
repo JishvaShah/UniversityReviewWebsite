@@ -94,16 +94,21 @@ public class UniversityController {
     public RecommendResp recommend(@RequestBody RecommendReq req) {
         RecommendResp resp = new RecommendResp();
         try {
+            int cnt = req.getNum() == null ? 3 : req.getNum();
             List<University> recommendations = new ArrayList<>();
             List<University> universities = universityService.get(new UniversityService.Condition(100));
-            Map<Integer, Boolean> used = new HashMap<>();
-            while (recommendations.size() != (req.getNum() == null ? 3 : req.getNum())) {
-                int idx = getRandomInt(0, universities.size() - 1);
-                if (used.containsKey(idx)) {
-                    continue;
+            if (universities.size() < cnt) {
+                recommendations.addAll(universities);
+            } else {
+                Map<Integer, Boolean> used = new HashMap<>();
+                while (recommendations.size() != cnt) {
+                    int idx = getRandomInt(0, universities.size() - 1);
+                    if (used.containsKey(idx)) {
+                        continue;
+                    }
+                    used.put(idx, true);
+                    recommendations.add(universities.get(idx));
                 }
-                used.put(idx, true);
-                recommendations.add(universities.get(idx));
             }
 
             resp.setData(recommendations);
