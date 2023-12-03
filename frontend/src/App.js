@@ -16,6 +16,7 @@ import Review from "./components/pages/Review";
 import Search from "./components/Main/Search";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import Footer from "./components/Main/Footer";
 
 const store = configureStore({ reducer: {userReducer} });
 
@@ -58,6 +59,7 @@ function App() {
                            exact={true}
                            element={<Search/>}/>
                 </Routes>
+                <Footer/>
             </div>
             </Provider>
         </BrowserRouter>

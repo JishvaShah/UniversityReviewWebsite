@@ -8,6 +8,7 @@ import img4 from "../images/img4.jpeg";
 import {Link} from "react-router-dom";
 import {Helmet} from "react-helmet";
 import Header from "../Main/Header";
+import Footer from "../Main/Footer";
 
 function Home() {
   return (
@@ -131,6 +132,7 @@ function Home() {
         </div>
       </div>
         </div>
+        <Footer/>
       </>
   );
 }

@@ -1,10 +1,8 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
+import {getUniByID, getUserById} from "../../service/allServices";
 
-const ReviewCard = ({review = {
-        user: "test3",
-        rating: 2,
-        review: "This is a place holder"
-}}) => {
+const ReviewCard = (review) => {
+    const reviewItem = review.review;
 
 
     const getStars = (rating) => {
@@ -29,16 +27,16 @@ const ReviewCard = ({review = {
     return (
         <>
             <div className="row border border-dark-subtle border-1 m-3 p-3 rounded me-0 pe-0">
-                    <div className="fw-bold fs-4 text-body mb-1">{review.user}
+                    <div className="fw-bold fs-4 text-body mb-1">{reviewItem.username}
                         {
-                            getStars(review.rating).map(star =>
+                            getStars(reviewItem.rating).map(star =>
                                 <i className={`${star}`}></i>
                         )
                     }
                     </div>
 
                 <div>
-                    {review.review}
+                    {reviewItem.content}
                 </div>
 
             </div>

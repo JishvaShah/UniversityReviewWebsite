@@ -1,37 +1,68 @@
 import React, {useEffect, useState} from 'react'
-import {Link, useParams} from 'react-router-dom'
+import {Link, useParams, useNavigate} from 'react-router-dom'
 import './search.css';
 import Header from "../Header";
 import { Helmet } from 'react-helmet';
 import university from "../University";
+import {getRecommendUni, getUniByName} from "../../service/allServices";
+import Footer from "../Footer";
+import University from "../University";
+import {useSelector} from "react-redux";
+import uniPlaceholder from "../../Data/univeristy.json"
+
+const selectProfile = (profile) => profile;
 
 
 const Search = () => {
     const params = useParams();
+    const [searchTerm, setSearchTerm] = useState("");
+    const [searchResult, setSearchResult] = useState([]);
+    const [uniList, setUniList] = useState([]);
+    const navigate = useNavigate();
+
+    let user = useSelector(selectProfile)['userReducer'];
 
     const searchUniversity = (event) => {
+        setSearchTerm(searchTerm => event.target.value);
+        console.log("Search term:" + event.target.value);
+        getUniByName({name: searchTerm})
+            .then(res => {
+                console.log("search result"+ JSON.stringify(res.data));
+                if (res.data !== null && res.data !== undefined) {
+                    let uniName = [];
+                    res.data.forEach(item => uniName.push(item.name));
+                    setSearchResult(searchResult => uniName);
+                }
 
+            })
+            .catch(e => console.log(e))
     };
 
-
+    const getRandomUniversity= () =>{
+        getRecommendUni()
+            .then(res =>{
+                console.log("search: "+ JSON.stringify(res.data));
+                if (res.data )
+                    setUniList(uniList => res.data)
+            })
+            .catch(e => console.log(e))
+    }
 
     const clickSearch = () => {
-
+        getUniByName(searchTerm)
+            .then(res => {
+                    console.log("db data length ==>", res.data );
+                    if (res.data ) {
+                        setUniList(uniList => res.data)
+                    }
+                }
+            )
     }
 
 
+    useEffect(clickSearch, []);
+    const mid = Math.round(uniList.length / 2);
 
-    const getRandomUniversity= () =>{
-
-    }
-    //
-    //
-    // useEffect(clickSearch, [])
-    //
-    const mid = 0;
-
-    const searchResult = [];
-    const universityList = [];
     return (
         <>
             <Helmet>
@@ -42,7 +73,7 @@ const Search = () => {
                 <Header active="search"/>
 
                 <img className="wd-search-bg"
-                     src="/frontend/src/components/images/autumn.jpeg"
+                     src="/images/autumn.jpeg"
                      alt=""/>
 
                 <div className="wd-search-container">
@@ -60,10 +91,9 @@ const Search = () => {
                                     placeholder="Search University"
                                     onChange={e => searchUniversity(e)}/>
 
-
-                                <datalist id="item-list">
-                                    {searchResult.map(item => (
-                                        <option value={item.title} >
+                                 <datalist id="item-list">
+                                    { searchTerm.length > 0 && searchResult.length > 0 && searchResult.map((item, idx) => (
+                                        <option value={item} key={idx} >
                                         </option>
                                     ))}
                                 </datalist>
@@ -79,7 +109,6 @@ const Search = () => {
                                 </button>
                             </span>
                             <span>
-                                {/*TODO direct to a random recipe page*/}
                                 <button className="btn btn-outline-primary wd-button"
                                         onClick={getRandomUniversity}>
                                     Explore A New University
@@ -92,53 +121,23 @@ const Search = () => {
 
                 <div className="row justify-content-evenly">
                     <ul className="list-group wd-search-result col-12 col-md-6 row">
-                        {universityList.slice(0, mid).map(item => {
-                            return (
-                                <Link to={`/details/${item.id === undefined? item._id: item.id}`}>
-                                    <li className="list-group-item wd-search-result-item d-flex"
-                                        key={item.id}>
 
-                                        <span>
-                                            <img className="wd-search-result-image"
-                                                 src={item.image} alt=""/>
-                                        </span>
-
-                                        <span className="ms-3">
-                                            <h4 className="wd-search-result-name fw-bold wd-color-coral">{item.title}</h4>
-                                            <h6 className="my-1">servings: &nbsp;&nbsp;&nbsp;&nbsp;{item.servings}</h6>
-                                            <h6 className="">total time:  &nbsp;{item.readyInMinutes} min</h6>
-                                            {/*<h6 >{item.id}</h6>*/}
-                                        </span>
-                                    </li>
-                                </Link>
+                        {
+                            uniList.length > 0 && uniList.slice(0, mid).map(singleSchool =>
+                                <University university={singleSchool} key={singleSchool.id} userId={user.id} setFavList={null} favList={[]} />
                             )
-                        })}
+                        }
                     </ul>
                     <ul className="list-group wd-search-result col-12 col-md-6 row">
-                        {universityList.slice(mid, universityList.length).map(item => {
-                            return (
-                                <Link to={`/details/${item.id}`}>
-                                    <li className="list-group-item wd-search-result-item d-flex"
-                                        key={item.id}>
-
-                                        <span>
-                                            <img className="wd-search-result-image"
-                                                 src={item.image} alt=""/>
-                                        </span>
-
-                                        <span className="ms-3">
-                                            <h4 className="wd-search-result-name fw-bold wd-color-coral">{item.title}</h4>
-                                            <h6 className="my-1">servings: &nbsp;&nbsp;&nbsp;&nbsp;{}</h6>
-                                            <h6 className="">total time:  &nbsp;{} min</h6>
-                                            {/*<h6 >{item.id}</h6>*/}
-                                        </span>
-                                    </li>
-                                </Link>
+                        {
+                            uniList.length > 0 && uniList.slice(mid, uniList.length).map(singleSchool =>
+                                <University university={singleSchool} key={singleSchool.id} userId={user.id} setFavList={null} favList={[]} />
                             )
-                        })}
+                        }
                     </ul>
                 </div>
             </div>
+            {/*<Footer/>*/}
         </>
 
     );

@@ -4,21 +4,25 @@ import "./universityCard.css";
 import {likeUni, unlikeUni} from "../../service/allServices";
 import cardImage from '../../images/card1.jpeg';
 
-const UniversityCard = ({university, userId, setFavList}) => {
+
+const University = ({university, userId, setFavList, favList}) => {
     const [popularity, setPopularity] = useState(university.popularity);
-    const [like, setLike] = useState(false);
+    const [like, setLike] = useState(favList.indexOf(university.id) !== -1);
+    const login = userId=== 0;
     
     const likeUniversityHandler = (universityId, dispatch) => {
         // make sure user is logged in, so he can like and unlike
-        if (userId === null || userId === undefined) {
+        if (userId === 0) {
             alert("Please Login to like a university.")
             return;
         }
+      
 
         // need to remove the like from the list
         if (like) {
             unlikeUni({uerID: userId, uniID: university.id})
                 .then(r => {
+                    console.log("UNLIKE"+ JSON.stringify(r.data));
                     setPopularity(popularity -1);
                     setLike(!like);
                     setFavList(favList => favList.filter(item=> item !== university.id));
@@ -29,8 +33,9 @@ const UniversityCard = ({university, userId, setFavList}) => {
 
         } else {   // need to add the like to the list
 
-            likeUni({userId: userId, uniId: university.id})
+            likeUni({userID: userId, uniID: university.id})
                 .then(r => {
+                        console.log("LIKE"+JSON.stringify(r.data));
                         setPopularity(popularity + 1);
                         setLike(!like);
                         setFavList(favList => [...favList, university.id]);
@@ -41,16 +46,12 @@ const UniversityCard = ({university, userId, setFavList}) => {
 
     };
 
-    //
-    // if (!university.photo) {
-    //     university.photo = 'data:image/jpeg;base64,'+ placeholoder;
-    // }
 
 
     return (
         <div className="col">
             <div className="card mx-2" >
-                <img src={cardImage} className="card-img-top wd-card-img" alt="sample"/>
+                <img src={university.photo} className="card-img-top wd-card-img" alt="sample"/>
                 <button className="btn btn-outline-primary wd-button wd-button-on-img"
                         onClick={() => likeUniversityHandler(university.id)}>
                     <i className={`fas fa-heart ${like ? "wd-color-red" : ""}`}/>
@@ -101,4 +102,4 @@ const UniversityCard = ({university, userId, setFavList}) => {
     )
 }
 
-export default UniversityCard;
+export default University;
