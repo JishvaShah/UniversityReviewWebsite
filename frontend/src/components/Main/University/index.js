@@ -8,11 +8,11 @@ import cardImage from '../../images/card1.jpeg';
 const University = ({university, userId, setFavList, favList}) => {
     const [popularity, setPopularity] = useState(university.popularity);
     const [like, setLike] = useState(favList.indexOf(university.id) !== -1);
-    // const [inFavList, setInFavList] = useState();
+    const login = userId=== 0;
     
     const likeUniversityHandler = (universityId, dispatch) => {
         // make sure user is logged in, so he can like and unlike
-        if (userId === null || userId === undefined) {
+        if (userId === 0) {
             alert("Please Login to like a university.")
             return;
         }

@@ -17,7 +17,7 @@ const Search = () => {
     const params = useParams();
     const [searchTerm, setSearchTerm] = useState("");
     const [searchResult, setSearchResult] = useState([]);
-    const [uniList, setUniList] = useState([uniPlaceholder]);
+    const [uniList, setUniList] = useState([]);
     const navigate = useNavigate();
 
     let user = useSelector(selectProfile)['userReducer'];
@@ -62,7 +62,6 @@ const Search = () => {
 
     useEffect(clickSearch, []);
     const mid = Math.round(uniList.length / 2);
-
 
     return (
         <>
@@ -124,21 +123,21 @@ const Search = () => {
                     <ul className="list-group wd-search-result col-12 col-md-6 row">
 
                         {
-                            uniList.slice(0, mid).map(singleSchool =>
+                            uniList.length > 0 && uniList.slice(0, mid).map(singleSchool =>
                                 <University university={singleSchool} key={singleSchool.id} userId={user.id} setFavList={null} favList={[]} />
                             )
                         }
                     </ul>
                     <ul className="list-group wd-search-result col-12 col-md-6 row">
                         {
-                            uniList.slice(mid, uniList.length).map(singleSchool =>
+                            uniList.length > 0 && uniList.slice(mid, uniList.length).map(singleSchool =>
                                 <University university={singleSchool} key={singleSchool.id} userId={user.id} setFavList={null} favList={[]} />
                             )
                         }
                     </ul>
                 </div>
             </div>
-            <Footer/>
+            {/*<Footer/>*/}
         </>
 
     );
