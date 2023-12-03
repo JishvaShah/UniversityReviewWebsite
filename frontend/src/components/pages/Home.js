@@ -6,9 +6,10 @@ import img2 from "../images/img2.jpeg";
 import img3 from "../images/img3.jpeg";
 import img4 from "../images/img4.jpeg";
 import {Link} from "react-router-dom";
+import background from "../images/university.png";
 import {Helmet} from "react-helmet";
 import Header from "../Main/Header";
-import Footer from "../Main/Footer";
+
 
 function Home() {
   return (
@@ -20,15 +21,28 @@ function Home() {
         <div className="container mt-2 mb-3">
           <Header active="home"/>
       <div className="frame">
-        <div className="section1">
-          <p className="section1-text">
-            University Rater
-            <br />
-            <br />
-            We believe in the power of real and honest student experiences to guide you in making well-informed decisions
-            about your academic future. Our platform is your one-stop destination to explore, evaluate, and share in-depth
-            reviews of universities. Whether you&#39;re a prospective student or an alumnus, we&#39;ve got you covered.
-          </p>
+        <div className="section1 head-text">
+          {/*<div className="head-text">*/}
+
+            <div className='text-on-image'>
+              <h3>  University Rater </h3>
+              <p>
+                <br />
+                <br />
+                We believe in the power of real and honest student experiences to guide you in making well-informed decisions
+                about your academic future. Our platform is your one-stop destination to explore, evaluate, and share in-depth
+                reviews of universities. Whether you&#39;re a prospective student or an alumnus, we&#39;ve got you covered. </p>
+            </div>
+          </div>
+
+          {/*<p className="section1-text">*/}
+          {/*  University Rater*/}
+          {/*  <br />*/}
+          {/*  <br />*/}
+          {/*  We believe in the power of real and honest student experiences to guide you in making well-informed decisions*/}
+          {/*  about your academic future. Our platform is your one-stop destination to explore, evaluate, and share in-depth*/}
+          {/*  reviews of universities. Whether you&#39;re a prospective student or an alumnus, we&#39;ve got you covered.*/}
+          {/*</p>*/}
         </div>
         <div className="section2">
           <Link to="/login">
@@ -131,8 +145,7 @@ function Home() {
           </div>
         </div>
       </div>
-        </div>
-        <Footer/>
+        {/*</div>*/}
       </>
   );
 }

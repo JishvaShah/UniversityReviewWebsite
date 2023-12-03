@@ -4,6 +4,29 @@
   height: 670px;
   width: 100%;
 }
+
+
+
+.head-text {
+  position: relative;
+}
+
+.head-image {
+  height: 670px;
+  width: 100%;
+  background-size: cover;
+
+}
+.text-on-image {
+  position: absolute;
+  top: 50px;
+  right: 20px;
+  left: 20px;
+  color: white;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
 .section1 {
   height: 100%;
   overflow: hidden;

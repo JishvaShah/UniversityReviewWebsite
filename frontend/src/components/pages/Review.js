@@ -3,7 +3,6 @@ import "../styles/Review.css";
 import { Helmet } from "react-helmet";
 import Header from "../Main/Header";
 import Rating from "react-rating-stars-component";
-import Footer from "../Main/Footer";
 
 export default function Review() {
   const [formData, setFormData] = useState({
@@ -206,7 +205,6 @@ export default function Review() {
           </div>
         </div>
       </div>
-      <Footer/>
     </>
   );
 }
