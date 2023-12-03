@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 const Footer = () => {
 
     return (
-        <div className="wd-footer mt-5">
+        <div className="wd-footer">
             <div className="p-0">
                 <div className="d-flex justify-content-between align-items-center">
                     <div>

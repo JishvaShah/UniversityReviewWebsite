@@ -6,7 +6,7 @@ import { Helmet } from 'react-helmet';
 import university from "../University";
 import {getRecommendUni, getUniByName} from "../../service/allServices";
 import Footer from "../Footer";
-import UniversityCard from "../University";
+import University from "../University";
 import {useSelector} from "react-redux";
 import uniPlaceholder from "../../Data/univeristy.json"
 
@@ -24,28 +24,29 @@ const Search = () => {
 
     const searchUniversity = (event) => {
         setSearchTerm(searchTerm => event.target.value);
+        console.log("Search term:" + event.target.value);
         getUniByName({name: searchTerm})
             .then(res => {
                 console.log("search result"+ JSON.stringify(res.data));
-                if (res.data)
-                    setSearchResult(uniList => res.data)
+                if (res.data !== null && res.data !== undefined) {
+                    let uniName = [];
+                    res.data.forEach(item => uniName.push(item.name));
+                    setSearchResult(searchResult => uniName);
+                }
+
             })
             .catch(e => console.log(e))
-
-
     };
 
     const getRandomUniversity= () =>{
         getRecommendUni()
             .then(res =>{
                 console.log("search: "+ JSON.stringify(res.data));
-                if (res.data)
+                if (res.data )
                     setUniList(uniList => res.data)
             })
             .catch(e => console.log(e))
     }
-
-
 
     const clickSearch = () => {
         getUniByName(searchTerm)
@@ -53,11 +54,9 @@ const Search = () => {
                     console.log("db data length ==>", res.data );
                     if (res.data ) {
                         setUniList(uniList => res.data)
-
                     }
                 }
             )
-        alert(searchTerm);
     }
 
 
@@ -93,10 +92,9 @@ const Search = () => {
                                     placeholder="Search University"
                                     onChange={e => searchUniversity(e)}/>
 
-
-                                <datalist id="item-list">
-                                    {uniList.map((item, idx) => (
-                                        <option value={item.name} key={idx} >
+                                 <datalist id="item-list">
+                                    { searchTerm.length > 0 && searchResult.length > 0 && searchResult.map((item, idx) => (
+                                        <option value={item} key={idx} >
                                         </option>
                                     ))}
                                 </datalist>
@@ -112,7 +110,6 @@ const Search = () => {
                                 </button>
                             </span>
                             <span>
-                                {/*TODO direct to a random recipe page*/}
                                 <button className="btn btn-outline-primary wd-button"
                                         onClick={getRandomUniversity}>
                                     Explore A New University
@@ -128,14 +125,14 @@ const Search = () => {
 
                         {
                             uniList.slice(0, mid).map(singleSchool =>
-                                <UniversityCard university={singleSchool} key={singleSchool.id} userId={user.id}  setFavList={null} favList={[]} />
+                                <University university={singleSchool} key={singleSchool.id} userId={user.id} setFavList={null} favList={[]} />
                             )
                         }
                     </ul>
                     <ul className="list-group wd-search-result col-12 col-md-6 row">
                         {
                             uniList.slice(mid, uniList.length).map(singleSchool =>
-                                <UniversityCard university={singleSchool} key={singleSchool.id} userId={user.id}  setFavList={null} favList={[]} />
+                                <University university={singleSchool} key={singleSchool.id} userId={user.id} setFavList={null} favList={[]} />
                             )
                         }
                     </ul>

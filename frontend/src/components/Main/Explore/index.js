@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Header from "../Header";
 import {Helmet} from 'react-helmet';
-import UniversityCard from "../University";
+import University from "../University";
 import {getFavByUserId, getRecommendUni} from "../../service/allServices";
 import uniPlaceHolder from "../../Data/univeristy.json";
 import {useSelector} from "react-redux";
@@ -76,7 +76,7 @@ const Explore = () => {
                 <div className="row">
                     {
                         universities.map(singleSchool =>
-                            <UniversityCard university={singleSchool} key={singleSchool.id} userId={user.id}  setFavList={setFavList} favList={favList} />
+                            <University university={singleSchool} key={singleSchool.id} userId={user.id} setFavList={setFavList} favList={favList} />
                         )
                     }
                 </div>

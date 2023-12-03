@@ -1,7 +1,9 @@
+import fetch from 'node-fetch';
 const API_USER = 'http://localhost:8080/user';
 const API_FAV = 'http://localhost:8080/favourite';
 const API_UNI = 'http://localhost:8080/university';
 const API_REVIEWS = 'http://localhost:8080/review';
+
 
 
 export const login = (user) =>

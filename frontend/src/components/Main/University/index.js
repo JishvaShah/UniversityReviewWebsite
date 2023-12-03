@@ -5,7 +5,7 @@ import {likeUni, unlikeUni} from "../../service/allServices";
 import cardImage from '../../images/card1.jpeg';
 
 
-const UniversityCard = ({university, userId, setFavList, favList}) => {
+const University = ({university, userId, setFavList, favList}) => {
     const [popularity, setPopularity] = useState(university.popularity);
     const [like, setLike] = useState(favList.indexOf(university.id) !== -1);
     // const [inFavList, setInFavList] = useState();
@@ -102,4 +102,4 @@ const UniversityCard = ({university, userId, setFavList, favList}) => {
     )
 }
 
-export default UniversityCard;
+export default University;
