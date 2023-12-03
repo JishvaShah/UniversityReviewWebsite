@@ -3,7 +3,9 @@ import HeaderNavItem from "./HeaderNavItem";
 import headerNavs from "./headerNavs.json";
 import "./header.css";
 import {useSelector} from "react-redux";
-
+import { Link, useNavigate } from "react-router-dom";
+import {useDispatch} from "react-redux";
+import userService from "../../service/allServices";
 
 // const selectProfile = (profile) => profile;
 
@@ -22,26 +24,54 @@ const Header = ({
     const [searchTerm, setSearchTerm] = useState("");
     const [searchResult, setSearchResult] = useState([]);
 
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
     const searchRecipe = (event) => {
         setSearchTerm(event.target.value);
         console.log("auto complete result ->", event.target.value);
     };
 
-    // let user = {
-    //     username: "testing",
-    //     id: 12
-    // }
-
     let user = useSelector(state => state.userReducer);
+
+    const userInfo = () => {
+        if (user && user.username) {
+            return <div className="d-none d-lg-block col-lg-4 align-self-end text-center">
+                <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <Link to="/profile">
+                        <button className="login-button">{user.username}</button>
+                    </Link>
+                    <Link to="/home">
+                        <button className="login-button" onClick={logoutUser}>Log out</button>
+                    </Link>
+                </div>
+            </div>;
+        }
+        return <div className="d-none d-lg-block col-lg-4 align-self-end text-center">
+            <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+                <Link to="/login">
+                    <button className="login-button">Login</button>
+                </Link>
+            </div>
+
+        </div>;
+    }
+
+    const logoutUser = () => {
+        dispatch({
+            type: "logout-user",
+        })
+        navigate('/home');
+    }
 
 
     return (
         <>
             <div className="row wd-home-header">
-                <div className="col-2 col-md-2">
-                    <h5><a href="/home" className="text-danger fw-bold">University Rater</a></h5>
+                <div className="col-3 col-md-3 pt-3">
+                    <h4><a href="/home" className="text-danger fw-bold">University Rater</a></h4>
                 </div>
-                <div className="col-6 col-md-9 col-xl-6 align-self-center">
+                <div className="col-5 col-md-5 col-xl-5 align-self-center">
                     <ul className="nav justify-content-left">
                         {headerNavs.map(nav => {
                             return (
@@ -49,42 +79,12 @@ const Header = ({
                                                nav={nav}
                                                isActive={nav.isActive}/>);
                         })}
-                        {/*{*/}
-                        {/*    <li className="nav-item">*/}
-                        {/*        <a className='nav-link text-danger' href="/allUsers">User</a>*/}
-                        {/*    </li>*/}
-                        {/*}*/}
                     </ul>
                 </div>
-                <div className="d-none d-xl-block col-xl-3 align-self-center">
-                    <div className="align-items-center">
-                        {/*<div className="wd-magnifier">*/}
-                        {/*    <label htmlFor="SearchInput">*/}
-                        {/*        <i className="fas fa-search"/>*/}
-                        {/*    </label>*/}
-                        {/*</div>*/}
-                        <div>
-                            {/*<input id="SearchInput"*/}
-                            {/*       className="form-control wd-search-bar-input"*/}
-                            {/*       list="datalistOptions"*/}
-                            {/*       placeholder="Search University"*/}
-                            {/*       onChange={e => searchRecipe(e)}*/}
-                            {/*      />*/}
-
-                            {/*<datalist id="datalistOptions">*/}
-                            {/*    {searchResult.map(item => (*/}
-                            {/*        <option value={item.title} />*/}
-                            {/*    ))}*/}
-                            {/*</datalist>*/}
-                        </div>
-                    </div>
-                </div>
                 {
-                    user && user.username &&
-                    <div className="d-none d-lg-block col-lg-1 align-self-center text-center">
-                        {user.username}
-                    </div>
+                  userInfo()
                 }
+
 
             </div>
 

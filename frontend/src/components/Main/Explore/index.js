@@ -7,7 +7,7 @@ import uniPlaceHolder from "../../Data/univeristy.json";
 import {useSelector} from "react-redux";
 import FavCard from "../University/favCard";
 import {Link} from "react-router-dom";
-import Footer from "../Footer";
+
 
 const selectProfile = (profile) => profile;
 
@@ -111,7 +111,6 @@ const Explore = () => {
 
                 </div>
             </div>
-            <Footer/>
         </>
 
     );

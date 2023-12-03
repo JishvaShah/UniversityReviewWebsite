@@ -25,7 +25,6 @@ function App() {
     return (
         <BrowserRouter>
             <Provider store={store}>
-            <div className="container">
             <ToastContainer />
                 <Routes>
                     <Route path="/home"
@@ -59,9 +58,8 @@ function App() {
                            exact={true}
                            element={<Search/>}/>
                 </Routes>
-                <Footer/>
-            </div>
             </Provider>
+            <Footer/>
         </BrowserRouter>
     );
 

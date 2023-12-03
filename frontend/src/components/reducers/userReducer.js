@@ -25,9 +25,10 @@ const userReducer = (state = initialUser, action) => {
             state = {
                 username: "",
                 email: "",
-                favUniversityList: [],
-                usersUniversity: [],
-                userReviews: [],
+                address:"",
+                id: 0,
+                tel:"",
+                password:""
             }
             return state;
 

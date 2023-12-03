@@ -5,7 +5,6 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { Helmet } from "react-helmet";
 import { Link, useNavigate } from "react-router-dom";
-import Footer from "../Main/Footer";
 
 export default function User() {
   const navigate = useNavigate();
@@ -166,7 +165,6 @@ export default function User() {
           </div>
         </div>
       </div>
-      <Footer/>
     </>
   );
 }

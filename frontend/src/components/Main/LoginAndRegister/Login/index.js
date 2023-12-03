@@ -6,7 +6,7 @@ import Header from "../../Header";
 import userService from "../../../service/allServices";
 import {useDispatch} from "react-redux";
 import loginBg from "../../../images/school.jpeg";
-import Footer from "../../Footer";
+
 
 export default function Login() {
     const [user, setUser] = useState({
@@ -90,7 +90,6 @@ export default function Login() {
                     </div>
                 </div>
             </div>
-            <Footer/>
         </>
     );
 
