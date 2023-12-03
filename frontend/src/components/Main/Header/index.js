@@ -3,8 +3,9 @@ import HeaderNavItem from "./HeaderNavItem";
 import headerNavs from "./headerNavs.json";
 import "./header.css";
 import {useSelector} from "react-redux";
-import {Link} from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import {useDispatch} from "react-redux";
+import userService from "../../service/allServices";
 
 // const selectProfile = (profile) => profile;
 
@@ -23,6 +24,9 @@ const Header = ({
     const [searchTerm, setSearchTerm] = useState("");
     const [searchResult, setSearchResult] = useState([]);
 
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
     const searchRecipe = (event) => {
         setSearchTerm(event.target.value);
         console.log("auto complete result ->", event.target.value);
@@ -33,16 +37,31 @@ const Header = ({
     const userInfo = () => {
         if (user && user.username) {
             return <div className="d-none d-lg-block col-lg-4 align-self-end text-center">
-                <Link to="/profile">
-                    <button className="login-button">{user.username}</button>
-                </Link>
+                <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <Link to="/profile">
+                        <button className="login-button">{user.username}</button>
+                    </Link>
+                    <Link to="/home">
+                        <button className="login-button" onClick={logoutUser}>Log out</button>
+                    </Link>
+                </div>
             </div>;
         }
         return <div className="d-none d-lg-block col-lg-4 align-self-end text-center">
-            <Link to="/login">
-                <button className="login-button">Login</button>
-            </Link>
+            <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+                <Link to="/login">
+                    <button className="login-button">Login</button>
+                </Link>
+            </div>
+
         </div>;
+    }
+
+    const logoutUser = () => {
+        dispatch({
+            type: "logout-user",
+        })
+        navigate('/home');
     }
 
 
