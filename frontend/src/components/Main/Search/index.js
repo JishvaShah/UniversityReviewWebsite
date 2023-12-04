@@ -9,6 +9,7 @@ import Footer from "../Footer";
 import University from "../University";
 import {useSelector} from "react-redux";
 import uniPlaceholder from "../../Data/univeristy.json"
+import FavCard from "../University/favCard";
 
 const selectProfile = (profile) => profile;
 
