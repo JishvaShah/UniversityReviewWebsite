@@ -7,10 +7,9 @@ import university from "../University";
 import {getRecommendUni, getUniByName} from "../../service/allServices";
 import Footer from "../Footer";
 import University from "../University";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import uniPlaceholder from "../../Data/univeristy.json"
-
-const selectProfile = (profile) => profile;
+import FavCard from "../University/favCard";
 
 
 const Search = () => {
@@ -20,14 +19,14 @@ const Search = () => {
     const [uniList, setUniList] = useState([]);
     const navigate = useNavigate();
 
-    let user = useSelector(selectProfile)['userReducer'];
+    const user = useSelector((state) => state.originalUser)
 
     const searchUniversity = (event) => {
         setSearchTerm(searchTerm => event.target.value);
         console.log("Search term:" + event.target.value);
         getUniByName({name: searchTerm})
             .then(res => {
-                console.log("search result"+ JSON.stringify(res.data));
+                // console.log("search result"+ JSON.stringify(res.data));
                 if (res.data !== null && res.data !== undefined) {
                     let uniName = [];
                     res.data.forEach(item => uniName.push(item.name));
@@ -39,9 +38,10 @@ const Search = () => {
     };
 
     const getRandomUniversity= () =>{
-        getRecommendUni()
+        setSearchTerm("");
+        getRecommendUni({num: 1})
             .then(res =>{
-                console.log("search: "+ JSON.stringify(res.data));
+                // console.log("search: "+ JSON.stringify(res.data));
                 if (res.data )
                     setUniList(uniList => res.data)
             })
@@ -51,7 +51,7 @@ const Search = () => {
     const clickSearch = () => {
         getUniByName(searchTerm)
             .then(res => {
-                    console.log("db data length ==>", res.data );
+                    // console.log("db data length ==>", res.data );
                     if (res.data ) {
                         setUniList(uniList => res.data)
                     }
@@ -60,7 +60,7 @@ const Search = () => {
     }
 
 
-    useEffect(clickSearch, []);
+    useEffect(clickSearch, [user.id]);
     const mid = Math.round(uniList.length / 2);
 
     return (
@@ -137,7 +137,6 @@ const Search = () => {
                     </ul>
                 </div>
             </div>
-            {/*<Footer/>*/}
         </>
 
     );
