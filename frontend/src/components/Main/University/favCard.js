@@ -4,7 +4,7 @@ import "./universityCard.css";
 import {getRecommendUni, getFavByUserId, getUniByID, unlikeUni} from "../../service/allServices";
 import image from '../../images/school.jpeg'
 import placeHolderUni from '../../Data/univeristy.json'
-import cardImage from "../../images/card1.jpeg";
+import cardImage from "../../images/school.jpeg";
 
 
 
@@ -57,7 +57,7 @@ const FavCard = ({uniID, userId, setFavList}) => {
                                 <h1 className="modal-title fs-5" id="exampleModalLabel">{university.name}</h1>
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <img src={image} className="card-img-top wd-card-img p-2" alt="sample"/>
+                            <img src={university.photo || image} className="card-img-top wd-card-img p-2" alt="sample"/>
                             <div className="modal-body">
                                 <p className="fw-bold">Introduction</p>
                                 <p>{university.description}</p>

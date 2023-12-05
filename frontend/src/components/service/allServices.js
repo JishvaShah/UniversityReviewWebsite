@@ -108,10 +108,10 @@ export const getAllUsers = () =>
 
 
 // university related services
-export const getRecommendUni = () =>
+export const getRecommendUni = (num) =>
     fetch(`${API_UNI}/recommend`, {
         method: 'POST',
-        body: JSON.stringify({"num": 3}),
+        body: JSON.stringify(num),
         credentials: 'include',
         headers: {
             'content-type': 'application/json'

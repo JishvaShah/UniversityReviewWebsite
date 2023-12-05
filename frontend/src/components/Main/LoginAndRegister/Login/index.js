@@ -4,9 +4,8 @@ import "../loginAndRegister.css";
 import {Helmet} from "react-helmet";
 import Header from "../../Header";
 import userService from "../../../service/allServices";
-import {useDispatch} from "react-redux";
-import loginBg from "../../../images/school.jpeg";
-
+import {useDispatch, useSelector} from "react-redux";
+import {setUserLogin} from "../../../store/userSlice";
 
 export default function Login() {
     const [user, setUser] = useState({
@@ -20,12 +19,8 @@ export default function Login() {
     const login = () => {
         userService.login(user)
             .then(response => {
-                dispatch({
-                    type: "set-user",
-                    newUser: response.data
-                })
-                navigate('/explore');
-                })
+                dispatch(setUserLogin(response.data));
+                navigate('/explore')})
             .catch(e => alert("User does not exist or wrong password."))
     };
 
@@ -40,7 +35,7 @@ export default function Login() {
                 <div className="row align-items-center">
                     <div className="d-none d-md-block col-md-5">
                         <img className="wd-login-bg mt-5"
-                             src={loginBg}
+                             src="/images/school.jpeg"
                              alt=""/>
                     </div>
                     <div className="col-12 col-md-7">

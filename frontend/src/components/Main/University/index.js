@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {Link} from "react-router-dom";
 import "./universityCard.css";
 import {likeUni, unlikeUni} from "../../service/allServices";
-import cardImage from '../../images/card1.jpeg';
+
 
 
 const University = ({university, userId, setFavList, favList}) => {

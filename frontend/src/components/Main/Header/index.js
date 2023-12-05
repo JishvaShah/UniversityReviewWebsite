@@ -3,39 +3,29 @@ import HeaderNavItem from "./HeaderNavItem";
 import headerNavs from "./headerNavs.json";
 import "./header.css";
 import {useSelector} from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate  } from "react-router-dom";
 import {useDispatch} from "react-redux";
-import userService from "../../service/allServices";
-
-// const selectProfile = (profile) => profile;
+import {setUserLogout} from "../../store/userSlice";
 
 const Header = ({
                     active = 'home',
-
                 }) => {
-
 
     // change the active nav's isActive field
     for (let i = 0; i < headerNavs.length; i++) {
         headerNavs[i].isActive = (headerNavs[i].navTitle === active);
     }
 
-    // data part starts from here ----------------
-    const [searchTerm, setSearchTerm] = useState("");
-    const [searchResult, setSearchResult] = useState([]);
-
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    let user = useSelector((state) =>
+       state.user.originalUser
+    );
 
-    const searchRecipe = (event) => {
-        setSearchTerm(event.target.value);
-        console.log("auto complete result ->", event.target.value);
-    };
 
-    let user = useSelector(state => state.userReducer);
 
     const userInfo = () => {
-        if (user && user.username) {
+        if (user.id !== 0) {
             return <div className="d-none d-lg-block col-lg-4 align-self-end text-center">
                 <div className="d-grid gap-2 d-md-flex justify-content-md-end">
                     <Link to="/profile">
@@ -58,9 +48,7 @@ const Header = ({
     }
 
     const logoutUser = () => {
-        dispatch({
-            type: "logout-user",
-        })
+        dispatch(setUserLogout());
         navigate('/home');
     }
 

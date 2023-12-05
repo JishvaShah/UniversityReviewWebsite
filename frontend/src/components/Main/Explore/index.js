@@ -4,25 +4,27 @@ import {Helmet} from 'react-helmet';
 import University from "../University";
 import {getFavByUserId, getRecommendUni} from "../../service/allServices";
 import uniPlaceHolder from "../../Data/univeristy.json";
-import {useSelector} from "react-redux";
 import FavCard from "../University/favCard";
 import {Link} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
 
 
-const selectProfile = (profile) => profile;
 
 const Explore = () => {
     // get shown menu lists information
     const menuIds = [1, 2, 3, 4, 5];
 
-    let user = useSelector(selectProfile)['userReducer'];
+    const user = useSelector((state) =>
+        state.user.originalUser
+    )
+    const dispatch = useDispatch();
 
     const [universities, setUniversities] = useState([]);
     const [favList, setFavList] = useState([]);
     const [login, setLogin] = useState(false);
 
     useEffect(() => {
-        getRecommendUni()
+        getRecommendUni({num: 3})
             .then(res => {
                 // console.log("uni: "+ JSON.stringify(res.data));
                 if (res.data) {
@@ -34,13 +36,12 @@ const Explore = () => {
         if (user.id === 0) {
             setLogin(false);
         } else {
-
             console.log("record, userid: " + JSON.stringify(user));
 
             getFavByUserId({userID: user.id})
                 .then(res => {
                     if (res.data) {
-                        console.log("Fav uni: "+ JSON.stringify(res.data));
+                        // console.log("Fav uni: "+ JSON.stringify(res.data));
                         setFavList(favList => {
                             res.data.forEach((item) => {
                                 // if the item is not in the fav list, add it into favList
