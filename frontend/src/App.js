@@ -11,12 +11,14 @@ import AllReviews from "./components/Main/AllReviews";
 import Home from "./components/pages/Home";
 import User from "./components/pages/User";
 import {Provider} from "react-redux";
-import {store} from "./components/store/index";
+
 import { configureStore } from '@reduxjs/toolkit'
 import Review from "./components/pages/Review";
 import Search from "./components/Main/Search";
 import { ToastContainer } from "react-toastify";
 import Footer from "./components/Main/Footer";
+import { PersistGate } from 'redux-persist/integration/react'
+import {store, persistor} from "./components/store/store";
 
 
 
@@ -24,6 +26,7 @@ function App() {
     return (
         <Provider store={store}>
         <BrowserRouter>
+            <PersistGate loading={null} persistor={persistor}>
 
                 <ToastContainer />
                 <Routes>
@@ -60,6 +63,7 @@ function App() {
                 </Routes>
 
             <Footer/>
+            </PersistGate>
         </BrowserRouter>
         </Provider>
 

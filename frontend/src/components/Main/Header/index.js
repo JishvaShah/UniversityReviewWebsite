@@ -19,9 +19,13 @@ const Header = ({
     const navigate = useNavigate();
     const dispatch = useDispatch();
     let user = useSelector((state) =>
-       state.user.originalUser
+       state.originalUser
     );
 
+    const logoutUser = () => {
+        dispatch(setUserLogout());
+        navigate('/home');
+    }
 
 
     const userInfo = () => {
@@ -45,11 +49,6 @@ const Header = ({
             </div>
 
         </div>;
-    }
-
-    const logoutUser = () => {
-        dispatch(setUserLogout());
-        navigate('/home');
     }
 
 

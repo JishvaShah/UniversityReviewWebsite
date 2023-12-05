@@ -85,4 +85,4 @@ const FavCard = ({uniID, userId, setFavList}) => {
     )
 }
 
-export default  FavCard;
+export default FavCard;

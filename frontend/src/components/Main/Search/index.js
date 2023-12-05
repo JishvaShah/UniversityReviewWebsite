@@ -19,9 +19,7 @@ const Search = () => {
     const [uniList, setUniList] = useState([]);
     const navigate = useNavigate();
 
-    const user = useSelector((state) => state.user.originalUser)
-    const dispatch = useDispatch();
-    console.log("In search page: " + JSON.stringify(user));
+    const user = useSelector((state) => state.originalUser)
 
     const searchUniversity = (event) => {
         setSearchTerm(searchTerm => event.target.value);

@@ -9,14 +9,12 @@ import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 
 
-
 const Explore = () => {
     // get shown menu lists information
     const menuIds = [1, 2, 3, 4, 5];
 
-    const user = useSelector((state) =>
-        state.user.originalUser
-    )
+    const user = useSelector((state) => state.originalUser);
+
     const dispatch = useDispatch();
 
     const [universities, setUniversities] = useState([]);
