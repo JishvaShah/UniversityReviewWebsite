@@ -1,0 +1,30 @@
+.profile.mt-4 h2{
+    font-family: helvetica;
+    font-weight: bold;
+    color: #F17C67;
+    text-shadow: none;
+    padding-bottom: 5%;
+}
+
+.container.profile{
+    font-family:Arial, Helvetica, sans-serif;
+    padding-top: 1%;
+    width: 35%;
+    height: 800px;
+}
+
+.profile.mb-3{
+    text-align: left;
+}
+
+.profile.btn{
+    border: 1px solid #0056b3;
+    color: #0056b3;
+    background-color: #fff;
+}
+
+.profile.btn:hover{
+    border: 1px solid #0056b3;
+    color: #fff;
+    background-color: #0056b3;
+}
