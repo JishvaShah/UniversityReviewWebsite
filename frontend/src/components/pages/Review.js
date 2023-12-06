@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import "../styles/Review.css";
 import { Helmet } from "react-helmet";
 import Header from "../Main/Header";
-import { useParams } from 'react-router-dom';
+import { toast } from "react-toastify";
+import { useParams } from "react-router-dom";
 import Rating from "react-rating-stars-component";
 import { createReview } from "../service/allServices.js";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Review() {
-
   const user = useSelector((state) => state.originalUser);
   const { id } = useParams();
   const navigate = useNavigate();
@@ -41,6 +41,14 @@ export default function Review() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!formData.review.trim() || formData.overallRating === 0) {
+      toast.error("All fields must be filled.", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      return;
+    }
+
     const reviewData = {
       userName: user.username,
       uniID: id,
@@ -58,40 +66,35 @@ export default function Review() {
 
     createReview(reviewData)
       .then((res) => {
-        // Handle success
-        console.log("Review submitted successfully:", res);
-        navigate('/explore');
-        // You might want to redirect the user or show a success message here
+        if (res.responseCode === 100) {
+          navigate("/explore");
+          toast.success("Review submitted successfully!", {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+        }
       })
       .catch((error) => {
-        // Handle error
-        console.error("Error submitting review:", error);
-        // You might want to show an error message to the user
+        toast.error("Error submitting review!", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
       });
 
+    console.log("uni id:", id);
+    console.log("user id:", user.username);
+    console.log("Form Data:", review.value);
+  };
 
-      // Calculate the average rating
-      // const averageRating = calculateAverage(ratings);
-      console.log("uni id:",id);
-      console.log("user id:", user.username);
-      console.log("Form Data:", review.value);
-      // console.log("Average Rating:", averageRating);
-    };
+  const calculateAverage = (ratings) => {
+    if (ratings.length !== 6) {
+      console.error("Expected an array of six ratings.");
+      return 0;
+    }
 
-    const calculateAverage = (ratings) => {
-        if (ratings.length !== 6) {
-          console.error("Expected an array of six ratings.");
-          return 0;
-        }
-    
-        const sum = ratings.reduce((total, rating) => total + rating, 0);
-        const average = Math.ceil(sum / 6);
-    
-        return average;
-      };
-    
+    const sum = ratings.reduce((total, rating) => total + rating, 0);
+    const average = Math.ceil(sum / 6);
 
-  
+    return average;
+  };
 
   return (
     <>
@@ -102,7 +105,7 @@ export default function Review() {
         <Header active="review" />
         <div className="row">
           <div className="col-md-6 mx-auto">
-            <h2>Review your University</h2>
+            <h2>- Review your University -</h2>
             <form onSubmit={handleSubmit} className="review-form">
               <div className="form-group">
                 <label htmlFor="email">Email</label>
