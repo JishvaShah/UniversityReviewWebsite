@@ -2,12 +2,16 @@ import React, { useState } from "react";
 import Header from "../Header";
 import "./profile.css";
 import { Helmet } from "react-helmet";
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import userService from "../../service/allServices";
+import { Link, useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Profile() {
   const user = useSelector((state) => state.originalUser);
+  const navigate = useNavigate();
+
   const [newPassword, setNewPassword] = useState("");
   const [originalPassword, setoriginalPassword] = useState("");
   const [showChangePassword, setShowChangePassword] = useState(false);
@@ -18,21 +22,30 @@ export default function Profile() {
       originalPassword: originalPassword,
       newPassword: newPassword,
     };
-    console.log(updatedUser);
+
     userService
       .updateProfile(updatedUser)
       .then((response) => {
-        console.log("Password updated successfully", response);
+        if (response.responseCode === 100) {
+          toast.success("Password updated successfully.", {
+            position: toast.POSITION.TOP_RIGHT,
+          });
 
-        // Clear sensitive data from state after use
-        setoriginalPassword("");
-        setNewPassword("");
+          navigate("/explore");
+          setoriginalPassword("");
+          setNewPassword("");
 
-        // Hide the change password section after successful update
-        setShowChangePassword(false);
+          setShowChangePassword(false);
+        } else {
+          toast.error("Error updating password! Check again.", {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+        }
       })
       .catch((error) => {
-        console.error("Error updating password:", error);
+        toast.error("Error updating password! Check again.", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
       });
   };
 
@@ -98,13 +111,13 @@ export default function Profile() {
         <div className="profile align-items-center mt-4">
           <h2>Hey, seems like you haven't logged in.</h2>
           <p>
-            <Link to="/login"> Log in </Link> to see or edit your profile information.
+            <Link to="/login"> Log in </Link> to see or edit your profile
+            information.
           </p>
         </div>
       );
     }
   };
-  
 
   return (
     <>
@@ -114,8 +127,7 @@ export default function Profile() {
       <Header active="profile" />
       <div className="container profile mt-4 text-center">
         {userInfo()}
-  
-        {/* Show Change Password Section Button */}
+
         {user.id !== 0 && (
           <button
             className="profile btn btn-primary mt-3"
@@ -124,8 +136,7 @@ export default function Profile() {
             Change Password
           </button>
         )}
-  
-        {/* Change Password Section */}
+
         {showChangePassword && (
           <div className="profile mt-4">
             <h2>- Change Password -</h2>
@@ -164,5 +175,4 @@ export default function Profile() {
       </div>
     </>
   );
-  
 }
