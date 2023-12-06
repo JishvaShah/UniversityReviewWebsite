@@ -11,7 +11,7 @@ import AllReviews from "./components/Main/AllReviews";
 import Home from "./components/pages/Home";
 import User from "./components/pages/User";
 import {Provider} from "react-redux";
-
+import Profile from "./components/Main/Profile/index.js";
 import { configureStore } from '@reduxjs/toolkit'
 import Review from "./components/pages/Review";
 import Search from "./components/Main/Search";
@@ -47,7 +47,7 @@ function App() {
                            element={<Explore/>}/>
                     <Route path="/profile"
                            exact={true}
-                           element={<User/>}/>
+                           element={<Profile/>}/>
                     <Route path="/allReviews/:id"
                            exact={true}
                            element={<AllReviews/>}/>

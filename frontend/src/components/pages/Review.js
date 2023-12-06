@@ -2,9 +2,18 @@ import React, { useState } from "react";
 import "../styles/Review.css";
 import { Helmet } from "react-helmet";
 import Header from "../Main/Header";
+import { useParams } from 'react-router-dom';
 import Rating from "react-rating-stars-component";
+import { createReview } from "../service/allServices.js";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Review() {
+
+  const user = useSelector((state) => state.originalUser);
+  const { id } = useParams();
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     email: "",
     universityName: "",
@@ -32,19 +41,41 @@ export default function Review() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const ratings = [
+    const reviewData = {
+      userName: user.username,
+      uniID: id,
+      content: formData.review,
+      rating: calculateAverage([
         formData.facilitiesRating,
         formData.locationRating,
         formData.studentSupportRating,
         formData.campusLookFeelRating,
         formData.studentLifeRating,
         formData.studentUnionRating,
-      ];
-  
+      ]),
+    };
+    console.log(reviewData);
+
+    createReview(reviewData)
+      .then((res) => {
+        // Handle success
+        console.log("Review submitted successfully:", res);
+        navigate('/explore');
+        // You might want to redirect the user or show a success message here
+      })
+      .catch((error) => {
+        // Handle error
+        console.error("Error submitting review:", error);
+        // You might want to show an error message to the user
+      });
+
+
       // Calculate the average rating
-      const averageRating = calculateAverage(ratings);
-      console.log("Form Data:", formData);
-      console.log("Average Rating:", averageRating);
+      // const averageRating = calculateAverage(ratings);
+      console.log("uni id:",id);
+      console.log("user id:", user.username);
+      console.log("Form Data:", review.value);
+      // console.log("Average Rating:", averageRating);
     };
 
     const calculateAverage = (ratings) => {
@@ -54,7 +85,7 @@ export default function Review() {
         }
     
         const sum = ratings.reduce((total, rating) => total + rating, 0);
-        const average = Math.floor(sum / 6);
+        const average = Math.ceil(sum / 6);
     
         return average;
       };
