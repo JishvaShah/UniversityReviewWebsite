@@ -1,3 +1,3 @@
 # University-Review
 
-# Authors: Tingting Jiang, Jishva Sha, Jianhua Xue, Yixuan Huang
+# Authors: Tingting Jiang, Jishva Shah, Jianhua Xue, Yixuan Huang
